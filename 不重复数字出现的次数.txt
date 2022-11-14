@@ -1,0 +1,26 @@
+public class RemoveDuplicatesFromSortedArrays {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
+        int[] arrayDemo = {1,1,2,2,3,5,5,5};
+
+        int newLength=removeDuplicatesElements(arrayDemo);
+        System.out.println("NEW LENGTH OF ARRAYDEMO IS: "+newLength);
+
+    }
+
+    public static int removeDuplicatesElements(int[] arrayDemo) {
+        //如果数组长度为0，即不包含任何元素，则返回0
+        if (arrayDemo.length == 0) return 0;   
+        int i = 0;
+        for (int j = 1; j < arrayDemo.length; j++) {
+            if (arrayDemo[j] != arrayDemo[i]) {
+                i++;
+                arrayDemo[i] = arrayDemo[j];
+            }
+        }
+        return i + 1;
+    }
+
+}
