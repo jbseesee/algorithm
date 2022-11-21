@@ -1,0 +1,2124 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)https://rengwuxian.com/kotlin-generics/ -->
+<html lang="zh"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Kotlin 的泛型</title>
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="shortcut icon" href="https://rengwuxian.com/favicon.png">
+<style>
+
+	/* roboto-regular */
+	@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: regular;
+	src: url('//lib.baomitu.com/fonts/roboto/roboto-regular.eot'); /* IE9 Compat Modes */
+	src: local('Roboto'), local('Roboto-Normal'),
+		url('//lib.baomitu.com/fonts/roboto/roboto-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/roboto/roboto-regular.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/roboto/roboto-regular.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/roboto/roboto-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/roboto/roboto-regular.svg#Roboto') format('svg'); /* Legacy iOS */
+	}
+	
+	/* roboto-500 */
+	@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 500;
+	src: url('//lib.baomitu.com/fonts/roboto/roboto-500.eot'); /* IE9 Compat Modes */
+	src: local('Roboto'), local('Roboto-Normal'),
+		url('//lib.baomitu.com/fonts/roboto/roboto-500.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/roboto/roboto-500.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/roboto/roboto-500.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/roboto/roboto-500.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/roboto/roboto-500.svg#Roboto') format('svg'); /* Legacy iOS */
+	}
+	
+	/* roboto-700 */
+	@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 700;
+	src: url('//lib.baomitu.com/fonts/roboto/roboto-700.eot'); /* IE9 Compat Modes */
+	src: local('Roboto'), local('Roboto-Normal'),
+		url('//lib.baomitu.com/fonts/roboto/roboto-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/roboto/roboto-700.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/roboto/roboto-700.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/roboto/roboto-700.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/roboto/roboto-700.svg#Roboto') format('svg'); /* Legacy iOS */
+	}
+	
+	/* poppins-regular */
+	@font-face {
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: regular;
+	src: url('//lib.baomitu.com/fonts/poppins/poppins-regular.eot'); /* IE9 Compat Modes */
+	src: local('Poppins'), local('Poppins-Normal'),
+		url('//lib.baomitu.com/fonts/poppins/poppins-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/poppins/poppins-regular.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-regular.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/poppins/poppins-regular.svg#Poppins') format('svg'); /* Legacy iOS */
+	}
+	
+	/* poppins-italic */
+	@font-face {
+	font-family: 'Poppins';
+	font-style: italic;
+	font-weight: regular;
+	src: url('//lib.baomitu.com/fonts/poppins/poppins-italic.eot'); /* IE9 Compat Modes */
+	src: local('Poppins'), local('Poppins-Italic'),
+		url('//lib.baomitu.com/fonts/poppins/poppins-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/poppins/poppins-italic.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-italic.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-italic.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/poppins/poppins-italic.svg#Poppins') format('svg'); /* Legacy iOS */
+	}
+	
+	/* poppins-500 */
+	@font-face {
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 500;
+	src: url('//lib.baomitu.com/fonts/poppins/poppins-500.eot'); /* IE9 Compat Modes */
+	src: local('Poppins'), local('Poppins-Normal'),
+		url('//lib.baomitu.com/fonts/poppins/poppins-500.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/poppins/poppins-500.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-500.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-500.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/poppins/poppins-500.svg#Poppins') format('svg'); /* Legacy iOS */
+	}
+	
+	/* poppins-600 */
+	@font-face {
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 600;
+	src: url('//lib.baomitu.com/fonts/poppins/poppins-600.eot'); /* IE9 Compat Modes */
+	src: local('Poppins'), local('Poppins-Normal'),
+		url('//lib.baomitu.com/fonts/poppins/poppins-600.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/poppins/poppins-600.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-600.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-600.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/poppins/poppins-600.svg#Poppins') format('svg'); /* Legacy iOS */
+	}
+	
+	/* poppins-700 */
+	@font-face {
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 700;
+	src: url('//lib.baomitu.com/fonts/poppins/poppins-700.eot'); /* IE9 Compat Modes */
+	src: local('Poppins'), local('Poppins-Normal'),
+		url('//lib.baomitu.com/fonts/poppins/poppins-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/poppins/poppins-700.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-700.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-700.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/poppins/poppins-700.svg#Poppins') format('svg'); /* Legacy iOS */
+	}
+	
+	/* poppins-700italic */
+	@font-face {
+	font-family: 'Poppins';
+	font-style: italic;
+	font-weight: 700;
+	src: url('//lib.baomitu.com/fonts/poppins/poppins-700italic.eot'); /* IE9 Compat Modes */
+	src: local('Poppins'), local('Poppins-Italic'),
+		url('//lib.baomitu.com/fonts/poppins/poppins-700italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/poppins/poppins-700italic.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-700italic.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-700italic.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/poppins/poppins-700italic.svg#Poppins') format('svg'); /* Legacy iOS */
+	}
+  
+</style>
+
+<link href="./Kotlin 的泛型_files/style.min.css" type="text/css" rel="stylesheet">
+<link href="./Kotlin 的泛型_files/plugins.min.css" type="text/css" rel="stylesheet" as="style" onload="this.rel=&#39;stylesheet&#39;">
+
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="/assets/dist/grids-ie.css?v=ef6c9f55ae">
+<script src="/assets/js/html5shiv.min.js?v=ef6c9f55ae"></script>
+<![endif]-->
+
+<iframe id="pxcelframe" title="pxcelframe" src="./Kotlin 的泛型_files/t_.html" style="display: none;"></iframe><script async="" src="./Kotlin 的泛型_files/6075a9981ec66e0011e92ed4.js.下载"></script><script src="./Kotlin 的泛型_files/embed.dist.js.下载" async=""></script><script src="./Kotlin 的泛型_files/hm.js.下载"></script><script type="text/javascript">
+	// Theme Config, check the documentation before edit this file
+    var search_engine_key = 'e9ae642e278dd89cf1a4c09bc3'; // example: e08514f918d175f017584aaf34
+    var search_api = "/ghost/api/content/posts/?key=" + search_engine_key + "&limit=all&include=tags";
+	var theme_config = {
+		flickr_id: '27579110@N08', // You can get it here: http://idgettr.com/
+		flickr_photos_limit: 6, // How many photos you want to show
+		disqus_shortname: 'ghostexample', // You can create your own Disqus Comments here: https://disqus.com/admin/create/
+	};
+</script><style type="text/css" abt="234"></style>
+
+
+<link rel="icon" href="https://rengwuxian.com/favicon.png" type="image/png">
+    <link rel="canonical" href="https://rengwuxian.com/kotlin-generics/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="https://rengwuxian.com/kotlin-generics/amp/">
+    
+    <meta property="og:site_name" content="扔物线">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Kotlin 的泛型">
+    <meta property="og:description" content="本期作者：  视频：扔物线（朱凯）  文章：Bruce（郑啸天）  大家好，我是扔物线朱凯。你在看的是码上开学项目的 Kotlin 高级部分的第 1 篇：Kotlin 的泛型。首当其冲的当然还是香香的视频香香的我啦：    如果你看不到上面的哔哩哔哩视频，可以点击 这里 去 YouTube 看。  以下内容来自文章作者Bruce。  从 Kotlin 的 in 和 out 说起 这期是码上开学 Kotlin 系列的独立技术点部分的第一期，我们来聊一聊泛型。  提到 Kotlin 的泛型，通常离不开 in 和 out 关键字，但泛型这门武功需要些基本功才能修炼，否则容易走火入魔，待笔者慢慢道来。  下面这段 Java 代码在日常开发中应该很常见了：  ☕️ List&amp;">
+    <meta property="og:url" content="https://rengwuxian.com/kotlin-generics/">
+    <meta property="og:image" content="https://rengwuxian.com/content/images/2021/04/0-21.jpeg">
+    <meta property="article:published_time" content="2019-09-02T01:51:00.000Z">
+    <meta property="article:modified_time" content="2021-04-22T02:57:21.000Z">
+    <meta property="article:tag" content="Kotlin">
+    <meta property="article:tag" content="Kotlin 泛型">
+    <meta property="article:tag" content="Kotln 进阶">
+    <meta property="article:tag" content="码上开学">
+    
+    <meta property="article:publisher" content="https://www.facebook.com/rengwuxian">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kotlin 的泛型">
+    <meta name="twitter:description" content="本期作者：  视频：扔物线（朱凯）  文章：Bruce（郑啸天）  大家好，我是扔物线朱凯。你在看的是码上开学项目的 Kotlin 高级部分的第 1 篇：Kotlin 的泛型。首当其冲的当然还是香香的视频香香的我啦：    如果你看不到上面的哔哩哔哩视频，可以点击 这里 去 YouTube 看。  以下内容来自文章作者Bruce。  从 Kotlin 的 in 和 out 说起 这期是码上开学 Kotlin 系列的独立技术点部分的第一期，我们来聊一聊泛型。  提到 Kotlin 的泛型，通常离不开 in 和 out 关键字，但泛型这门武功需要些基本功才能修炼，否则容易走火入魔，待笔者慢慢道来。  下面这段 Java 代码在日常开发中应该很常见了：  ☕️ List&amp;">
+    <meta name="twitter:url" content="https://rengwuxian.com/kotlin-generics/">
+    <meta name="twitter:image" content="https://rengwuxian.com/content/images/2021/04/0-21.jpeg">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="yanke">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="Kotlin, Kotlin 泛型, Kotln 进阶, 码上开学">
+    <meta name="twitter:site" content="@rengwuxian">
+    <meta property="og:image:width" content="1280">
+    <meta property="og:image:height" content="666">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "扔物线",
+        "url": "https://rengwuxian.com/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://rengwuxian.com/favicon.png",
+            "width": 60,
+            "height": 60
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "yanke",
+        "url": "https://rengwuxian.com/author/yanke/",
+        "sameAs": []
+    },
+    "headline": "Kotlin 的泛型",
+    "url": "https://rengwuxian.com/kotlin-generics/",
+    "datePublished": "2019-09-02T01:51:00.000Z",
+    "dateModified": "2021-04-22T02:57:21.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://rengwuxian.com/content/images/2021/04/0-21.jpeg",
+        "width": 1280,
+        "height": 666
+    },
+    "keywords": "Kotlin, Kotlin 泛型, Kotln 进阶, 码上开学",
+    "description": "&gt; 本期作者：\n\n视频：扔物线（朱凯）\n\n文章：Bruce（郑啸天） [https://github.com/bruce3x]\n\n\n大家好，我是扔物线朱凯。你在看的是码上开学项目的 Kotlin 高级部分的第 1 篇：Kotlin 的泛型。首当其冲的当然还是香香的视频香香的我啦：\n\n如果你看不到上面的哔哩哔哩视频，可以点击 这里 [https://youtu.be/rgslIQi65b8] 去 YouTube 看。\n\n&gt; 以下内容来自文章作者Bruce [https://github.com/bruce3x]。\n\n\n从 Kotlin 的 in 和 out 说起\n这期是码上开学 Kotlin 系列的独立技术点部分的第一期，我们来聊一聊泛型。\n\n提到 Kotlin 的泛型，通常离不开 in 和 out 关键字，但泛型这门武功需要些基本功才能修炼，否则容易走火入魔，待笔者慢慢道来。\n\n下面这段 Java 代码在日常开发中应该很常见了：\n\n☕️\nList&lt;TextView&gt; textViews &#x3D; new ArrayList&lt;TextView&gt;();\n\n\n其中 List&lt;TextView&gt; 表",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://rengwuxian.com/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.36">
+    <link rel="alternate" type="application/rss+xml" title="扔物线" href="https://rengwuxian.com/rss/">
+    <script defer="" src="./Kotlin 的泛型_files/portal.min.js.下载" data-ghost="https://rengwuxian.com/" crossorigin="anonymous"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style>
+    <script defer="" src="./Kotlin 的泛型_files/cards.min.js.下载"></script>
+    <link rel="stylesheet" type="text/css" href="./Kotlin 的泛型_files/cards.min.css">
+    <!-- 搜狗站长工具 -->
+<meta name="sogou_site_verification" content="RqiH1rN2f2">
+<!-- 头条站长工具 -->
+<meta name="bytedance-verification-code" content="LBvgIFkyZA2HGPoo49cg">
+<!-- 360 站长工具 -->
+<meta name="360-site-verification" content="56d0d68e6d1b0da2445dcfaa95ea7c5d">
+<!-- 神马站长工具 -->
+<meta name="shenma-site-verification" content="20324305e696b94bac55cbb9c880228e_1623723970">
+<!-- Bing 站长工具 -->
+<meta name="msvalidate.01" content="BE5EE195E88484861667DED05FC69166">
+<!-- Google 站长工具 -->
+<meta name="google-site-verification" content="3-cfltjQ_72y96I68q1iY1KeObFLMzL0TB27-xi2zIA">
+<!-- 百度统计 -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d2f1ea1235e2c9ffe722cea1c6b5b3df";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="./Kotlin 的泛型_files/js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XEF0Z7HWK0');
+</script>
+<script type="text/javascript" src="./Kotlin 的泛型_files/sharethis.js.下载" async="async"></script>
+<!-- <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" async='async'/>
+<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js" async='async'></script>
+<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.0.min.js"></script> -->
+<script src="./Kotlin 的泛型_files/jquery.min.js.下载"></script>
+<style>
+    .block {
+    	display: block;
+    }
+    
+    .hidden {
+    	display: none!important;
+    }
+    
+    #header .share-buttons {
+    	padding: 10px 22px;
+        border-radius: 30px;
+    }
+    
+    #header div.menu-wrapper {
+    	left: 0;
+    }
+    .btn-follow {
+    	padding: 10px 25px;
+        color: #111;
+    	background-color: #FFD012;
+    	border-radius: 25px;
+        margin-left: 30px;
+    }
+    
+    .btn-follow:hover {
+        color: #fff;
+        background-color: #111;
+    }
+    .text-center {
+    	text-align: center;
+    }
+    
+    #footer .subscribe {
+    	padding: 50px;
+    }
+    .follow-us {
+    	font-size: 32px;
+    }
+    
+    .mt-10 {
+    	margin-top: 10px;
+    }
+    
+    .mt-15 {
+    	margin-top: 15px;
+    }
+    
+    .mt-20 {
+    	margin-top: 20px;
+    }
+    
+    .tag-filters {
+    	margin-left: 0px;
+    }
+    
+    .follow-qrcode-list img {
+        width: 70%;
+    	border-radius: 10px;
+    }
+    
+    .follow-qrcode-item {
+    	margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+    
+    .btn-follow-learn {
+    	display: inline-block;
+        margin: 0 5px;
+        background: #FF3152;
+        height: 40px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff;
+        line-height: 40px;
+        padding: 0 25px;
+        font-family: "Roboto",sans-serif;
+        border-radius: 25px;
+        margin-left: 15px;
+    }
+    
+    .flex {
+    	display: flex;
+    }
+    
+    .flex-col {
+    	flex-direction: column;
+    }
+    
+    .justify-center {
+    	justify-content: center;
+    }
+    
+    .justify-between {
+    	justify-content: space-between;
+    }
+    
+    .items-center {
+    	align-items: center;
+    }
+    
+    .white {
+    	color: white;
+    }
+    
+     .white-80 {
+    	color: #FFFFFFCC;
+    }
+    
+    .gray {
+    	color: gray;
+    }
+   	.title.ularge {
+    	font-size: 52px;
+    }
+    .sub-title {
+    	font-size: 30px;
+        margin-left: 100px;
+    }
+    .opacity-100 {
+        opacity: 1;
+    }
+    .opacity-80 {
+        opacity: 0.8;
+    }
+    
+    .hero {
+    	padding-left: 0;
+        padding-right: 0;
+    }
+    
+    .cover-bg {
+    	height: 668px;
+        background-position: center;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 13.3%;
+    }
+    
+    .hero-content {
+    	height: 668px;
+        -webkit-animation: fadeIn 1s ease-in-out;
+        animation: fadeIn 1s ease-in-out;
+        vertical-align: middle;
+        background-size: cover;
+        background-position: center;
+    	background-repeat: no-repeat;
+        border-radius: 10px;
+    }
+    
+    div.articles .featured-image {
+    	border-radius: 10px;
+    }
+    
+    div.articles {
+    	padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    div.articles article {
+       	padding-top: 20px;
+        padding-bottom: 10px;
+   	}
+    
+    div.articles article a.thumb {
+    	min-height: 230px;
+    }
+    
+    .tablet-grid-50 {
+    	padding-left: 12px;
+        padding-right: 12px;
+    }
+    
+    .grid-container {
+        max-width: 1300px;
+        padding-top: 0px;
+    }
+    
+    .ad-post-list-container {
+    	margin-left: 15px;
+        margin-right: 15px;
+    }
+    
+    .ad-post-list-container img {
+    	width: 1300px;
+        border-radius: 10px;
+    	margin-top: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .follow-list {
+        margin-right: 30px;
+    }
+    
+    #single.standard .featured-image {
+    	height: 500px;
+    }
+    
+    div.text blockquote, div.text hr, div.text pre, div.text table,
+    div.text figure, div.text iframe, div.text p {
+    	margin-bottom: 16px;
+    }
+    
+    div.text blockquote {
+    	padding: 5px 20px;
+    }
+    
+    div.text p {
+        margin-bottom: 10px;
+    }
+    
+    div.text ol, div.text ul {
+    	margin-bottom: 16px;
+        margin-left: 20px;
+    }
+    
+    div.text ol, div.text ul, div.text ul li {
+    	list-style-position: initial;
+    }
+    
+    div.text blockquote ul {
+    	margin-bottom: 0px;
+    }
+    
+    div.text code:not([class*=language-]) {
+    	padding: 1px 4px;
+        margin: 2px 1px;
+        font-size: 13px;
+        color: #ff3152;
+        line-height: 22px;
+    }
+    
+    code[class*=language-], pre[class*=language-] {
+    	border-radius: 6px;
+    }
+    
+    div.text h1 code,
+    div.text h2 code,
+    div.text h3 code,
+    div.text h4 code,
+    div.text h5 code,
+    div.text h6 code{
+        color: inherit!important;
+        font-size: inherit!important;
+    	background: inherit!important;
+        border: inherit!important;
+        padding: none!important;
+        line-height: inherit!important
+    }
+    
+    aside .widget {
+    	padding: 25px 0px 50px
+    }
+    
+    #single .share-buttons .title {
+       margin-bottom: 0px;
+    }
+    
+    #st-1 {
+    	display: flex!important;
+        flex-direction: column!important;
+        padding: 5px;
+    }
+    
+    #st-1 .st-btn {
+        display: block!important;
+        margin-right: 0px!important;
+        margin-bottom: 10px;
+        border: unset!important;
+    }
+    
+    #st-2 .st-btn {
+    	display: inline-block!important;
+        padding: 0 9px!important;
+        border: unset!important;
+        background: #fff;
+        -webkit-box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+
+    }
+    .sidebar-follow {
+    	padding: 30px 0;
+        background: #FF3152;
+        border-top-right-radius: 7px;
+        padding-left: 50px;
+        padding-right: 50px;
+        position: relative;
+    }
+    
+    .sidebar-follow .btn-follow {
+    	margin-left: 0px;
+    }
+    
+    .justify-around {
+    	justify-content: space-around;
+    }
+    
+    .gh-post-upgrade-cta-content {
+        padding: 40px 1vw;
+    }
+    
+    .swiper-pagination-bullet {
+        width: 12px;
+        height: 12px;
+        border-radius: 14px;
+        opacity: 0.6;
+    	background: #FFFFFF!important;
+	}
+    
+    .swiper-pagination-bullet-active {
+        color:#FFFFFF;
+        opacity: 1;
+        background: #FF3152!important;
+    }
+    
+    .swiper-slide img {
+    	width: 100%;
+    }
+    
+    .swiper-slide .large {
+    	display: block;
+    }
+    
+    .swiper-slide .small {
+    	display: none;
+    }
+    
+    
+    .hero-content img {
+        border-radius: 10px;
+    }
+    
+    .hero div {
+        display: none!important;
+    }
+    
+    div.filters {
+    	padding: 15px 0;
+    }
+    
+    .content {
+    	margin-top: 50px;
+    }
+    
+    .hero-ad-container img {
+    	width: 1300px;
+        height: auto;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    
+    #header nav ul.menu li:hover .dropdown-menu {
+    	display: block;
+    }
+    
+    #header ul.dropdown-menu {
+    	position: absolute;
+        top: 100%;
+        left: -20px;
+        z-index: 1000;
+        display: none;
+        padding: 0.5rem 0.5rem;
+        text-align: left;
+        list-style: none;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: 0.25rem;
+        background-color: #fff;
+        border-radius: 6px;
+        -webkit-box-shadow: 0 0 0 1px rgb(68 68 68 / 11%);
+        box-shadow: 0 0 0 1px rgb(68 68 68 / 11%);
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        -webkit-transform-origin: 50% 0;
+        -ms-transform-origin: 50% 0;
+        transform-origin: 50% 0;
+        -webkit-transform: scale(0.75) translateY(-22.5px);
+        -ms-transform: scale(0.75) translateY(-22.5px);
+        transform: scale(0.75) translateY(-22.5px);
+        -webkit-transition: all 0.2s cubic-bezier(0.5,0,0,1.25),opacity 0.15s ease-out;
+        -o-transition: all 0.2s cubic-bezier(0.5,0,0,1.25),opacity 0.15s ease-out;
+        transition: all 0.2s cubic-bezier(0.5,0,0,1.25),opacity 0.15s ease-out;
+        max-height: 50vh;
+        overflow: auto;
+        min-width: 245px;
+    }
+    
+    #header ul.dropdown-menu a {
+    	color: #494949!important;
+    }
+    
+    #header ul.dropdown-menu li {
+    	padding: 15px 5px!important;
+        width: 100%;
+        display: block;
+    }
+    
+    #header ul.dropdown-menu li:hover a {
+    	color: #FFD012!important;
+    }
+    
+    [class^=fa-chevron-] {
+    	transition: all .2s ease 0s;
+    }
+    
+    #menu-header .fa-chevron-up {
+    	display: none;
+    }
+    
+    #header nav ul.menu li:hover .fa-chevron-up {
+    	display: inline-block;
+        color: white;
+        transition: all .2s ease 0s;
+    }
+    
+    #header nav ul.menu li:hover .fa-chevron-down {
+    	display: none;
+        transition: all .2s ease 0s;
+    }
+    
+    .pop {
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        background-color: #000000AA;
+        text-align: center;
+        z-index: 100;
+        display: none;
+    }
+    .pop-container {
+        height: 80%;
+        margin-top: 7%;
+    }
+    .pop-links {
+        text-decoration: none;
+    }
+    .pop-image {
+        max-height: 70%;
+    }
+    .pop-text {
+        width: 60%;
+        color: white;
+        margin-top: 20px;
+        line-height: 30px;
+    }
+    
+    #home .title {
+    	margin-bottom: 15px;
+    }
+    
+    #home p {
+    	color: gray;
+        margin-bottom: 25px;
+    }
+    
+    #home .pagination {
+        border-top: none;
+        border-bottom: 1px solid #e5e5e5;
+        margin-bottom: 30px;
+    }
+    
+    
+    .hero-weekly {
+    	padding-bottom: 25px;
+    }
+    .hero-weekly .title {
+    	margin-bottom: 30px;
+    }
+    
+    .hero-weekly ul {
+        list-style: disc;
+    	padding: 10px 30px;
+    }
+    
+    @media screen and (max-width: 1024px) {
+        .hero-content {
+        	height: 480px;
+        }
+    }
+    
+    @media screen and (max-width: 768px) {
+        
+        #header nav {
+        	width: 87%;
+            left: 10px;
+        }
+        .hero-content {
+        	height: 360px;
+        }
+        .sub-title {
+        	margin-left: 0px;
+        }
+        
+        #header ul.dropdown-menu {
+        	display: block;
+            position: inherit;
+            top: 100%;
+            left: 0px;
+            z-index: 1000;
+            border: none;
+            box-shadow: unset;
+            -webkit-box-shadow: unset;
+            transform-origin: unset;
+            -webkit-transform: unset;
+        }
+        
+        #header ul.dropdown-menu>li {
+        	padding: 5px 5px!important;
+            width: auto;
+        }
+    }
+    @media screen and (max-width: 767px) {
+        .hero-content {
+        	height: 220px;
+        }
+        .title.ularge {
+    		font-size: 24px;
+            padding-top: 30px;
+        }
+        .sub-title {
+            font-size: 17.5px;
+            margin-left: 0px;
+        }
+        .hero-content div {
+        	flex-direction: column;
+        }
+        
+        .tag-filters {
+    		margin-left: 0px;
+    	}
+        
+        .btn-follow-learn {
+        	height: 28px;
+            line-height: 28px;
+            padding: 0 15px;
+            font-size: 14px;
+        }
+        
+        .follow-list {
+        	margin-right: 15px;
+        }
+        
+        .btn-follow {
+        	padding: 10px 15px;
+            margin-left: 10px;
+            font-size: 12px;
+        }
+        
+        div.articles article {
+            padding-bottom: 5px;
+        }
+        
+        div.articles article a.thumb {
+            min-height: 180px;
+        }
+        
+        .ad-post-list-container {
+        	margin-left: 0px;
+            margin-right: 0px;
+        }
+        
+        div.articles {
+        	padding-left: 0px;
+        	padding-right: 0px;
+        }
+        
+        .share-buttons-container {
+        	flex-direction: column;
+        }
+        
+        .sharethis-inline-share-buttons {
+        	margin-top: 20px;
+        }
+        
+        .swiper-pagination-bullet {
+        	width: 8px;
+            height: 8px;
+        }
+        
+        .swiper-slide .large {
+            display: none;
+        }
+
+        .swiper-slide .small {
+            display: block;
+        }
+    }
+    
+    @media screen and (max-width: 414px) {
+        .hero-content {
+        	height: 240px;
+        }
+    }
+    
+    @media screen and (max-width: 375px) {
+        .hero-content {
+        	height: 220px;
+        }
+    }
+    @media screen and (max-width: 320px) {
+        .hero-content {
+        	height: 190px;
+        }
+    }
+    
+    #taboola-livere {
+    	display: none;
+    }
+</style>
+<style type="text/css">#st-1 {
+  font-family: "Helvetica Neue", Verdana, Helvetica, Arial, sans-serif;;
+  direction: ltr;
+  display: block;
+  opacity: 1;
+  text-align: center;
+  z-index: 94034;
+}
+#st-1.st-animated {
+  -moz-transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in; -ms-transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in; -o-transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in; -webkit-transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in; transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in;
+}
+#st-1.st-hidden {
+  opacity: 0;
+}
+#st-1.st-hide {
+  display: none;
+}
+#st-1 .st-btn {
+  -moz-box-sizing: border-box;
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+  -moz-transition: opacity 0.2s ease-in, top 0.2s ease-in; -ms-transition: opacity 0.2s ease-in, top 0.2s ease-in; -o-transition: opacity 0.2s ease-in, top 0.2s ease-in; -webkit-transition: opacity 0.2s ease-in, top 0.2s ease-in; transition: opacity 0.2s ease-in, top 0.2s ease-in;
+  -moz-border-radius: 20px;
+-webkit-border-radius: 20px;
+border-radius: 20px;
+  border: solid 1px #ccc;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  height: 40px;
+  line-height: 40px;
+  margin-right: 8px;
+  padding: 0 10px;
+  position: relative;
+  text-align: center;
+  top: 0;
+  vertical-align: top;
+  white-space: nowrap;
+}
+#st-1 .st-btn:last-child {
+  margin-right: 0;
+}
+#st-1 .st-btn > svg {
+  height: 20px;
+  width: 20px;
+  position: relative;
+  top: 10px;
+  vertical-align: top;
+}
+#st-1 .st-btn > img {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  position: relative;
+  top: 10px;
+  vertical-align: top;
+}
+#st-1 .st-btn > span {
+  -moz-transition: all 0.2s ease-in; -ms-transition: all 0.2s ease-in; -o-transition: all 0.2s ease-in; -webkit-transition: all 0.2s ease-in; transition: all 0.2s ease-in;
+  color: #fff;
+  display: inline-block;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  min-width: 67px;
+  opacity: 1;
+  padding: 0 6px;
+  position: relative;
+  vertical-align: top;
+}
+#st-1.st-has-labels .st-btn {
+  min-width: 135px;
+}
+#st-1.st-has-labels .st-btn.st-remove-label {
+  min-width: 50px;
+}
+#st-1.st-has-labels .st-btn.st-remove-label > span {
+  display: none;
+}
+#st-1.st-has-labels .st-btn.st-hide-label > span {
+  display: none;
+}
+#st-1 .st-total {
+  color: #555;
+  display: inline-block;
+  font-weight: 500;
+  line-height: 15px;
+  margin-right: 0;
+  max-width: 80px;
+  padding: 4px 8px;
+  text-align: center;
+}
+#st-1 .st-total.st-hidden {
+  display: none;
+}
+#st-1 .st-total > span {
+  font-size: 20px;
+  line-height: 22px;
+  display: block;
+  padding: 0;
+}
+#st-1 .st-total > span.st-shares {
+  font-size: 12px;
+  line-height: 12px;
+}
+#st-1.st-justified {
+  display: flex;
+  text-align: center;
+}
+#st-1.st-justified .st-btn {
+  -moz-flex: 1;
+-ms-flex: 1;
+-webkit-flex: 1;
+flex: 1;
+}#st-1 .st-btn:hover {
+  opacity: .8;
+  top: -4px;
+}#st-1 .st-btn[data-network='weibo'] {
+  background-color: #fff
+}
+#st-1 .st-btn[data-network='weibo'] img {
+  filter: 
+}
+#st-1 .st-btn[data-network='weibo'] > span {
+  color: #ff9933
+}
+#st-1 .st-btn[data-network='wechat'] {
+  background-color: #fff
+}
+#st-1 .st-btn[data-network='wechat'] img {
+  filter: 
+}
+#st-1 .st-btn[data-network='wechat'] > span {
+  color: #4EC034
+}
+#st-1 .st-btn[data-network='twitter'] {
+  background-color: #fff
+}
+#st-1 .st-btn[data-network='twitter'] img {
+  filter: 
+}
+#st-1 .st-btn[data-network='twitter'] > span {
+  color: #55acee
+}
+#st-1 .st-btn[data-network='email'] {
+  background-color: #fff
+}
+#st-1 .st-btn[data-network='email'] img {
+  filter: 
+}
+#st-1 .st-btn[data-network='email'] > span {
+  color: #7d7d7d
+}#st-1 .st-btn[data-network='snapchat'] > span {
+  color: #333};
+}</style><style type="text/css">#st-2 {
+  font-family: "Helvetica Neue", Verdana, Helvetica, Arial, sans-serif;;
+  direction: ltr;
+  display: block;
+  opacity: 1;
+  text-align: center;
+  z-index: 94034;
+}
+#st-2.st-animated {
+  -moz-transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in; -ms-transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in; -o-transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in; -webkit-transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in; transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in;
+}
+#st-2.st-hidden {
+  opacity: 0;
+}
+#st-2.st-hide {
+  display: none;
+}
+#st-2 .st-btn {
+  -moz-box-sizing: border-box;
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+  -moz-transition: opacity 0.2s ease-in, top 0.2s ease-in; -ms-transition: opacity 0.2s ease-in, top 0.2s ease-in; -o-transition: opacity 0.2s ease-in, top 0.2s ease-in; -webkit-transition: opacity 0.2s ease-in, top 0.2s ease-in; transition: opacity 0.2s ease-in, top 0.2s ease-in;
+  -moz-border-radius: 20px;
+-webkit-border-radius: 20px;
+border-radius: 20px;
+  border: solid 1px #ccc;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  height: 40px;
+  line-height: 40px;
+  margin-right: 8px;
+  padding: 0 10px;
+  position: relative;
+  text-align: center;
+  top: 0;
+  vertical-align: top;
+  white-space: nowrap;
+}
+#st-2 .st-btn:last-child {
+  margin-right: 0;
+}
+#st-2 .st-btn > svg {
+  height: 20px;
+  width: 20px;
+  position: relative;
+  top: 10px;
+  vertical-align: top;
+}
+#st-2 .st-btn > img {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  position: relative;
+  top: 10px;
+  vertical-align: top;
+}
+#st-2 .st-btn > span {
+  -moz-transition: all 0.2s ease-in; -ms-transition: all 0.2s ease-in; -o-transition: all 0.2s ease-in; -webkit-transition: all 0.2s ease-in; transition: all 0.2s ease-in;
+  color: #fff;
+  display: inline-block;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  min-width: 67px;
+  opacity: 1;
+  padding: 0 6px;
+  position: relative;
+  vertical-align: top;
+}
+#st-2.st-has-labels .st-btn {
+  min-width: 135px;
+}
+#st-2.st-has-labels .st-btn.st-remove-label {
+  min-width: 50px;
+}
+#st-2.st-has-labels .st-btn.st-remove-label > span {
+  display: none;
+}
+#st-2.st-has-labels .st-btn.st-hide-label > span {
+  display: none;
+}
+#st-2 .st-total {
+  color: #555;
+  display: inline-block;
+  font-weight: 500;
+  line-height: 15px;
+  margin-right: 0;
+  max-width: 80px;
+  padding: 4px 8px;
+  text-align: center;
+}
+#st-2 .st-total.st-hidden {
+  display: none;
+}
+#st-2 .st-total > span {
+  font-size: 20px;
+  line-height: 22px;
+  display: block;
+  padding: 0;
+}
+#st-2 .st-total > span.st-shares {
+  font-size: 12px;
+  line-height: 12px;
+}
+#st-2.st-justified {
+  display: flex;
+  text-align: center;
+}
+#st-2.st-justified .st-btn {
+  -moz-flex: 1;
+-ms-flex: 1;
+-webkit-flex: 1;
+flex: 1;
+}#st-2 .st-btn:hover {
+  opacity: .8;
+  top: -4px;
+}#st-2 .st-btn[data-network='weibo'] {
+  background-color: #fff
+}
+#st-2 .st-btn[data-network='weibo'] img {
+  filter: 
+}
+#st-2 .st-btn[data-network='weibo'] > span {
+  color: #ff9933
+}
+#st-2 .st-btn[data-network='wechat'] {
+  background-color: #fff
+}
+#st-2 .st-btn[data-network='wechat'] img {
+  filter: 
+}
+#st-2 .st-btn[data-network='wechat'] > span {
+  color: #4EC034
+}
+#st-2 .st-btn[data-network='twitter'] {
+  background-color: #fff
+}
+#st-2 .st-btn[data-network='twitter'] img {
+  filter: 
+}
+#st-2 .st-btn[data-network='twitter'] > span {
+  color: #55acee
+}
+#st-2 .st-btn[data-network='email'] {
+  background-color: #fff
+}
+#st-2 .st-btn[data-network='email'] img {
+  filter: 
+}
+#st-2 .st-btn[data-network='email'] > span {
+  color: #7d7d7d
+}#st-2 .st-btn[data-network='snapchat'] > span {
+  color: #333};
+}</style><style>
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZVJvb3QiOiIifQ== */</style><style>
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZVJvb3QiOiIifQ== */</style><script>//remove baidu search ad
+var _countAA = 0
+function doBBBd(){}
+doBBBd()
+document.addEventListener('keyup', function(){_countAA-=10;doBBBd()}, false)
+document.addEventListener('click', function(){_countAA-=10;doBBBd()}, false)
+
+</script><style>hcfy-result.__hcfy__result__loaded__.__hcfy__result__both__{border: 1px dotted}</style></head><body class=" post-template tag-kotlin tag-kotlin-generics tag-kotlin-advanced tag-kaixue  pace-done"><div class="pace  pace-inactive"><div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+  <div class="pace-progress-inner"></div>
+</div>
+<div class="pace-activity"></div></div><div class="pop hidden-xs">
+        <div class="pop-container">
+            <a class="pop-links" href="https://rengwuxian.com/kotlin-generics/#" target="_blank">
+                <img class="pop-image" src="https://rengwuxian.com/kotlin-generics/">
+            </a>
+            <center><h4 class="pop-text"></h4></center>
+            <span class="pop-btn-close"><svg t="1573004385562" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2029" width="32" height="32"><path d="M679.453315 383.633401c-0.409322-10.153244-4.200672-20.195971-11.954263-27.948539-7.751544-7.749498-17.767666-11.517311-27.947516-11.954263-11.301394-0.436952-22.709211 3.330862-31.335682 11.954263l-96.099708 96.127338-96.100732-96.127338c-8.625448-8.623401-20.034289-12.391215-31.333636-11.954263-10.152221 0.436952-20.195971 4.204765-27.948539 11.954263-7.752568 7.751544-11.544941 17.795295-11.954263 27.948539-0.464581 11.299347 3.327792 22.708188 11.954263 31.333636l96.099708 96.127338-96.099708 96.074126c-8.626471 8.625448-12.418844 20.034289-11.954263 31.333636 0.409322 10.152221 4.201695 20.195971 11.954263 27.948539 7.751544 7.751544 17.795295 11.57257 27.948539 11.95631 11.299347 0.490164 22.708188-3.330862 31.333636-11.95631l96.100732-96.073102 96.099708 96.073102c8.626471 8.625448 20.034289 12.44545 31.335682 11.95631 10.178827-0.38374 20.194948-4.203742 27.947516-11.95631 7.752568-7.751544 11.543917-17.796318 11.954263-27.948539 0.463558-11.299347-3.327792-22.708188-11.954263-31.333636l-96.099708-96.074126 96.099708-96.127338C676.125523 406.341588 679.916872 394.932748 679.453315 383.633401zM512.116145 63.916728c-246.953462 0-447.178669 200.227254-447.178669 447.178669 0 246.953462 200.225207 447.177646 447.178669 447.177646 246.953462 0 447.178669-200.224184 447.178669-447.177646C959.294814 264.143982 759.069607 63.916728 512.116145 63.916728zM512.116145 874.427426c-200.333678 0-363.332029-162.996305-363.332029-363.333052 0-200.333678 162.999374-363.333052 363.332029-363.333052s363.333052 162.999374 363.333052 363.333052C875.449197 711.431122 712.449823 874.427426 512.116145 874.427426z" p-id="2030" fill="#bfbfbf"></path></svg></span>
+        </div>
+</div><style>:root {--ghost-accent-color: #FF1A75;}</style>
+
+
+
+
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: none;">
+
+	<symbol id="clock" viewBox="0 0 512 512">
+		<path d="M347.216,301.211l-71.387-53.54V138.609c0-10.966-8.864-19.83-19.83-19.83c-10.966,0-19.83,8.864-19.83,19.83v118.978    c0,6.246,2.935,12.136,7.932,15.864l79.318,59.489c3.569,2.677,7.734,3.966,11.878,3.966c6.048,0,11.997-2.717,15.884-7.952    C357.766,320.208,355.981,307.775,347.216,301.211z"></path>
+		<path d="M256,0C114.833,0,0,114.833,0,256s114.833,256,256,256s256-114.833,256-256S397.167,0,256,0z M256,472.341    c-119.275,0-216.341-97.066-216.341-216.341S136.725,39.659,256,39.659c119.295,0,216.341,97.066,216.341,216.341    S375.275,472.341,256,472.341z"></path>
+	</symbol>
+
+    <symbol id="comments-old" viewBox="0 0 31 31">
+        <path d="M29.833,22.545c-0.034-0.028-0.075-0.044-0.112-0.068c-0.043-0.041-0.078-0.087-0.125-0.125l-2.187-1.774
+		c2.356-1.741,3.774-4.021,3.774-6.558c0-5.591-6.849-9.97-15.592-9.97C6.849,4.05,0,8.43,0,14.02c0,2.94,1.937,5.649,5.351,7.534
+		l-2.19,5.385l1.331,0.133c0.414,0.043,0.812,0.062,1.197,0.062c3.585,0,5.955-1.692,7.384-3.272
+		c0.83,0.086,1.675,0.129,2.519,0.129c2.286,0,4.438-0.306,6.375-0.849l4.215,3.419c0.049,0.04,0.104,0.071,0.155,0.105
+		c0.028,0.029,0.05,0.062,0.082,0.087c0.245,0.198,0.562,0.272,0.896,0.241c0.041,0.004,0.082,0.011,0.125,0.011
+		c0.582,0,1.162-0.252,1.556-0.737l0.894-1.102c0.426-0.525,0.536-1.203,0.364-1.811C30.212,23.029,30.075,22.742,29.833,22.545z
+		 M15.595,21.99c-0.944,0-1.888-0.058-2.806-0.172l-0.548-0.069l-0.35,0.427c-1.528,1.866-3.488,2.857-5.831,2.951l1.845-4.536
+		l-0.848-0.407c-3.213-1.544-5.055-3.79-5.055-6.163c0-4.32,6.224-7.97,13.592-7.97c7.367,0,13.593,3.651,13.593,7.971
+		c0,1.976-1.312,3.806-3.431,5.216l-7.153-5.806l-1.185-0.961c-0.088-0.093-0.188-0.179-0.31-0.252l-0.06-0.048l-0.009,0.011
+		c-0.096-0.052-0.198-0.1-0.312-0.137l-5.011-1.632c-0.223-0.073-0.416-0.107-0.578-0.107c-0.598,0-0.758,0.47-0.326,1.221
+		l2.629,4.567c0.06,0.104,0.13,0.192,0.2,0.276l-0.007,0.009l0.034,0.028c0.111,0.125,0.233,0.22,0.362,0.293l1.61,1.308
+		l4.346,3.528C18.602,21.826,17.126,21.99,15.595,21.99z M15.701,16.275l0.28-0.345l6.191,5.024c-0.238,0.08-0.486,0.15-0.734,0.223
+		l-5.871-4.766C15.612,16.367,15.658,16.328,15.701,16.275z M15.343,14.276l-1.049,1.292l-2.312-4.017l4.407,1.436l-0.599,0.738
+		L15.343,14.276z M23.93,23.199l-0.603-0.489c0.233-0.083,0.46-0.173,0.685-0.263l0.318,0.259L23.93,23.199z M27.436,23.176
+		l-0.894,1.103c-0.229,0.283-0.383,0.596-0.472,0.904l-1.484-1.205l2.154-2.654l1.484,1.205
+		C27.939,22.678,27.666,22.892,27.436,23.176z"></path>
+    </symbol>
+
+    <symbol id="copy" viewBox="0 0 488.3 488.3">
+        <g>
+            <path d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124
+                C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124
+                c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z"></path>
+            <path d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227
+                c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6
+                V38.6C439.65,17.3,422.35,0,401.05,0z"></path>
+        </g>
+    </symbol>
+
+    <symbol id="download" viewBox="0 -15 512 511">
+    <path d="m400.5625 144.59375h-.945312c-9.101563-79.101562-80.605469-135.847656-159.707032-126.742188-66.566406 7.660157-119.085937 60.175782-126.746094 126.742188h-.941406c-53.085937 0-96.117187 43.03125-96.117187 96.117188 0 53.082031 43.03125 96.113281 96.117187 96.113281h288.339844c53.085938 0 96.117188-43.03125 96.117188-96.113281 0-53.085938-43.035157-96.117188-96.117188-96.117188zm0 0" fill="#bddbff"></path><g fill="#3d9ae2"><path d="m413.492188 129.410156c-17.292969-86.765625-101.648438-143.082031-188.414063-125.789062-63.460937 12.648437-113.082031 62.238281-125.769531 125.691406-61.519532 7.089844-105.648438 62.707031-98.5625 124.230469 6.523437 56.621093 54.480468 99.339843 111.476562 99.300781h80.09375c8.847656 0 16.019532-7.171875 16.019532-16.019531 0-8.847657-7.171876-16.019531-16.019532-16.019531h-80.09375c-44.238281-.261719-79.886718-36.332032-79.625-80.566407.261719-44.238281 36.332032-79.886719 80.566406-79.625 8.167969 0 15.027344-6.140625 15.925782-14.257812 8.132812-70.304688 71.722656-120.707031 142.03125-112.574219 59.109375 6.835938 105.738281 53.464844 112.574218 112.574219 1.34375 8.261719 8.5 14.3125 16.867188 14.257812 44.238281 0 80.097656 35.859375 80.097656 80.097657 0 44.234374-35.859375 80.09375-80.097656 80.09375h-80.09375c-8.847656 0-16.019531 7.171874-16.019531 16.019531 0 8.847656 7.171875 16.019531 16.019531 16.019531h80.09375c61.929688-.386719 111.820312-50.902344 111.433594-112.828125-.347656-56.394531-42.527344-103.753906-98.503906-110.605469zm0 0"></path><path d="m313.019531 385.679688-40.609375 40.625v-201.613282c0-8.847656-7.171875-16.019531-16.019531-16.019531-8.84375 0-16.015625 7.171875-16.015625 16.019531v201.613282l-40.609375-40.625c-6.144531-6.363282-16.289063-6.539063-22.652344-.390626-6.363281 6.144532-6.539062 16.285157-.394531 22.648438.128906.132812.261719.265625.394531.394531l67.9375 67.953125c1.480469 1.480469 3.238281 2.65625 5.175781 3.460938 3.941407 1.664062 8.390626 1.664062 12.332032 0 1.9375-.804688 3.695312-1.980469 5.175781-3.460938l67.9375-67.953125c6.363281-6.144531 6.539063-16.285156.394531-22.652343-6.148437-6.363282-16.289062-6.539063-22.652344-.390626-.132812.128907-.265624.257813-.394531.390626zm0 0" fill="#3e3d42"></path></g>
+
+    </symbol>
+
+    <symbol id="comments-2" viewBox="1 -31 511.99999 511">
+    <path d="m464 16.5h-416c-17.671875 0-32 14.328125-32 32v256c0 17.671875 14.328125 32 32 32h80v96l96-96h240c17.675781 0 32-14.328125 32-32v-256c0-17.671875-14.328125-32-32-32zm0 0" fill="#ffe477"></path><path d="m128 448.5c-8.835938 0-16-7.164062-16-16v-80h-64c-26.511719 0-48-21.492188-48-48v-256c0-26.511719 21.488281-48 48-48h416c26.511719 0 48 21.488281 48 48v256c0 26.507812-21.488281 48-48 48h-233.375l-91.3125 91.3125c-3 3-7.070312 4.6875-11.3125 4.6875zm-80-416c-8.835938 0-16 7.164062-16 16v256c0 8.835938 7.164062 16 16 16h80c8.835938 0 16 7.164062 16 16v57.375l68.6875-68.6875c3-3 7.070312-4.6875 11.3125-4.6875h240c8.835938 0 16-7.164062 16-16v-256c0-8.835938-7.164062-16-16-16zm0 0" fill="#3e3d42"></path>
+
+    </symbol>
+
+    <symbol id="calendar" viewBox="1 1 511.99999 511.99999">
+    <g fill="#bddbff"><path d="m464 64h-64v32c0 8.835938-7.164062 16-16 16h-32c-8.835938 0-16-7.164062-16-16v-32h-160v32c0 8.835938-7.164062 16-16 16h-32c-8.835938 0-16-7.164062-16-16v-32h-64c-17.652344.054688-31.949219 14.347656-32 32v80h480v-80c-.054688-17.652344-14.347656-31.945312-32-32zm0 0"></path><path d="m160 272c0 17.671875-14.328125 32-32 32s-32-14.328125-32-32 14.328125-32 32-32 32 14.328125 32 32zm0 0"></path><path d="m416 272c0 17.671875-14.328125 32-32 32s-32-14.328125-32-32 14.328125-32 32-32 32 14.328125 32 32zm0 0"></path><path d="m288 272c0 17.671875-14.328125 32-32 32s-32-14.328125-32-32 14.328125-32 32-32 32 14.328125 32 32zm0 0"></path><path d="m160 400c0 17.671875-14.328125 32-32 32s-32-14.328125-32-32 14.328125-32 32-32 32 14.328125 32 32zm0 0"></path><path d="m416 400c0 17.671875-14.328125 32-32 32s-32-14.328125-32-32 14.328125-32 32-32 32 14.328125 32 32zm0 0"></path><path d="m288 400c0 17.671875-14.328125 32-32 32s-32-14.328125-32-32 14.328125-32 32-32 32 14.328125 32 32zm0 0"></path></g><path d="m464 48h-48v-16c0-17.671875-14.328125-32-32-32h-32c-17.671875 0-32 14.328125-32 32v16h-128v-16c0-17.671875-14.328125-32-32-32h-32c-17.671875 0-32 14.328125-32 32v16h-48c-26.507812 0-48 21.488281-48 48v368c0 26.507812 21.492188 48 48 48h416c26.507812 0 48-21.492188 48-48v-368c0-26.511719-21.492188-48-48-48zm-112-16h32v64h-32zm-224 0h32v64h-32zm-80 48h48v16c0 17.671875 14.328125 32 32 32h32c17.671875 0 32-14.324219 32-32v-16h128v16c0 17.671875 14.328125 32 32 32h32c17.671875 0 32-14.324219 32-32v-16h48c8.835938 0 16 7.164062 16 16v64h-448v-64c0-8.835938 7.164062-16 16-16zm416 400h-416c-8.835938 0-16-7.164062-16-16v-272h448v272c0 8.835938-7.164062 16-16 16zm0 0" fill="#3d9ae2"></path><path d="m128 224c-26.507812 0-48 21.492188-48 48s21.492188 48 48 48 48-21.492188 48-48-21.492188-48-48-48zm0 64c-8.835938 0-16-7.164062-16-16s7.164062-16 16-16 16 7.164062 16 16-7.164062 16-16 16zm0 0" fill="#3d9ae2"></path><path d="m384 224c-26.507812 0-48 21.492188-48 48s21.492188 48 48 48 48-21.492188 48-48-21.492188-48-48-48zm0 64c-8.835938 0-16-7.164062-16-16s7.164062-16 16-16 16 7.164062 16 16-7.164062 16-16 16zm0 0" fill="#3d9ae2"></path><path d="m256 224c-26.507812 0-48 21.492188-48 48s21.492188 48 48 48 48-21.492188 48-48-21.492188-48-48-48zm0 64c-8.835938 0-16-7.164062-16-16s7.164062-16 16-16 16 7.164062 16 16-7.164062 16-16 16zm0 0" fill="#3d9ae2"></path><path d="m128 352c-26.507812 0-48 21.492188-48 48s21.492188 48 48 48 48-21.492188 48-48-21.492188-48-48-48zm0 64c-8.835938 0-16-7.164062-16-16s7.164062-16 16-16 16 7.164062 16 16-7.164062 16-16 16zm0 0" fill="#3d9ae2"></path><path d="m384 352c-26.507812 0-48 21.492188-48 48s21.492188 48 48 48 48-21.492188 48-48-21.492188-48-48-48zm0 64c-8.835938 0-16-7.164062-16-16s7.164062-16 16-16 16 7.164062 16 16-7.164062 16-16 16zm0 0" fill="#3d9ae2"></path><path d="m256 352c-26.507812 0-48 21.492188-48 48s21.492188 48 48 48 48-21.492188 48-48-21.492188-48-48-48zm0 64c-8.835938 0-16-7.164062-16-16s7.164062-16 16-16 16 7.164062 16 16-7.164062 16-16 16zm0 0" fill="#3d9ae2"></path>
+
+    </symbol>
+
+    <symbol id="clock-2" viewBox="1 1 511.99998 511.99998">
+        <path d="m256 0c-141.386719 0-256 114.613281-256 256s114.613281 256 256 256 256-114.613281 256-256c-.167969-141.316406-114.683594-255.832031-256-256zm16 479.183594v-31.183594c0-8.835938-7.164062-16-16-16s-16 7.164062-16 16v31.183594c-110.917969-8.054688-199.128906-96.265625-207.183594-207.183594h31.183594c8.835938 0 16-7.164062 16-16s-7.164062-16-16-16h-31.183594c8.054688-110.917969 96.265625-199.128906 207.183594-207.183594v31.183594c0 8.835938 7.164062 16 16 16s16-7.164062 16-16v-31.183594c110.917969 8.054688 199.128906 96.265625 207.183594 207.183594h-31.183594c-8.835938 0-16 7.164062-16 16s7.164062 16 16 16h31.183594c-8.054688 110.917969-96.265625 199.128906-207.183594 207.183594zm0 0"></path><path d="m352 240h-80v-96c0-8.835938-7.164062-16-16-16s-16 7.164062-16 16v112c0 8.835938 7.164062 16 16 16h96c8.835938 0 16-7.164062 16-16s-7.164062-16-16-16zm0 0"></path>
+
+    </symbol>
+
+    <symbol id="envelope" viewBox="1 -95 511.99998 511">
+        <path d="m16 32.5v256c0 8.835938 7.164062 16 16 16h448c8.835938 0 16-7.164062 16-16v-256l-240 112zm0 0" fill="#333"></path><path d="m480 16.5h-448c-8.835938 0-16 7.164062-16 16l240 112 240-112c0-8.835938-7.164062-16-16-16zm0 0" fill="#333"></path><path d="m512 32.117188c0-.207032 0-.386719 0-.59375-.527344-17.289063-14.699219-31.03125-32-31.023438h-448c-17.261719.042969-31.378906 13.769531-31.9023438 31.023438v.59375c0 .207031-.0976562.253906-.0976562.382812v256c0 17.671875 14.328125 32 32 32h448c17.671875 0 32-14.328125 32-32v-256c0-.128906 0-.257812 0-.382812zm-53.839844.382812-202.160156 94.398438-202.160156-94.398438zm-426.160156 256v-230.878906l217.230469 101.375c4.292969 2.003906 9.246093 2.003906 13.539062 0l217.230469-101.375v230.878906zm0 0" fill="#fff"></path>
+
+    </symbol>
+
+
+
+
+
+</svg>
+
+
+	<!-- start: #wrapper -->
+	<div id="wrapper">
+
+		<!-- start: #header -->
+<header id="header">
+
+	<div class="menu-mobile">
+		<i class="fa fa-bars"></i>
+	</div>
+
+	<!-- start: .menu-wrapper -->
+	<div id="undefined-sticky-wrapper" class="sticky-wrapper" style="height: 129px;"><div class="menu-wrapper">
+	
+		<div class="grid-container">
+		
+				<div class="logo">
+					<a href="https://rengwuxian.com/" class="title white no-margin">扔物线</a>
+				</div>
+
+            <div class="share-buttons flex justify-center items-center hide-on-tablet hide-on-mobile">
+				<a href="https://space.bilibili.com/27559447" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40" viewBox="0 0 48 48" class="icon block"><path fill="#ffffff" d="M36.5,12h-7.086l3.793-3.793c0.391-0.391,0.391-1.023,0-1.414s-1.023-0.391-1.414,0L26.586,12 h-5.172l-5.207-5.207c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414L18.586,12H12.5C9.467,12,7,14.467,7,17.5v15 c0,3.033,2.467,5.5,5.5,5.5h2c0,0.829,0.671,1.5,1.5,1.5s1.5-0.671,1.5-1.5h14c0,0.829,0.671,1.5,1.5,1.5s1.5-0.671,1.5-1.5h2 c3.033,0,5.5-2.467,5.5-5.5v-15C42,14.467,39.533,12,36.5,12z M39,32.5c0,1.378-1.122,2.5-2.5,2.5h-24c-1.378,0-2.5-1.122-2.5-2.5 v-15c0-1.378,1.122-2.5,2.5-2.5h24c1.378,0,2.5,1.122,2.5,2.5V32.5z"></path><rect width="2.75" height="7.075" x="30.625" y="18.463" fill="#ffffff" transform="rotate(-71.567 32.001 22)"></rect><rect width="7.075" height="2.75" x="14.463" y="20.625" fill="#ffffff" transform="rotate(-18.432 17.998 21.997)"></rect><path fill="#ffffff" d="M28.033,27.526c-0.189,0.593-0.644,0.896-1.326,0.896c-0.076-0.013-0.139-0.013-0.24-0.025 c-0.013,0-0.05-0.013-0.063,0c-0.341-0.05-0.745-0.177-1.061-0.467c-0.366-0.265-0.808-0.745-0.947-1.477 c0,0-0.29,1.174-0.896,1.49c-0.076,0.05-0.164,0.114-0.253,0.164l-0.038,0.025c-0.303,0.164-0.682,0.265-1.086,0.278 c-0.568-0.051-0.947-0.328-1.136-0.821l-0.063-0.164l-1.427,0.656l0.05,0.139c0.467,1.124,1.465,1.768,2.74,1.768 c0.922,0,1.667-0.303,2.209-0.909c0.556,0.606,1.288,0.909,2.209,0.909c1.856,0,2.55-1.288,2.765-1.843l0.051-0.126l-1.427-0.657 L28.033,27.526z"></path></svg></a>
+                <a href="https://juejin.cn/user/2524134386185736" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" width="34px" viewBox="0 0 90 70" version="1.1" class="icon block">
+						<g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+							<g id="about" sketch:type="MSArtboardGroup" transform="translate(-621.000000, -108.000000)">
+								<g id="Group-3" sketch:type="MSLayerGroup" transform="translate(621.000000, 108.000000)">
+									<path d="M50.1219251,9.58631264 L43.0259809,4 L35.6121953,9.83662979 L35.2279087,10.1457646 L43.0259809,16.3537666 L50.8480281,10.1457646 L50.1219251,9.58631264 Z M77.011711,31.2503723 L43.0054308,58.0226799 L9.01970069,31.2667865 L4,35.2923786 L43.0054308,66 L82.0320967,35.2759644 L77.011711,31.2503723 Z M43.0054308,33.4225232 L24.5000795,18.8542023 L19.4796938,22.8797944 L43.0054308,41.4005273 L66.5510328,22.8633801 L61.5306472,18.837788 L43.0054308,33.4225232 Z" id="Fill-1-Copy" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
+								</g>
+							</g>
+						</g>
+					</svg>			
+				</a>
+                <a href="https://www.youtube.com/channel/UCTlQrnCIPDNF9xHvX45g7ow" target="_blank"><svg t="1618283231717" class="icon block" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4062" width="32" height="32"><path d="M628.004571 710.838857v120.576c0 25.709714-7.424 38.290286-22.272 38.290286-8.557714 0-17.152-3.986286-25.709714-12.580572v-171.995428c8.557714-8.557714 17.152-12.580571 25.709714-12.580572 14.848 0 22.272 13.129143 22.272 38.290286z m193.133715 0.585143v26.294857h-51.419429v-26.294857c0-25.709714 8.557714-38.838857 25.709714-38.838857s25.709714 13.129143 25.709715 38.838857zM269.129143 586.861714h61.147428v-53.723428H151.990857v53.723428h60.013714v325.156572H269.165714v-325.156572z m164.571428 325.156572h50.870858v-282.294857H433.700571v215.990857c-11.446857 16.018286-22.272 23.990857-32.585142 23.990857-6.838857 0-10.861714-3.986286-11.995429-11.995429-0.585143-1.718857-0.585143-8.009143-0.585143-20.004571v-208.018286H337.664v223.414857c0 20.004571 1.718857 33.133714 4.571429 41.728 4.571429 14.299429 16.566857 21.138286 33.133714 21.138286 18.285714 0 37.705143-11.446857 58.294857-34.852571v30.866285z m245.138286-84.589715v-112.566857c0-26.294857-1.133714-45.129143-5.156571-56.576-6.290286-21.138286-20.553143-32-40.557715-32-18.870857 0-36.571429 10.276571-53.138285 30.866286v-124.013714h-50.870857v378.843428h50.870857v-27.428571c17.152 21.138286 34.852571 31.414857 53.138285 31.414857 20.004571 0 34.304-10.861714 40.557715-31.414857 3.986286-11.995429 5.156571-30.866286 5.156571-57.161143z m193.170286-5.705142v-7.424h-52.004572c0 20.553143-0.585143 32-1.133714 34.852571-2.852571 13.714286-10.276571 20.553143-22.857143 20.553143-17.700571 0-26.294857-13.129143-26.294857-39.424v-49.700572h102.290286v-58.843428c0-30.281143-5.156571-52.004571-15.433143-66.304-14.848-19.419429-34.852571-29.147429-60.562286-29.147429-26.294857 0-46.299429 9.728-61.147428 29.147429-10.861714 14.299429-16.018286 35.986286-16.018286 66.304v98.852571c0 30.281143 5.705143 52.553143 16.566857 66.304 14.848 19.419429 34.852571 29.147429 61.696 29.147429s48.018286-10.276571 61.696-30.281143a65.828571 65.828571 0 0 0 11.995429-30.866286c1.133714-5.156571 1.133714-16.566857 1.133714-33.133714z m-347.428572-521.728V180.004571c0-26.294857-7.424-39.424-24.576-39.424-16.566857 0-24.576 13.129143-24.576 39.424v119.990858c0 26.294857 8.009143 40.009143 24.576 40.009142 17.152 0 24.576-13.714286 24.576-40.009142z m410.843429 429.165714c0 65.718857-0.585143 136.009143-14.848 200.009143-10.861714 45.129143-47.433143 78.299429-91.428571 82.870857-105.142857 11.995429-211.419429 11.995429-317.147429 11.995428s-212.004571 0-317.147429-11.995428c-43.995429-4.571429-81.152-37.705143-91.428571-82.870857-14.848-64-14.848-134.290286-14.848-200.009143 0-66.304 0.585143-136.009143 14.848-200.009143 10.861714-45.129143 47.433143-78.299429 92.013714-83.419429 104.557714-11.446857 210.870857-11.446857 316.562286-11.446857s212.004571 0 317.147429 11.446857c43.995429 5.156571 81.152 38.290286 91.428571 83.419429 14.848 64 14.848 133.705143 14.848 200.009143zM365.129143 0h58.294857L354.267429 227.986286v154.843428H297.106286V227.986286c-5.156571-28.013714-16.566857-67.986286-34.852572-121.161143-12.580571-35.437714-25.161143-71.424-37.156571-106.861714h60.562286L326.217143 150.235429z m211.456 190.281143v99.986286c0 30.281143-5.156571 53.138286-16.018286 67.437714-14.299429 19.419429-34.304 29.147429-60.562286 29.147428-25.709714 0-45.714286-9.728-60.013714-29.147428-10.861714-14.848-16.018286-37.156571-16.018286-67.437714V190.281143c0-30.281143 5.156571-52.553143 16.018286-66.852572 14.299429-19.419429 34.304-29.147429 60.013714-29.147428 26.294857 0 46.299429 9.728 60.562286 29.147428 10.861714 14.299429 16.018286 36.571429 16.018286 66.852572zM768 97.718857v285.147429h-52.004571V351.451429c-20.553143 23.990857-40.009143 35.437714-58.843429 35.437714-16.566857 0-28.562286-6.838857-33.718857-21.138286-2.852571-8.557714-4.571429-22.272-4.571429-42.861714V97.755429h52.004572v209.700571c0 11.995429 0 18.870857 0.585143 20.004571 1.133714 8.009143 5.156571 12.580571 11.995428 12.580572 10.276571 0 21.138286-8.009143 32.585143-24.576V97.755429h52.004571z" fill="#ffffff" p-id="4063"></path></svg></a>
+				<a href="https://www.zhihu.com/people/rengwuxian" target="_blank"><svg t="1618282657306" class="icon block" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2025" width="32" height="32"><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64z m-90.7 477.8l-0.1 1.5c-1.5 20.4-6.3 43.9-12.9 67.6l24-18.1 71 80.7c9.2 33-3.3 63.1-3.3 63.1l-95.7-111.9v-0.1c-8.9 29-20.1 57.3-33.3 84.7-22.6 45.7-55.2 54.7-89.5 57.7-34.4 3-23.3-5.3-23.3-5.3 68-55.5 78-87.8 96.8-123.1 11.9-22.3 20.4-64.3 25.3-96.8H264.1s4.8-31.2 19.2-41.7h101.6c0.6-15.3-1.3-102.8-2-131.4h-49.4c-9.2 45-41 56.7-48.1 60.1-7 3.4-23.6 7.1-21.1 0 2.6-7.1 27-46.2 43.2-110.7 16.3-64.6 63.9-62 63.9-62-12.8 22.5-22.4 73.6-22.4 73.6h159.7c10.1 0 10.6 39 10.6 39h-90.8c-0.7 22.7-2.8 83.8-5 131.4H519s12.2 15.4 12.2 41.7H421.3z m346.5 167h-87.6l-69.5 46.6-16.4-46.6h-40.1V321.5h213.6v387.3zM408.2 611s0-0.1 0 0z m216 94.3l56.8-38.1h45.6-0.1V364.7H596.7v302.5h14.1z" p-id="2026" fill="#ffffff"></path></svg></a>
+			</div>
+			
+			<!-- start: .main-nav -->
+			<nav class="main-nav grid-container grid-parent" role="navigation">
+				
+				<ul id="menu-header" class="menu">
+   <li class="nav-shou-ye"><a href="https://rengwuxian.com/">首页</a></li>
+   <li class="nav-compose"><a href="https://rengwuxian.com/tag/compose/">Compose</a></li>
+   <li class="nav-kotlin"><a href="https://rengwuxian.com/tag/kotlin/">Kotlin</a></li>
+   <li class="nav-zi-ding-yi-view"><a href="https://rengwuxian.com/tag/custom-view/">自定义View</a></li>
+	<li id="gen-wo-xue" class="nav-gen-wo-xue">
+		<a href="https://edu.rengwuxian.com/">跟我学 <i class="fa fa-chevron-down"></i><i class="fa fa-chevron-up"></i></a>
+		<ul class="menu flex flex-col dropdown-menu">
+			<li class="nav-plus-course"><a href="https://edu.rengwuxian.com/detail/p_628461c9e4b0cedf38b34ece/6?product_id=p_628461c9e4b0cedf38b34ece">Android 高级进阶课程</a></li>
+			<li class="nav-compose"><a href="https://edu.rengwuxian.com/p/t_pc/goods_pc_detail/goods_detail/course_2Dpw6101YdL7bHFs5LFpYyzSUS6?app_id=appuoykwnbg2526">Jetpack Compose 课程</a></li>
+		</ul>
+	</li>
+ 
+   <li class="nav-xiao-dao-xiao-xi"><a href="https://quanzi.xiaoe-tech.com/c_6221b266902d9_bA5aFqcd1806/feed_list?app_id=appuoykwnbg2526">小道消息</a></li>
+   <li class="nav-jiao-wu-xi-tong"><a href="https://jw.hencoder.com/">教务系统</a></li>
+</ul>
+
+			</nav>
+			<!-- end: .main-nav -->
+
+            <div class="clear"></div>
+
+            <div class="border hide-on-tablet hide-on-mobile"></div>
+		
+		</div>		
+        
+		<div class="clear"></div>
+		
+	</div></div>
+	<!-- end: .menu-wrapper -->
+	
+	<div class="clear"></div>
+
+</header>
+<!-- end: #header -->
+
+<div id="form-lang" data-results-title="个搜索结果"></div>
+        <script type="text/javascript" src="./Kotlin 的泛型_files/sharethis.js.下载" async="async"></script>
+
+<!-- start: #single -->
+<main id="single" class="main grid-container standard" role="main">
+
+    <!-- start: .center -->
+    <div class="center content">
+
+
+            <!-- start: .content -->
+            <div class="left-content grid-70 np-mobile">
+
+                <article class="main-article post tag-kotlin tag-kotlin-generics tag-kotlin-advanced tag-kaixue">
+
+                        <header>
+
+                                <div class="featured-image cover" style="background: url(/content/images/size/w840h400/2021/04/0-21.jpeg);">
+                                        <div class="tags absolute">
+                                            <a href="https://rengwuxian.com/tag/kotlin/">Kotlin</a><a href="https://rengwuxian.com/tag/kotlin-generics/">Kotlin 泛型</a><a href="https://rengwuxian.com/tag/kotlin-advanced/">Kotln 进阶</a><a href="https://rengwuxian.com/tag/kaixue/">码上开学</a>
+                                        </div>
+                                </div>
+
+                            <!-- start: .meta -->
+                            <div class="meta">
+                                <h1 class="title no-thumb large bold">Kotlin 的泛型</h1>
+                                <div class="left grid-60 grid-parent">
+                                    <time datetime="2019-09-02"><svg><use xlink:href="#calendar"></use></svg>Sep 2, 2019</time>
+                                    <a href="https://rengwuxian.com/kotlin-generics/#comments" class="comments tooltip tooltipstered"><svg><use xlink:href="#comments-2"></use></svg> <span class="disqus-comment-count comment-count" data-disqus-url="https://rengwuxian.com/kotlin-generics/" data-disqus-identifier="606fb2d1b343744f4d8667aa">0</span> 评论</a>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <!-- end: .meta -->
+
+                            <div class="clear"></div>
+
+                        </header>
+
+                    <section class="post-content">
+
+                        <div class="share-container hide-on-mobile"><div class="inner-wrapper-sticky">
+                            <div class="share">
+                                <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons st-center st-lang-zh  st-inline-share-buttons st-animated" id="st-1"><div class="st-btn st-first st-remove-label" data-network="weibo" style="display: inline-block;">
+  <img alt="weibo-white sharing button" src="./Kotlin 的泛型_files/weibo-white.svg">
+  
+</div><div class="st-btn st-remove-label" data-network="wechat" style="display: none;">
+  <img alt="wechat-white sharing button" src="./Kotlin 的泛型_files/wechat-white.svg">
+  
+</div><div class="st-btn st-remove-label" data-network="twitter" style="display: none;">
+  <img alt="twitter-white sharing button" src="./Kotlin 的泛型_files/twitter-white.svg">
+  
+</div><div class="st-btn st-last st-remove-label" data-network="email" style="display: none;">
+  <img alt="email-white sharing button" src="./Kotlin 的泛型_files/email-white.svg">
+  
+</div></div><!-- ShareThis END -->                            </div>
+                        </div></div>
+
+                        <div class="text">
+                            <!--kg-card-begin: markdown--><blockquote>
+<p>本期作者：</p>
+<p>视频：扔物线（朱凯）</p>
+<p>文章：<a href="https://github.com/bruce3x">Bruce（郑啸天）</a></p>
+</blockquote>
+<p>大家好，我是扔物线朱凯。你在看的是码上开学项目的 Kotlin 高级部分的第 1 篇：Kotlin 的泛型。首当其冲的当然还是香香的视频香香的我啦：</p>
+<iframe width="100%" height="480" src="./Kotlin 的泛型_files/player.html" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+<p><em>如果你看不到上面的哔哩哔哩视频，可以点击 <a href="https://youtu.be/rgslIQi65b8">这里</a> 去 YouTube 看。</em></p>
+<blockquote>
+<p>以下内容来自文章作者<a href="https://github.com/bruce3x">Bruce</a>。</p>
+</blockquote>
+<h2 id="%E4%BB%8E-kotlin-%E7%9A%84-in-%E5%92%8C-out-%E8%AF%B4%E8%B5%B7">从 Kotlin 的 in 和 out 说起</h2>
+<p>这期是码上开学 Kotlin 系列的独立技术点部分的第一期，我们来聊一聊泛型。</p>
+<p>提到 Kotlin 的泛型，通常离不开 <code>in</code> 和 <code>out</code> 关键字，但泛型这门武功需要些基本功才能修炼，否则容易走火入魔，待笔者慢慢道来。</p>
+<p>下面这段 Java 代码在日常开发中应该很常见了：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TextView</span><span class="token punctuation">&gt;</span></span> textViews <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TextView</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>其中 <code>List&lt;TextView&gt;</code> 表示这是一个泛型类型为 <code>TextView</code> 的 <code>List</code>。</p>
+<p>那到底什么是泛型呢？我们先来讲讲泛型的由来。</p>
+<p>现在的程序开发大都是面向对象的，平时会用到各种类型的对象，一组对象通常需要用集合来存储它们，因而就有了一些集合类，比如 <code>List</code>、<code>Map</code> 等。</p>
+<p>这些集合类里面都是装的具体类型的对象，如果每个类型都去实现诸如 <code>TextViewList</code>、<code>ActivityList</code> 这样的具体的类型，显然是不可能的。</p>
+<p>因此就诞生了「泛型」，它的意思是把具体的类型泛化，编码的时候用符号来指代类型，在使用的时候，再确定它的类型。</p>
+<p>前面那个例子，<code>List&lt;TextView&gt;</code> 就是泛型类型声明。</p>
+<p>既然泛型是跟类型相关的，那么是不是也能适用类型的多态呢？</p>
+<p>先看一个常见的使用场景：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token class-name">TextView</span> textView <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">Button</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 👆 这是多态</span>
+
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span><span class="token punctuation">&gt;</span></span> buttons <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TextView</span><span class="token punctuation">&gt;</span></span> textViews <span class="token operator">=</span> buttons<span class="token punctuation">;</span>
+<span class="token comment">// 👆 多态用在这里会报错 incompatible types: List&lt;Button&gt; cannot be converted to List&lt;TextView&gt;</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>我们知道 <code>Button</code> 是继承自 <code>TextView</code> 的，根据 Java 多态的特性，第一处赋值是正确的。</p>
+<p>但是到了 <code>List&lt;TextView&gt;</code> 的时候 IDE 就报错了，这是因为 Java 的泛型本身具有「不可变性 Invariance」，Java 里面认为 <code>List&lt;TextView&gt;</code> 和 <code>List&lt;Button&gt;</code> 类型并不一致，也就是说，子类的泛型（<code>List&lt;Button&gt;</code>）不属于泛型（<code>List&lt;TextView&gt;</code>）的子类。</p>
+<blockquote>
+<p>Java 的泛型类型会在编译时发生<strong>类型擦除</strong>，为了保证类型安全，不允许这样赋值。至于什么是类型擦除，这里就不展开了。</p>
+<p>你可以试一下，在 Java 里用数组做类似的事情，是不会报错的，这是因为数组并没有在编译时擦除类型：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java"> ☕️
+ <span class="token class-name">TextView</span><span class="token punctuation">[</span><span class="token punctuation">]</span> textViews <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">TextView</span><span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+</blockquote>
+<p>但是在实际使用中，我们的确会有这种类似的需求，需要实现上面这种赋值。</p>
+<p>Java 提供了「泛型通配符」 <code>? extends</code> 和 <code>? super</code> 来解决这个问题。</p>
+<h2 id="java-%E4%B8%AD%E7%9A%84-extends">Java 中的 <code>? extends</code></h2>
+<p>在 Java 里面是这么解决的：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span><span class="token punctuation">&gt;</span></span> buttons <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      👇
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword keyword-extends">extends</span> <span class="token class-name">TextView</span><span class="token punctuation">&gt;</span></span> textViews <span class="token operator">=</span> buttons<span class="token punctuation">;</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>这个 <code>? extends</code> 叫做「上界通配符」，可以使 Java 泛型具有「协变性 Covariance」，协变就是允许上面的赋值是合法的。</p>
+<blockquote>
+<p>在继承关系树中，子类继承自父类，可以认为父类在上，子类在下。<code>extends</code> 限制了泛型类型的父类型，所以叫上界。</p>
+</blockquote>
+<p>它有两层意思：</p>
+<ul>
+<li>其中 <code>?</code> 是个通配符，表示这个 <code>List</code> 的泛型类型是一个<strong>未知类型</strong>。</li>
+<li><code>extends</code> 限制了这个未知类型的上界，也就是泛型类型必须满足这个 <code>extends</code> 的限制条件，这里和定义 <code>class</code> 的 <code>extends</code> 关键字有点不一样：
+<ul>
+<li>它的范围不仅是所有直接和间接子类，还包括上界定义的父类本身，也就是 <code>TextView</code>。</li>
+<li>它还有 <code>implements</code> 的意思，即这里的上界也可以是 <code>interface</code>。</li>
+</ul>
+</li>
+</ul>
+<p>这里 <code>Button</code> 是 <code>TextView</code> 的子类，满足了泛型类型的限制条件，因而能够成功赋值。</p>
+<p>根据刚才的描述，下面几种情况都是可以的：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword keyword-extends">extends</span> <span class="token class-name">TextView</span><span class="token punctuation">&gt;</span></span> textViews <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TextView</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 👈 本身</span>
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword keyword-extends">extends</span> <span class="token class-name">TextView</span><span class="token punctuation">&gt;</span></span> textViews <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 👈 直接子类</span>
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword keyword-extends">extends</span> <span class="token class-name">TextView</span><span class="token punctuation">&gt;</span></span> textViews <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">RadioButton</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 👈 间接子类</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>一般集合类都包含了 <code>get</code> 和 <code>add</code> 两种操作，比如 Java 中的 <code>List</code>，它的具体定义如下：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-interface">interface</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">E</span><span class="token punctuation">&gt;</span></span> <span class="token keyword keyword-extends">extends</span> <span class="token class-name">Collection</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">E</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>
+    <span class="token class-name">E</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-boolean">boolean</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token class-name">E</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>上面的代码中，<code>E</code> 就是表示泛型类型的符号（用其他字母甚至单词都可以）。</p>
+<p>我们看看在使用了上界通配符之后，<code>List</code> 的使用上有没有什么问题：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword keyword-extends">extends</span> <span class="token class-name">TextView</span><span class="token punctuation">&gt;</span></span> textViews <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">TextView</span> textView <span class="token operator">=</span> textViews<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 👈 get 可以</span>
+textViews<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>textView<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//             👆 add 会报错，no suitable method found for add(TextView)</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>前面说到 <code>List&lt;? extends TextView&gt;</code> 的泛型类型是个未知类型 <code>?</code>，编译器也不确定它是啥类型，只是有个限制条件。</p>
+<p>由于它满足 <code>? extends TextView</code> 的限制条件，所以 <code>get</code> 出来的对象，肯定是 <code>TextView</code> 的子类型，根据多态的特性，能够赋值给 <code>TextView</code>，啰嗦一句，赋值给 <code>View</code> 也是没问题的。</p>
+<p>到了 <code>add</code> 操作的时候，我们可以这么理解：</p>
+<ul>
+<li><code>List&lt;? extends TextView&gt;</code> 由于类型未知，它可能是 <code>List&lt;Button&gt;</code>，也可能是 <code>List&lt;TextView&gt;</code>。</li>
+<li>对于前者，显然我们要添加 TextView 是不可以的。</li>
+<li>实际情况是编译器无法确定到底属于哪一种，无法继续执行下去，就报错了。</li>
+</ul>
+<p>那我干脆不要 <code>extends TextView</code> ，只用通配符 <code>?</code> 呢？</p>
+<p>这样使用 <code>List&lt;?&gt;</code> 其实是 <code>List&lt;? extends Object&gt;</code> 的缩写。</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span><span class="token punctuation">&gt;</span></span> buttons <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> buttons<span class="token punctuation">;</span>
+<span class="token class-name">Object</span> obj <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 👈 这里还是会报错</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>和前面的例子一样，编译器没法确定 <code>?</code> 的类型，所以这里就只能 <code>get</code> 到 <code>Object</code> 对象。</p>
+<p>同时编译器为了保证类型安全，也不能向 <code>List&lt;?&gt;</code> 中添加任何类型的对象，理由同上。</p>
+<p>由于 <code>add</code> 的这个限制，使用了 <code>? extends</code> 泛型通配符的 <code>List</code>，只能够向外提供数据被消费，从这个角度来讲，向外提供数据的一方称为「生产者 Producer」。对应的还有一个概念叫「消费者 Consumer」，对应 Java 里面另一个泛型通配符 <code>? super</code>。</p>
+<h2 id="java-%E4%B8%AD%E7%9A%84-super">Java 中的 <code>? super</code></h2>
+<p>先看一下它的写法：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+     👇
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword keyword-super">super</span> <span class="token class-name">Button</span><span class="token punctuation">&gt;</span></span> buttons <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TextView</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>这个 <code>? super</code> 叫做「下界通配符」，可以使 Java 泛型具有「逆变性 Contravariance」。</p>
+<blockquote>
+<p>与上界通配符对应，这里 super 限制了通配符 ? 的子类型，所以称之为下界。</p>
+</blockquote>
+<p>它也有两层意思：</p>
+<ul>
+<li>通配符 <code>?</code> 表示 <code>List</code> 的泛型类型是一个<strong>未知类型</strong>。</li>
+<li><code>super</code> 限制了这个未知类型的下界，也就是泛型类型必须满足这个 <code>super</code> 的限制条件。
+<ul>
+<li><code>super</code> 我们在类的方法里面经常用到，这里的范围不仅包括 <code>Button</code> 的直接和间接父类，也包括下界 <code>Button</code> 本身。</li>
+<li><code>super</code> 同样支持 <code>interface</code>。</li>
+</ul>
+</li>
+</ul>
+<p>上面的例子中，<code>TextView</code> 是 <code>Button</code> 的父类型 ，也就能够满足 <code>super</code> 的限制条件，就可以成功赋值了。</p>
+<p>根据刚才的描述，下面几种情况都是可以的：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword keyword-super">super</span> <span class="token class-name">Button</span><span class="token punctuation">&gt;</span></span> buttons <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 👈 本身</span>
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword keyword-super">super</span> <span class="token class-name">Button</span><span class="token punctuation">&gt;</span></span> buttons <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TextView</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 👈 直接父类</span>
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword keyword-super">super</span> <span class="token class-name">Button</span><span class="token punctuation">&gt;</span></span> buttons <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 👈 间接父类</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>对于使用了下界通配符的 <code>List</code>，我们再看看它的 <code>get</code> 和 <code>add</code> 操作：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword keyword-super">super</span> <span class="token class-name">Button</span><span class="token punctuation">&gt;</span></span> buttons <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TextView</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Object</span> object <span class="token operator">=</span> buttons<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 👈 get 出来的是 Object 类型</span>
+<span class="token class-name">Button</span> button <span class="token operator">=</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+buttons<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>button<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 👈 add 操作是可以的</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>解释下，首先 <code>?</code> 表示未知类型，编译器是不确定它的类型的。</p>
+<p>虽然不知道它的具体类型，不过在 Java 里任何对象都是 <code>Object</code> 的子类，所以这里能把它赋值给 <code>Object</code>。</p>
+<p><code>Button</code> 对象一定是这个未知类型的子类型，根据多态的特性，这里通过 <code>add</code> 添加 <code>Button</code> 对象是合法的。</p>
+<p>使用下界通配符 <code>? super</code> 的泛型 <code>List</code>，只能读取到 <code>Object</code> 对象，一般没有什么实际的使用场景，通常也只拿它来添加数据，也就是消费已有的 <code>List&lt;? super Button&gt;</code>，往里面添加 <code>Button</code>，因此这种泛型类型声明称之为「消费者 Consumer」。</p>
+<hr>
+<p>小结下，Java 的泛型本身是不支持协变和逆变的。</p>
+<ul>
+<li>可以使用泛型通配符 <code>? extends</code> 来使泛型支持协变，但是「只能读取不能修改」，这里的修改仅指对泛型集合添加元素，如果是 <code>remove(int index)</code> 以及 <code>clear</code> 当然是可以的。</li>
+<li>可以使用泛型通配符 <code>? super</code> 来使泛型支持逆变，但是「只能修改不能读取」，这里说的不能读取是指不能按照泛型类型读取，你如果按照 <code>Object</code> 读出来再强转当然也是可以的。</li>
+</ul>
+<p>根据前面的说法，这被称为 PECS 法则：「<em>Producer-Extends, Consumer-Super</em>」。</p>
+<p>理解了 Java 的泛型之后，再理解 Kotlin 中的泛型，有如练完九阳神功再练乾坤大挪移，就比较容易了。</p>
+<h2 id="%E8%AF%B4%E5%9B%9E-kotlin-%E4%B8%AD%E7%9A%84-out-%E5%92%8C-in">说回 Kotlin 中的 <code>out</code> 和 <code>in</code></h2>
+<p>和 Java 泛型一样，Kolin 中的泛型本身也是不可变的。</p>
+<ul>
+<li>使用关键字 <code>out</code> 来支持协变，等同于 Java 中的上界通配符 <code>? extends</code>。</li>
+<li>使用关键字 <code>in</code> 来支持逆变，等同于 Java 中的下界通配符 <code>? super</code>。</li>
+</ul>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-var">var</span> textViews<span class="token operator">:</span> List<span class="token operator">&lt;</span><span class="token keyword keyword-out">out</span> TextView<span class="token operator">&gt;</span>
+<span class="token keyword keyword-var">var</span> textViews<span class="token operator">:</span> List<span class="token operator">&lt;</span><span class="token keyword keyword-in">in</span> TextView<span class="token operator">&gt;</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>换了个写法，但作用是完全一样的。<code>out</code> 表示，我这个变量或者参数只用来输出，不用来输入，你只能读我不能写我；<code>in</code> 就反过来，表示它只用来输入，不用来输出，你只能写我不能读我。</p>
+<p>你看，我们 Android 工程师学不会 <code>out</code> 和 <code>in</code>，其实并不是因为这两个关键字多难，而是因为我们应该先学学 Java 的泛型。是吧？</p>
+<p>说了这么多 <code>List</code>，其实泛型在非集合类的使用也非常广泛，就以「生产者-消费者」为例子：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-class">class</span> Producer<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-fun">fun</span> <span class="token function">produce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> T <span class="token punctuation">{</span>
+        <span class="token operator">..</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-val">val</span> producer<span class="token operator">:</span> Producer<span class="token operator">&lt;</span><span class="token keyword keyword-out">out</span> TextView<span class="token operator">&gt;</span> <span class="token operator">=</span> Producer<span class="token operator">&lt;</span>Button<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-val">val</span> textView<span class="token operator">:</span> TextView <span class="token operator">=</span> producer<span class="token punctuation">.</span><span class="token function">produce</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 👈 相当于 &amp;#39;List&amp;#39; 的 `get`</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>再来看看消费者：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️            
+<span class="token keyword keyword-class">class</span> Consumer<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-fun">fun</span> <span class="token function">consume</span><span class="token punctuation">(</span>t<span class="token operator">:</span> T<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token operator">..</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-val">val</span> consumer<span class="token operator">:</span> Consumer<span class="token operator">&lt;</span><span class="token keyword keyword-in">in</span> Button<span class="token operator">&gt;</span> <span class="token operator">=</span> Consumer<span class="token operator">&lt;</span>TextView<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+consumer<span class="token punctuation">.</span><span class="token function">consume</span><span class="token punctuation">(</span><span class="token function">Button</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// 👈 相当于 &amp;#39;List&amp;#39; 的 &amp;#39;add&amp;#39;</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<h2 id="%E5%A3%B0%E6%98%8E%E5%A4%84%E7%9A%84-out-%E5%92%8C-in">声明处的 <code>out</code> 和 <code>in</code></h2>
+<p>在前面的例子中，在声明 <code>Producer</code> 的时候已经确定了泛型 <code>T</code> 只会作为输出来用，但是每次都需要在使用的时候加上 <code>out TextView</code> 来支持协变，写起来很麻烦。</p>
+<p>Kotlin 提供了另外一种写法：可以在声明类的时候，给泛型符号加上 <code>out</code> 关键字，表明泛型参数 <code>T</code> 只会用来输出，在使用的时候就不用额外加 <code>out</code> 了。</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️             👇
+<span class="token keyword keyword-class">class</span> Producer<span class="token operator">&lt;</span><span class="token keyword keyword-out">out</span> T<span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-fun">fun</span> <span class="token function">produce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> T <span class="token punctuation">{</span>
+        <span class="token operator">..</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-val">val</span> producer<span class="token operator">:</span> Producer<span class="token operator">&lt;</span>TextView<span class="token operator">&gt;</span> <span class="token operator">=</span> Producer<span class="token operator">&lt;</span>Button<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 👈 这里不写 out 也不会报错</span>
+<span class="token keyword keyword-val">val</span> producer<span class="token operator">:</span> Producer<span class="token operator">&lt;</span><span class="token keyword keyword-out">out</span> TextView<span class="token operator">&gt;</span> <span class="token operator">=</span> Producer<span class="token operator">&lt;</span>Button<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 👈 out 可以但没必要</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>与 <code>out</code> 一样，可以在声明类的时候，给泛型参数加上 <code>in</code> 关键字，来表明这个泛型参数 <code>T</code> 只用来输入。</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️            👇
+<span class="token keyword keyword-class">class</span> Consumer<span class="token operator">&lt;</span><span class="token keyword keyword-in">in</span> T<span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-fun">fun</span> <span class="token function">consume</span><span class="token punctuation">(</span>t<span class="token operator">:</span> T<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token operator">..</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-val">val</span> consumer<span class="token operator">:</span> Consumer<span class="token operator">&lt;</span>Button<span class="token operator">&gt;</span> <span class="token operator">=</span> Consumer<span class="token operator">&lt;</span>TextView<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 👈 这里不写 in 也不会报错</span>
+<span class="token keyword keyword-val">val</span> consumer<span class="token operator">:</span> Consumer<span class="token operator">&lt;</span><span class="token keyword keyword-in">in</span> Button<span class="token operator">&gt;</span> <span class="token operator">=</span> Consumer<span class="token operator">&lt;</span>TextView<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 👈 in 可以但没必要</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<h2 id="%E5%8F%B7"><code>*</code> 号</h2>
+<p>前面讲到了 Java 中单个 <code>?</code> 号也能作为泛型通配符使用，相当于 <code>? extends Object</code>。<br>
+它在 Kotlin 中有等效的写法：<code>*</code> 号，相当于 <code>out Any</code>。</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️            👇
+<span class="token keyword keyword-var">var</span> list<span class="token operator">:</span> List<span class="token operator">&lt;</span><span class="token operator">*</span><span class="token operator">&gt;</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>和 Java 不同的地方是，如果你的类型定义里已经有了 <code>out</code> 或者 <code>in</code>，那这个限制在变量声明时也依然在，不会被 <code>*</code> 号去掉。</p>
+<p>比如你的类型定义里是 <code>out T : Number</code> 的，那它加上 <code>&lt;*&gt;</code> 之后的效果就不是 <code>out Any</code>，而是 <code>out Number</code>。</p>
+<h2 id="where-%E5%85%B3%E9%94%AE%E5%AD%97"><code>where</code> 关键字</h2>
+<p>Java 中声明类或接口的时候，可以使用 <code>extends</code> 来设置边界，将泛型类型参数限制为某个类型的子集：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️                
+<span class="token comment">//                👇  T 的类型必须是 Animal 的子类型</span>
+<span class="token keyword keyword-class">class</span> <span class="token class-name">Monster</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span> <span class="token keyword keyword-extends">extends</span> <span class="token class-name">Animal</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>注意这个和前面讲的声明变量时的泛型类型声明是不同的东西，这里并没有 <code>?</code>。</p>
+<p>同时这个边界是可以设置多个，用 <code>&amp;amp;</code> 符号连接：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token comment">//                            👇  T 的类型必须同时是 Animal 和 Food 的子类型</span>
+<span class="token keyword keyword-class">class</span> <span class="token class-name">Monster</span><span class="token operator">&lt;</span><span class="token class-name">T</span> <span class="token keyword keyword-extends">extends</span> <span class="token class-name">Animal</span> <span class="token operator">&amp;</span>amp<span class="token punctuation">;</span> <span class="token class-name">Food</span><span class="token operator">&gt;</span><span class="token punctuation">{</span> 
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>Kotlin 只是把 <code>extends</code> 换成了 <code>:</code> 冒号。</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️             👇
+<span class="token keyword keyword-class">class</span> Monster<span class="token operator">&lt;</span>T <span class="token operator">:</span> Animal<span class="token operator">&gt;</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>设置多个边界可以使用 <code>where</code> 关键字：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️                👇
+<span class="token keyword keyword-class">class</span> Monster<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> <span class="token keyword keyword-where">where</span> T <span class="token operator">:</span> Animal<span class="token punctuation">,</span> T <span class="token operator">:</span> Food
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>有人在看文档的时候觉得这个 <code>where</code> 是个新东西，其实虽然 Java 里没有 <code>where</code> ，但它并没有带来新功能，只是把一个老功能换了个新写法。</p>
+<p>不过笔者觉得 Kotlin 里 <code>where</code> 这样的写法可读性更符合英文里的语法，尤其是如果 <code>Monster</code> 本身还有继承的时候：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-class">class</span> Monster<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> <span class="token operator">:</span> MonsterParent<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span>
+    <span class="token keyword keyword-where">where</span> T <span class="token operator">:</span> Animal
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<h2 id="reified-%E5%85%B3%E9%94%AE%E5%AD%97"><code>reified</code> 关键字</h2>
+<p>由于 Java 中的泛型存在类型擦除的情况，任何在运行时需要知道泛型确切类型信息的操作都没法用了。</p>
+<p>比如你不能检查一个对象是否为泛型类型 <code>T</code> 的实例：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> <span class="token keyword keyword-void">void</span> <span class="token function">printIfTypeMatch</span><span class="token punctuation">(</span><span class="token class-name">Object</span> item<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>item <span class="token keyword keyword-instanceof">instanceof</span> <span class="token class-name">T</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// 👈 IDE 会提示错误，illegal generic type for instanceof</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>Kotlin 里同样也不行：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-fun">fun</span> <span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> <span class="token function">printIfTypeMatch</span><span class="token punctuation">(</span>item<span class="token operator">:</span> Any<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>item <span class="token keyword keyword-is">is</span> T<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// 👈 IDE 会提示错误，Cannot check for instance of erased type: T</span>
+        <span class="token function">println</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>这个问题，在 Java 中的解决方案通常是额外传递一个 <code>Class&lt;T&gt;</code> 类型的参数，然后通过 <code>Class#isInstance</code> 方法来检查：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️                             👇
+<span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> <span class="token keyword keyword-void">void</span> <span class="token function">check</span><span class="token punctuation">(</span><span class="token class-name">Object</span> item<span class="token punctuation">,</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>type<span class="token punctuation">.</span><span class="token function">isInstance</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+               👆
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>Kotlin 中同样可以这么解决，不过还有一个更方便的做法：使用关键字 <code>reified</code> 配合 <code>inline</code> 来解决：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️ 👇         👇
+<span class="token keyword keyword-inline">inline</span> <span class="token keyword keyword-fun">fun</span> <span class="token operator">&lt;</span><span class="token keyword keyword-reified">reified</span> T<span class="token operator">&gt;</span> <span class="token function">printIfTypeMatch</span><span class="token punctuation">(</span>item<span class="token operator">:</span> Any<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>item <span class="token keyword keyword-is">is</span> T<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// 👈 这里就不会在提示错误了</span>
+        <span class="token function">println</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>这具体是怎么回事呢？等到后续章节讲到 <code>inline</code> 的时候会详细说明，这里就不过多延伸了。</p>
+<p>还记得第二篇文章中，提到了两个 Kotlin 泛型与 Java 泛型不一致的地方，这里作一下解答。</p>
+<ol>
+<li>Java 里的数组是支持协变的，而 Kotlin 中的数组 <code>Array</code> 不支持协变。<br>
+这是因为在 Kotlin 中数组是用 <code>Array</code> 类来表示的，这个 <code>Array</code> 类使用泛型就和集合类一样，所以不支持协变。</li>
+<li>Java 中的 <code>List</code> 接口不支持协变，而 Kotlin 中的 <code>List</code> 接口支持协变。<br>
+Java 中的 <code>List</code> 不支持协变，原因在上文已经讲过了，需要使用泛型通配符来解决。<br>
+在 Kotlin 中，实际上 <code>MutableList</code> 接口才相当于 Java 的 <code>List</code>。Kotlin 中的 <code>List</code> 接口实现了只读操作，没有写操作，所以不会有类型安全上的问题，自然可以支持协变。</li>
+</ol>
+<h2 id="%E7%BB%83%E4%B9%A0%E9%A2%98">练习题</h2>
+<ol>
+<li>实现一个 <code>fill</code> 函数，传入一个 <code>Array</code> 和一个对象，将对象填充到 <code>Array</code> 中，要求 <code>Array</code> 参数的泛型支持逆变（假设 <code>Array</code> size 为 1）。</li>
+<li>实现一个 <code>copy</code> 函数，传入两个 <code>Array</code> 参数，将一个 <code>Array</code> 中的元素复制到另外个 <code>Array</code> 中，要求 <code>Array</code> 参数的泛型分别支持协变和逆变。（提示：Kotlin 中的 <code>for</code> 循环如果要用索引，需要使用 <code>Array.indices</code>）</li>
+</ol>
+<h2 id="%E4%BD%9C%E8%80%85%E4%BB%8B%E7%BB%8D">作者介绍</h2>
+<h3 id="%E8%A7%86%E9%A2%91%E4%BD%9C%E8%80%85">视频作者</h3>
+<h4 id="%E6%89%94%E7%89%A9%E7%BA%BF%EF%BC%88%E6%9C%B1%E5%87%AF%EF%BC%89">扔物线（朱凯）</h4>
+<ul>
+<li>码上开学创始人、项目管理人、内容模块规划者和视频内容作者。</li>
+<li><a href="https://developers.google.com/experts/people/kai-zhu">Android GDE</a>（ Google 认证 Android 开发专家），前 Flipboard Android 工程师。</li>
+<li>GitHub 全球 Java 排名第 92 位，在 <a href="https://github.com/rengwuxian">GitHub</a> 上有 6.6k followers 和 9.9k stars。</li>
+<li>个人的 Android 开源库 <a href="https://github.com/rengwuxian/MaterialEditText/">MaterialEditText</a> 被全球多个项目引用，其中包括在全球拥有 5 亿用户的新闻阅读软件 Flipboard 。</li>
+<li>曾多次在 Google Developer Group Beijing 线下分享会中担任 Android 部分的讲师。</li>
+<li>个人技术文章《<a href="https://gank.io/post/560e15be2dca930e00da1083">给 Android 开发者的 RxJava 详解</a>》发布后，在国内多个公司和团队内部被转发分享和作为团队技术会议的主要资料来源，以及逆向传播到了美国一些如 Google 、 Uber 等公司的部分华人团队。</li>
+<li>创办的 Android 高级进阶教学网站 <a href="https://hencoder.com/">HenCoder</a> 在全球华人 Android 开发社区享有相当的影响力。</li>
+<li>之后创办 Android 高级开发教学课程 <a href="https://plus.hencoder.com/">HenCoder Plus</a> ，学员遍布全球，有来自阿里、头条、华为、腾讯等知名一线互联网公司，也有来自中国台湾、日本、美国等地区的资深软件工程师。</li>
+</ul>
+<h3 id="%E6%96%87%E7%AB%A0%E4%BD%9C%E8%80%85">文章作者</h3>
+<h4 id="bruce%EF%BC%88%E9%83%91%E5%95%B8%E5%A4%A9%EF%BC%89">Bruce（郑啸天）</h4>
+<p><a href="https://github.com/bruce3x">Bruce（郑啸天）</a>，即刻 Android 工程师。2018 年加入即刻，参与了即刻多个版本的迭代。多年 Android 开发经验，现在负责即刻客户端中台基础建设。</p>
+<!--kg-card-end: markdown-->
+
+                            <h2>版权声明</h2>
+<blockquote class="post-copyright">
+  <p>本文首发于：<a href="https://rengwuxian.com/kotlin-generics/">https://rengwuxian.com/kotlin-generics/</a></p>
+  <p>微信公众号：扔物线</p>
+  <p>转载时请保留此声明</p>
+</blockquote>                        </div>
+                        
+                        <!-- start: .share-buttons -->
+                        <div class="share-buttons section">
+                            <div class="flex justify-center items-center share-buttons-container">
+                                <h5 class="title small share-title">分享文章</h5>
+                                <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons st-center st-lang-zh  st-inline-share-buttons st-animated" id="st-2"><div class="st-btn st-first st-remove-label" data-network="weibo" style="display: inline-block;">
+  <img alt="weibo-white sharing button" src="./Kotlin 的泛型_files/weibo-white.svg">
+  
+</div><div class="st-btn st-remove-label" data-network="wechat" style="display: inline-block;">
+  <img alt="wechat-white sharing button" src="./Kotlin 的泛型_files/wechat-white.svg">
+  
+</div><div class="st-btn st-remove-label" data-network="twitter" style="display: inline-block;">
+  <img alt="twitter-white sharing button" src="./Kotlin 的泛型_files/twitter-white.svg">
+  
+</div><div class="st-btn st-last st-remove-label" data-network="email" style="display: none;">
+  <img alt="email-white sharing button" src="./Kotlin 的泛型_files/email-white.svg">
+  
+</div></div><!-- ShareThis END -->                            </div>
+                            
+                            <div class="clear"></div>
+                            <div class="permalink">
+                                <input type="text" name="shortlink" value="https://rengwuxian.com/kotlin-generics/" id="copy-link" readonly="">
+                                <span class="copy"><svg><use xlink:href="#copy"></use></svg></span>
+                            </div>
+                        </div>
+                        <!-- end: .share-buttons -->
+
+                    </section>
+
+                </article>
+                <div class="clear"></div>
+
+                <section class="related section bordered">
+                    <!--<h3 class="title bordered">You might be interested in...</h3>-->
+                    	<article class="prev grid-50 tablet-grid-50 grid-parent">
+                                <div class="thumb cover lazy" data-src="/content/images/size/w600h450/2021/04/5.png" style="background-image: url(&quot;data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==&quot;);"></div>
+                            <a href="https://rengwuxian.com/kotlin-basic-3/" class="full-link"></a>
+                            <div class="info">
+                                <time datetime="2019-08-23">Aug 23, 2019</time>
+                                <h4 class="title white no-margin">Kotlin 里那些「更方便的」</h4>
+                            </div>
+                            <span class="button"><img src="./Kotlin 的泛型_files/left-arrow.svg" width="15"></span>
+                            <div class="overlay"></div>
+                        </article>
+
+                        <article class="next grid-50 tablet-grid-50 grid-parent">
+                                <div class="thumb cover lazy" data-src="/content/images/size/w600h450/2021/04/22.png" style="background-image: url(&quot;data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==&quot;);"></div>
+                            <a href="https://rengwuxian.com/kotlin-coroutines-1/" class="full-link"></a>
+                            <div class="info">
+                                <time datetime="2019-09-09">Sep 9, 2019</time>
+                                <h4 class="title white no-margin">Kotlin 的协程用力瞥一眼 - 学不会协程？很可能因为你看过的教程都是错的</h4>
+                            </div>
+                            <span class="button"><img src="./Kotlin 的泛型_files/right-arrow.svg" width="15"></span>
+                            <div class="overlay"></div>
+                        </article>
+                    <div class="clear"></div>
+                </section>
+
+    			<div class="clear"></div>
+
+                <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQwMi81OTcw">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+<div title="livereAd" id="lv-ad-279" style="min-width: 100%; width: 100px; overflow: visible; border: 0px; z-index: 124212;"><div id="livereAdWrapper" style="width: 100%; text-align: center;"><div id="livereAd" style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; max-width: 0px; width: 100%; margin: 0px auto;"></div></div></div></div>
+<!-- City版安装代码已完成 -->
+                <!-- start: .pagination -->
+                <div class="pagination">
+
+                    <div class="clear"></div>
+                </div>
+                <!-- end: .pagination-->
+
+                <div class="clear"></div>
+            </div>
+            <!-- end: .content -->
+
+        <div class="flex justify-between items-center sidebar-follow hide-on-tablet hide-on-mobile">
+    <a id="go-to-wechat" class="btn-follow" href="javascript:void(0)">关注公众号</a>
+    <a class="btn-follow" href="https://space.bilibili.com/27559447" target="_blank">关注 B 站</a> 
+</div><!-- start: #sidebar -->
+<aside id="sidebar" role="complementary" class="grid-30 tablet-grid-30 hide-on-tablet hide-on-mobile">
+
+	<!-- start: .search -->
+	<!-- end: .widget_text -->
+            <!-- start: .recent-articles -->
+            <div class="widget recent-articles">
+                <h3 class="title bordered">相关文章</h3>                
+                    <article class="post item">
+                            <a href="https://rengwuxian.com/kotlin-source-noinline-crossinline/" class="thumb hover-effect grid-33 grid-parent">
+                                <span class="fullimage cover" style="background: url(/content/images/size/w160h160/2021/04/0-12.png);"></span>
+                            </a>
+                        <div class="info">
+                            <div class="meta">
+                                <time datetime="2020-09-04">Sep 4, 2020</time>
+                            </div>
+                            <h4 class="title usmall gradient-effect"><a href="https://rengwuxian.com/kotlin-source-noinline-crossinline/">Kotlin 源码里成吨的 noinline 和 crossinline 是干嘛的？看完这个视频你转头也写了一吨</a></h4>
+                            
+                        </div>
+                        <div class="clear"></div>
+                    </article>	
+                    <article class="post item">
+                            <a href="https://rengwuxian.com/yue-tan/" class="thumb hover-effect grid-33 grid-parent">
+                                <span class="fullimage cover" style="background: url(/content/images/size/w160h160/2021/04/0-32.jpeg);"></span>
+                            </a>
+                        <div class="info">
+                            <div class="meta">
+                                <time datetime="2020-06-17">Jun 17, 2020</time>
+                            </div>
+                            <h4 class="title usmall gradient-effect"><a href="https://rengwuxian.com/yue-tan/">我被 Kotlin 和 Android 两个官方约谈了</a></h4>
+                            
+                        </div>
+                        <div class="clear"></div>
+                    </article>	
+                    <article class="post item">
+                            <a href="https://rengwuxian.com/kotlin-extensions/" class="thumb hover-effect grid-33 grid-parent">
+                                <span class="fullimage cover" style="background: url(/content/images/size/w160h160/2021/04/0-7.png);"></span>
+                            </a>
+                        <div class="info">
+                            <div class="meta">
+                                <time datetime="2020-05-15">May 15, 2020</time>
+                            </div>
+                            <h4 class="title usmall gradient-effect"><a href="https://rengwuxian.com/kotlin-extensions/">会写「18.dp」只是个入门——Kotlin 的扩展函数和扩展属性（Extension Functions  Properties）</a></h4>
+                            
+                        </div>
+                        <div class="clear"></div>
+                    </article>	
+                    <article class="post item">
+                            <a href="https://rengwuxian.com/kotlin-lambda/" class="thumb hover-effect grid-33 grid-parent">
+                                <span class="fullimage cover" style="background: url(/content/images/size/w160h160/2021/04/0-29.jpeg);"></span>
+                            </a>
+                        <div class="info">
+                            <div class="meta">
+                                <time datetime="2020-04-07">Apr 7, 2020</time>
+                            </div>
+                            <h4 class="title usmall gradient-effect"><a href="https://rengwuxian.com/kotlin-lambda/">Kotlin 的 Lambda 表达式，大多数人学得连皮毛都不算</a></h4>
+                            
+                        </div>
+                        <div class="clear"></div>
+                    </article>	
+                    <article class="post item">
+                            <a href="https://rengwuxian.com/kotlin-coroutines-3/" class="thumb hover-effect grid-33 grid-parent">
+                                <span class="fullimage cover" style="background: url(/content/images/size/w160h160/2021/04/0-26.jpeg);"></span>
+                            </a>
+                        <div class="info">
+                            <div class="meta">
+                                <time datetime="2019-09-29">Sep 29, 2019</time>
+                            </div>
+                            <h4 class="title usmall gradient-effect"><a href="https://rengwuxian.com/kotlin-coroutines-3/">到底什么是「非阻塞式」挂起？协程真的更轻量级吗？</a></h4>
+                            
+                        </div>
+                        <div class="clear"></div>
+                    </article>	
+            </div>
+            <!-- end: .recent-articles -->
+    
+    
+
+    <!-- start: .tag-cloud -->
+    <div class="widget tag-cloud">
+        <h3 class="widget-title title bordered">标签云</h3>
+            <a href="https://rengwuxian.com/tag/compose/">Compose</a><a href="https://rengwuxian.com/tag/hencoder/">HenCoder</a><a href="https://rengwuxian.com/tag/hencoder-plus/">HenCoder Plus</a><a href="https://rengwuxian.com/tag/hilt/">Hilt</a><a href="https://rengwuxian.com/tag/https/">HTTPS</a><a href="https://rengwuxian.com/tag/jetpack/">Jetpack</a><a href="https://rengwuxian.com/tag/kotlin/">Kotlin</a><a href="https://rengwuxian.com/tag/kotlin-anonymous-function/">Kotlin 匿名函数</a><a href="https://rengwuxian.com/tag/kotlin-coroutines/">Kotlin 协程</a><a href="https://rengwuxian.com/tag/kotlin-basic/">Kotlin 基础</a><a href="https://rengwuxian.com/tag/kotlin-kuo-zhan/">Kotlin 扩展</a><a href="https://rengwuxian.com/tag/kotlin-generics/">Kotlin 泛型</a><a href="https://rengwuxian.com/tag/kotlin-higher-order-function/">Kotlin 高阶函数</a><a href="https://rengwuxian.com/tag/kotlin-advanced/">Kotln 进阶</a><a href="https://rengwuxian.com/tag/lambda/">Lambda 表达式</a><a href="https://rengwuxian.com/tag/weekly/">Weekly</a><a href="https://rengwuxian.com/tag/yi-lai-zhu-ru/">依赖注入</a><a href="https://rengwuxian.com/tag/about/">关于 hencoder</a><a href="https://rengwuxian.com/tag/nei-cun/">内存</a><a href="https://rengwuxian.com/tag/happy-news/">喜报</a><a href="https://rengwuxian.com/tag/shi-jian/">实践</a><a href="https://rengwuxian.com/tag/bu-ju/">布局</a><a href="https://rengwuxian.com/tag/ji-zhu-shen-liao/">技术深聊</a><a href="https://rengwuxian.com/tag/kaixue/">码上开学</a><a href="https://rengwuxian.com/tag/hui-zhi/">绘制</a><a href="https://rengwuxian.com/tag/custom-view/">自定义 View</a><a href="https://rengwuxian.com/tag/hong-mo-fan-kui/">触摸反馈</a><a href="https://rengwuxian.com/tag/mian-shi/">面试</a>
+    </div>
+    <!-- end: .tag-cloud  -->
+         <!-- start: .widget -->
+	<section class="widget">
+		<h4 class="widget-title title bordered">广告</h4>
+        <div class="textwidget">
+			<a href="https://edu.rengwuxian.com/p/t_pc/goods_pc_detail/goods_detail/course_2Dpw6101YdL7bHFs5LFpYyzSUS6?app_id=appuoykwnbg2526" class="ads" target="_blank"><img src="./Kotlin 的泛型_files/f03f8a8ab1023.jpg" class="img-ad"></a>
+		</div>
+		<div class="clear"></div>
+	</section>
+	<!-- end: .widget -->
+	
+</aside>
+<!-- end: #sidebar -->
+        <div class="clear"></div>
+
+    </div>
+    <!-- end: .center -->
+
+</main>
+<!-- end: #single -->
+
+
+
+		<!-- start: #footer -->
+<footer id="footer" class="grid-container np-mobile">
+
+	
+<div id="follow-qrcode" class="subscribe section">
+    <p class="title white text-center follow-us">关注我们</p>
+    <div class="grid-container grid-medium grid-parent np-mobile mt-20 follow-qrcode-list">
+        <div class="grid-33 tablet-grid-33 mt-10 follow-qrcode-item">
+        	<img src="./Kotlin 的泛型_files/e5a3cb8f94920.jpeg">
+            <p class="title white text-center mt-10">公众号</p>
+        </div>
+        <div class="grid-33 tablet-grid-33 mt-10 follow-qrcode-item">
+            <img src="./Kotlin 的泛型_files/cd3c35c6034e7.jpg">
+            <p class="title white text-center mt-10">视频号</p>
+        </div>
+        <div class="grid-33 tablet-grid-33 mt-10 follow-qrcode-item">
+            <img src="./Kotlin 的泛型_files/978586b8156ca.jpg">
+            <p class="title white text-center mt-10">领取试听课</p>
+        </div>
+    </div>
+</div>
+		<h2 class="logo">
+			<a href="https://rengwuxian.com/" class="title white medium">扔物线</a>
+		</h2>
+	<p class="published border-effect">Published with <a href="https://ghost.org/" target="_blank">Ghost</a> <a href="https://beian.miit.gov.cn/" target="_blank">豫ICP备2020036939号-1</a></p>
+
+	<a href="javascript:void(0)" id="back-to-top" class="button dark"><i class="fa fa-chevron-up"></i></a>
+
+</footer>
+<!-- end: #footer -->
+
+        <div id="search-results" class="mfp-hide grid-container section"></div>
+
+    </div>
+    <!-- end: #wrapper -->
+    <script type="text/javascript" src="./Kotlin 的泛型_files/scripts.min.js.下载" defer=""></script>
+	
+<!-- <script>
+    var swiper = new Swiper('.swiper', {
+        // Optional parameters
+        direction: 'horizontal',
+        preventClicks: false,
+        preventClicksPropagation: false,
+        disableOnInteraction: false,
+        loop: true,
+		autoplay: {
+           delay: 5000,
+        },
+        // If we need pagination
+        pagination: {
+            el: '.swiper-pagination',
+        },
+
+        // Navigation arrows
+        //navigation: {
+        //    hideOnClick: true,
+        //    nextEl: '.swiper-button-next',
+        //    prevEl: '.swiper-button-prev',
+        //}
+    });
+</script> -->
+<!-- 顶层固定广告 -->
+<script>
+    var isShow = function isShow(value) {
+        return value && value.isshow;
+    };
+    var parseDate = function parseDate(date) {
+      const parsed = Date.parse(date);
+      if (!isNaN(parsed)) {
+        return parsed;
+      }
+      return Date.parse(date.replace(/-/g, '/').replace(/[a-z]+/gi, ' '));
+    };
+    var now = new Date().getTime();
+    var isExpired = function(item) {
+        let start = parseDate(item.start_time);
+		let end = parseDate(item.end_time);
+    	return item && start <= now && now <= end;
+    };
+    let image = $('.pop-image');
+    let link = $('.pop-links');
+    let text = $('.pop-text');
+    let adArray = [
+            {
+                "title": "双十一冰点价，最高可减 1300 元",
+                "link": "https://edu.rengwuxian.com/?utm_source=rengwuxian.com&utm_medium=fixed_ad",
+                "image": "https://image.rengwuxian.com/2022/11/01/905c6a532bf51.png",
+                "isshow": true,
+                "start_time": "2022-10-27 00:00",
+                "end_time": "2022-11-16 00:00"
+            }
+    ];
+    let showAds = adArray.filter(isShow).filter(isExpired);
+    let index = Math.floor(Math.random() * showAds.length);
+   	let adItem = showAds[index];
+    if(adItem) {
+        image.attr('src', adItem['image']);
+        link.attr('href', adItem['link']);
+        text.text(adItem['title']);
+        var currentTime = new Date().getTime();
+        if (localStorage.hideExpiredTime == null || localStorage.hideExpiredTime == undefined || localStorage.hideExpiredTime == ''){
+          localStorage.hideExpiredTime = 0;
+        }
+        if (currentTime - localStorage.hideExpiredTime > 300000){
+           $('.pop').show();
+        }
+    }
+    $(document).ready(function(){
+        $('.pop-btn-close').click(function(){
+            localStorage.hideExpiredTime = currentTime;
+            $('.pop').hide();
+        })
+    })
+</script>
+
+
+<div id="ghost-portal-root"></div></body><div style="all: initial;"><div id="__hcfy__" style="all: initial;"></div></div></html>

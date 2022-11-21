@@ -1,0 +1,2682 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)https://rengwuxian.com/kotlin-basic-2/ -->
+<html lang="zh"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Kotlin 里那些「不是那么写的」</title>
+
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="shortcut icon" href="https://rengwuxian.com/favicon.png">
+<style>
+
+	/* roboto-regular */
+	@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: regular;
+	src: url('//lib.baomitu.com/fonts/roboto/roboto-regular.eot'); /* IE9 Compat Modes */
+	src: local('Roboto'), local('Roboto-Normal'),
+		url('//lib.baomitu.com/fonts/roboto/roboto-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/roboto/roboto-regular.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/roboto/roboto-regular.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/roboto/roboto-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/roboto/roboto-regular.svg#Roboto') format('svg'); /* Legacy iOS */
+	}
+	
+	/* roboto-500 */
+	@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 500;
+	src: url('//lib.baomitu.com/fonts/roboto/roboto-500.eot'); /* IE9 Compat Modes */
+	src: local('Roboto'), local('Roboto-Normal'),
+		url('//lib.baomitu.com/fonts/roboto/roboto-500.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/roboto/roboto-500.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/roboto/roboto-500.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/roboto/roboto-500.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/roboto/roboto-500.svg#Roboto') format('svg'); /* Legacy iOS */
+	}
+	
+	/* roboto-700 */
+	@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 700;
+	src: url('//lib.baomitu.com/fonts/roboto/roboto-700.eot'); /* IE9 Compat Modes */
+	src: local('Roboto'), local('Roboto-Normal'),
+		url('//lib.baomitu.com/fonts/roboto/roboto-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/roboto/roboto-700.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/roboto/roboto-700.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/roboto/roboto-700.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/roboto/roboto-700.svg#Roboto') format('svg'); /* Legacy iOS */
+	}
+	
+	/* poppins-regular */
+	@font-face {
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: regular;
+	src: url('//lib.baomitu.com/fonts/poppins/poppins-regular.eot'); /* IE9 Compat Modes */
+	src: local('Poppins'), local('Poppins-Normal'),
+		url('//lib.baomitu.com/fonts/poppins/poppins-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/poppins/poppins-regular.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-regular.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/poppins/poppins-regular.svg#Poppins') format('svg'); /* Legacy iOS */
+	}
+	
+	/* poppins-italic */
+	@font-face {
+	font-family: 'Poppins';
+	font-style: italic;
+	font-weight: regular;
+	src: url('//lib.baomitu.com/fonts/poppins/poppins-italic.eot'); /* IE9 Compat Modes */
+	src: local('Poppins'), local('Poppins-Italic'),
+		url('//lib.baomitu.com/fonts/poppins/poppins-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/poppins/poppins-italic.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-italic.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-italic.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/poppins/poppins-italic.svg#Poppins') format('svg'); /* Legacy iOS */
+	}
+	
+	/* poppins-500 */
+	@font-face {
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 500;
+	src: url('//lib.baomitu.com/fonts/poppins/poppins-500.eot'); /* IE9 Compat Modes */
+	src: local('Poppins'), local('Poppins-Normal'),
+		url('//lib.baomitu.com/fonts/poppins/poppins-500.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/poppins/poppins-500.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-500.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-500.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/poppins/poppins-500.svg#Poppins') format('svg'); /* Legacy iOS */
+	}
+	
+	/* poppins-600 */
+	@font-face {
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 600;
+	src: url('//lib.baomitu.com/fonts/poppins/poppins-600.eot'); /* IE9 Compat Modes */
+	src: local('Poppins'), local('Poppins-Normal'),
+		url('//lib.baomitu.com/fonts/poppins/poppins-600.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/poppins/poppins-600.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-600.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-600.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/poppins/poppins-600.svg#Poppins') format('svg'); /* Legacy iOS */
+	}
+	
+	/* poppins-700 */
+	@font-face {
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 700;
+	src: url('//lib.baomitu.com/fonts/poppins/poppins-700.eot'); /* IE9 Compat Modes */
+	src: local('Poppins'), local('Poppins-Normal'),
+		url('//lib.baomitu.com/fonts/poppins/poppins-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/poppins/poppins-700.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-700.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-700.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/poppins/poppins-700.svg#Poppins') format('svg'); /* Legacy iOS */
+	}
+	
+	/* poppins-700italic */
+	@font-face {
+	font-family: 'Poppins';
+	font-style: italic;
+	font-weight: 700;
+	src: url('//lib.baomitu.com/fonts/poppins/poppins-700italic.eot'); /* IE9 Compat Modes */
+	src: local('Poppins'), local('Poppins-Italic'),
+		url('//lib.baomitu.com/fonts/poppins/poppins-700italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		url('//lib.baomitu.com/fonts/poppins/poppins-700italic.woff2') format('woff2'), /* Super Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-700italic.woff') format('woff'), /* Modern Browsers */
+		url('//lib.baomitu.com/fonts/poppins/poppins-700italic.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('//lib.baomitu.com/fonts/poppins/poppins-700italic.svg#Poppins') format('svg'); /* Legacy iOS */
+	}
+  
+</style>
+
+<link href="./Kotlin 里那些「不是那么写的」_files/style.min.css" type="text/css" rel="stylesheet">
+<link href="./Kotlin 里那些「不是那么写的」_files/plugins.min.css" type="text/css" rel="stylesheet" as="style" onload="this.rel=&#39;stylesheet&#39;">
+
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="/assets/dist/grids-ie.css?v=ef6c9f55ae">
+<script src="/assets/js/html5shiv.min.js?v=ef6c9f55ae"></script>
+<![endif]-->
+
+<iframe id="pxcelframe" title="pxcelframe" src="./Kotlin 里那些「不是那么写的」_files/t_.html" style="display: none;"></iframe><script async="" src="./Kotlin 里那些「不是那么写的」_files/6075a9981ec66e0011e92ed4.js.下载"></script><script src="./Kotlin 里那些「不是那么写的」_files/embed.dist.js.下载" async=""></script><script src="./Kotlin 里那些「不是那么写的」_files/hm.js.下载"></script><script type="text/javascript">
+	// Theme Config, check the documentation before edit this file
+    var search_engine_key = 'e9ae642e278dd89cf1a4c09bc3'; // example: e08514f918d175f017584aaf34
+    var search_api = "/ghost/api/content/posts/?key=" + search_engine_key + "&limit=all&include=tags";
+	var theme_config = {
+		flickr_id: '27579110@N08', // You can get it here: http://idgettr.com/
+		flickr_photos_limit: 6, // How many photos you want to show
+		disqus_shortname: 'ghostexample', // You can create your own Disqus Comments here: https://disqus.com/admin/create/
+	};
+</script><style type="text/css" abt="234"></style>
+
+
+<link rel="icon" href="https://rengwuxian.com/favicon.png" type="image/png">
+    <link rel="canonical" href="https://rengwuxian.com/kotlin-basic-2/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="https://rengwuxian.com/kotlin-basic-2/amp/">
+    
+    <meta property="og:site_name" content="扔物线">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Kotlin 里那些「不是那么写的」">
+    <meta property="og:description" content="本期作者：  视频：扔物线（朱凯）  文章：Walker（张磊）  大家好，我是扔物线朱凯。不是第一期了，咱就不多废话了。直接视频伺候：        如果你看不到上面的哔哩哔哩视频，可以点击 这里 去 YouTube 看。  以下内容来自文章作者 Walker。  上一篇我们讲了 Kotlin 上手最基础的三个点：变量、函数和类型。大家都听说过，Kotlin 完全兼容 Java，这个意思是用 Java 写出来的代码和 Kotlin 可以完美交互，而不是说你用 Java 的写法去写 Kotlin 就完全没问题，这个是不行的。这期内容我们就讲一下，Kotlin 里那些「不 Java」的写法。  Constructor 上一篇中简单介绍了 Kotlin 的构造器，">
+    <meta property="og:url" content="https://rengwuxian.com/kotlin-basic-2/">
+    <meta property="og:image" content="https://rengwuxian.com/content/images/2021/04/0-6.jpeg">
+    <meta property="article:published_time" content="2019-08-21T01:46:00.000Z">
+    <meta property="article:modified_time" content="2021-04-23T02:12:23.000Z">
+    <meta property="article:tag" content="Kotlin">
+    <meta property="article:tag" content="Kotlin 基础">
+    <meta property="article:tag" content="码上开学">
+    
+    <meta property="article:publisher" content="https://www.facebook.com/rengwuxian">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kotlin 里那些「不是那么写的」">
+    <meta name="twitter:description" content="本期作者：  视频：扔物线（朱凯）  文章：Walker（张磊）  大家好，我是扔物线朱凯。不是第一期了，咱就不多废话了。直接视频伺候：        如果你看不到上面的哔哩哔哩视频，可以点击 这里 去 YouTube 看。  以下内容来自文章作者 Walker。  上一篇我们讲了 Kotlin 上手最基础的三个点：变量、函数和类型。大家都听说过，Kotlin 完全兼容 Java，这个意思是用 Java 写出来的代码和 Kotlin 可以完美交互，而不是说你用 Java 的写法去写 Kotlin 就完全没问题，这个是不行的。这期内容我们就讲一下，Kotlin 里那些「不 Java」的写法。  Constructor 上一篇中简单介绍了 Kotlin 的构造器，">
+    <meta name="twitter:url" content="https://rengwuxian.com/kotlin-basic-2/">
+    <meta name="twitter:image" content="https://rengwuxian.com/content/images/2021/04/0-6.jpeg">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="yanke">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="Kotlin, Kotlin 基础, 码上开学">
+    <meta name="twitter:site" content="@rengwuxian">
+    <meta property="og:image:width" content="1280">
+    <meta property="og:image:height" content="713">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "扔物线",
+        "url": "https://rengwuxian.com/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://rengwuxian.com/favicon.png",
+            "width": 60,
+            "height": 60
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "yanke",
+        "url": "https://rengwuxian.com/author/yanke/",
+        "sameAs": []
+    },
+    "headline": "Kotlin 里那些「不是那么写的」",
+    "url": "https://rengwuxian.com/kotlin-basic-2/",
+    "datePublished": "2019-08-21T01:46:00.000Z",
+    "dateModified": "2021-04-23T02:12:23.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://rengwuxian.com/content/images/2021/04/0-6.jpeg",
+        "width": 1280,
+        "height": 713
+    },
+    "keywords": "Kotlin, Kotlin 基础, 码上开学",
+    "description": "&gt; 本期作者：\n\n视频：扔物线（朱凯）\n\n文章：Walker（张磊） [https://juejin.im/user/58e46281da2f60005fe23d48]\n\n\n大家好，我是扔物线朱凯。不是第一期了，咱就不多废话了。直接视频伺候：\n\n如果你看不到上面的哔哩哔哩视频，可以点击 这里 [https://youtu.be/2B54c4JtnQ8] 去 YouTube 看。\n\n&gt; 以下内容来自文章作者 Walker [https://juejin.im/user/58e46281da2f60005fe23d48]。\n\n\n上一篇我们讲了 Kotlin 上手最基础的三个点：变量、函数和类型。大家都听说过，Kotlin 完全兼容 Java，这个意思是用 Java 写出来的代码和\nKotlin 可以完美交互，而不是说你用 Java 的写法去写 Kotlin 就完全没问题，这个是不行的。这期内容我们就讲一下，Kotlin 里那些「不\nJava」的写法。\n\nConstructor\n上一篇中简单介绍了 Kotlin 的构造器，这一节具体看看 Kotlin 的构造器和 Java 有什么不一样的地方",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://rengwuxian.com/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.36">
+    <link rel="alternate" type="application/rss+xml" title="扔物线" href="https://rengwuxian.com/rss/">
+    <script defer="" src="./Kotlin 里那些「不是那么写的」_files/portal.min.js.下载" data-ghost="https://rengwuxian.com/" crossorigin="anonymous"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+.gh-post-upgrade-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.gh-post-upgrade-cta-content {
+    border-radius: 8px;
+    padding: 40px 4vw;
+}
+
+.gh-post-upgrade-cta h2 {
+    color: #ffffff;
+    font-size: 28px;
+    letter-spacing: -0.2px;
+    margin: 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta p {
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.gh-post-upgrade-cta small {
+    font-size: 16px;
+    letter-spacing: -0.2px;
+}
+
+.gh-post-upgrade-cta a {
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a:hover {
+    color: #ffffff;
+    opacity: 0.8;
+    box-shadow: none;
+    text-decoration: underline;
+}
+
+.gh-post-upgrade-cta a.gh-btn {
+    display: block;
+    background: #ffffff;
+    text-decoration: none;
+    margin: 28px 0 0;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.gh-post-upgrade-cta a.gh-btn:hover {
+    opacity: 0.92;
+}</style>
+    <script defer="" src="./Kotlin 里那些「不是那么写的」_files/cards.min.js.下载"></script>
+    <link rel="stylesheet" type="text/css" href="./Kotlin 里那些「不是那么写的」_files/cards.min.css">
+    <!-- 搜狗站长工具 -->
+<meta name="sogou_site_verification" content="RqiH1rN2f2">
+<!-- 头条站长工具 -->
+<meta name="bytedance-verification-code" content="LBvgIFkyZA2HGPoo49cg">
+<!-- 360 站长工具 -->
+<meta name="360-site-verification" content="56d0d68e6d1b0da2445dcfaa95ea7c5d">
+<!-- 神马站长工具 -->
+<meta name="shenma-site-verification" content="20324305e696b94bac55cbb9c880228e_1623723970">
+<!-- Bing 站长工具 -->
+<meta name="msvalidate.01" content="BE5EE195E88484861667DED05FC69166">
+<!-- Google 站长工具 -->
+<meta name="google-site-verification" content="3-cfltjQ_72y96I68q1iY1KeObFLMzL0TB27-xi2zIA">
+<!-- 百度统计 -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d2f1ea1235e2c9ffe722cea1c6b5b3df";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="./Kotlin 里那些「不是那么写的」_files/js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XEF0Z7HWK0');
+</script>
+<script type="text/javascript" src="./Kotlin 里那些「不是那么写的」_files/sharethis.js.下载" async="async"></script>
+<!-- <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" async='async'/>
+<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js" async='async'></script>
+<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.0.min.js"></script> -->
+<script src="./Kotlin 里那些「不是那么写的」_files/jquery.min.js.下载"></script>
+<style>
+    .block {
+    	display: block;
+    }
+    
+    .hidden {
+    	display: none!important;
+    }
+    
+    #header .share-buttons {
+    	padding: 10px 22px;
+        border-radius: 30px;
+    }
+    
+    #header div.menu-wrapper {
+    	left: 0;
+    }
+    .btn-follow {
+    	padding: 10px 25px;
+        color: #111;
+    	background-color: #FFD012;
+    	border-radius: 25px;
+        margin-left: 30px;
+    }
+    
+    .btn-follow:hover {
+        color: #fff;
+        background-color: #111;
+    }
+    .text-center {
+    	text-align: center;
+    }
+    
+    #footer .subscribe {
+    	padding: 50px;
+    }
+    .follow-us {
+    	font-size: 32px;
+    }
+    
+    .mt-10 {
+    	margin-top: 10px;
+    }
+    
+    .mt-15 {
+    	margin-top: 15px;
+    }
+    
+    .mt-20 {
+    	margin-top: 20px;
+    }
+    
+    .tag-filters {
+    	margin-left: 0px;
+    }
+    
+    .follow-qrcode-list img {
+        width: 70%;
+    	border-radius: 10px;
+    }
+    
+    .follow-qrcode-item {
+    	margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+    
+    .btn-follow-learn {
+    	display: inline-block;
+        margin: 0 5px;
+        background: #FF3152;
+        height: 40px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff;
+        line-height: 40px;
+        padding: 0 25px;
+        font-family: "Roboto",sans-serif;
+        border-radius: 25px;
+        margin-left: 15px;
+    }
+    
+    .flex {
+    	display: flex;
+    }
+    
+    .flex-col {
+    	flex-direction: column;
+    }
+    
+    .justify-center {
+    	justify-content: center;
+    }
+    
+    .justify-between {
+    	justify-content: space-between;
+    }
+    
+    .items-center {
+    	align-items: center;
+    }
+    
+    .white {
+    	color: white;
+    }
+    
+     .white-80 {
+    	color: #FFFFFFCC;
+    }
+    
+    .gray {
+    	color: gray;
+    }
+   	.title.ularge {
+    	font-size: 52px;
+    }
+    .sub-title {
+    	font-size: 30px;
+        margin-left: 100px;
+    }
+    .opacity-100 {
+        opacity: 1;
+    }
+    .opacity-80 {
+        opacity: 0.8;
+    }
+    
+    .hero {
+    	padding-left: 0;
+        padding-right: 0;
+    }
+    
+    .cover-bg {
+    	height: 668px;
+        background-position: center;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 13.3%;
+    }
+    
+    .hero-content {
+    	height: 668px;
+        -webkit-animation: fadeIn 1s ease-in-out;
+        animation: fadeIn 1s ease-in-out;
+        vertical-align: middle;
+        background-size: cover;
+        background-position: center;
+    	background-repeat: no-repeat;
+        border-radius: 10px;
+    }
+    
+    div.articles .featured-image {
+    	border-radius: 10px;
+    }
+    
+    div.articles {
+    	padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    div.articles article {
+       	padding-top: 20px;
+        padding-bottom: 10px;
+   	}
+    
+    div.articles article a.thumb {
+    	min-height: 230px;
+    }
+    
+    .tablet-grid-50 {
+    	padding-left: 12px;
+        padding-right: 12px;
+    }
+    
+    .grid-container {
+        max-width: 1300px;
+        padding-top: 0px;
+    }
+    
+    .ad-post-list-container {
+    	margin-left: 15px;
+        margin-right: 15px;
+    }
+    
+    .ad-post-list-container img {
+    	width: 1300px;
+        border-radius: 10px;
+    	margin-top: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .follow-list {
+        margin-right: 30px;
+    }
+    
+    #single.standard .featured-image {
+    	height: 500px;
+    }
+    
+    div.text blockquote, div.text hr, div.text pre, div.text table,
+    div.text figure, div.text iframe, div.text p {
+    	margin-bottom: 16px;
+    }
+    
+    div.text blockquote {
+    	padding: 5px 20px;
+    }
+    
+    div.text p {
+        margin-bottom: 10px;
+    }
+    
+    div.text ol, div.text ul {
+    	margin-bottom: 16px;
+        margin-left: 20px;
+    }
+    
+    div.text ol, div.text ul, div.text ul li {
+    	list-style-position: initial;
+    }
+    
+    div.text blockquote ul {
+    	margin-bottom: 0px;
+    }
+    
+    div.text code:not([class*=language-]) {
+    	padding: 1px 4px;
+        margin: 2px 1px;
+        font-size: 13px;
+        color: #ff3152;
+        line-height: 22px;
+    }
+    
+    code[class*=language-], pre[class*=language-] {
+    	border-radius: 6px;
+    }
+    
+    div.text h1 code,
+    div.text h2 code,
+    div.text h3 code,
+    div.text h4 code,
+    div.text h5 code,
+    div.text h6 code{
+        color: inherit!important;
+        font-size: inherit!important;
+    	background: inherit!important;
+        border: inherit!important;
+        padding: none!important;
+        line-height: inherit!important
+    }
+    
+    aside .widget {
+    	padding: 25px 0px 50px
+    }
+    
+    #single .share-buttons .title {
+       margin-bottom: 0px;
+    }
+    
+    #st-1 {
+    	display: flex!important;
+        flex-direction: column!important;
+        padding: 5px;
+    }
+    
+    #st-1 .st-btn {
+        display: block!important;
+        margin-right: 0px!important;
+        margin-bottom: 10px;
+        border: unset!important;
+    }
+    
+    #st-2 .st-btn {
+    	display: inline-block!important;
+        padding: 0 9px!important;
+        border: unset!important;
+        background: #fff;
+        -webkit-box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+
+    }
+    .sidebar-follow {
+    	padding: 30px 0;
+        background: #FF3152;
+        border-top-right-radius: 7px;
+        padding-left: 50px;
+        padding-right: 50px;
+        position: relative;
+    }
+    
+    .sidebar-follow .btn-follow {
+    	margin-left: 0px;
+    }
+    
+    .justify-around {
+    	justify-content: space-around;
+    }
+    
+    .gh-post-upgrade-cta-content {
+        padding: 40px 1vw;
+    }
+    
+    .swiper-pagination-bullet {
+        width: 12px;
+        height: 12px;
+        border-radius: 14px;
+        opacity: 0.6;
+    	background: #FFFFFF!important;
+	}
+    
+    .swiper-pagination-bullet-active {
+        color:#FFFFFF;
+        opacity: 1;
+        background: #FF3152!important;
+    }
+    
+    .swiper-slide img {
+    	width: 100%;
+    }
+    
+    .swiper-slide .large {
+    	display: block;
+    }
+    
+    .swiper-slide .small {
+    	display: none;
+    }
+    
+    
+    .hero-content img {
+        border-radius: 10px;
+    }
+    
+    .hero div {
+        display: none!important;
+    }
+    
+    div.filters {
+    	padding: 15px 0;
+    }
+    
+    .content {
+    	margin-top: 50px;
+    }
+    
+    .hero-ad-container img {
+    	width: 1300px;
+        height: auto;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    
+    #header nav ul.menu li:hover .dropdown-menu {
+    	display: block;
+    }
+    
+    #header ul.dropdown-menu {
+    	position: absolute;
+        top: 100%;
+        left: -20px;
+        z-index: 1000;
+        display: none;
+        padding: 0.5rem 0.5rem;
+        text-align: left;
+        list-style: none;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: 0.25rem;
+        background-color: #fff;
+        border-radius: 6px;
+        -webkit-box-shadow: 0 0 0 1px rgb(68 68 68 / 11%);
+        box-shadow: 0 0 0 1px rgb(68 68 68 / 11%);
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        -webkit-transform-origin: 50% 0;
+        -ms-transform-origin: 50% 0;
+        transform-origin: 50% 0;
+        -webkit-transform: scale(0.75) translateY(-22.5px);
+        -ms-transform: scale(0.75) translateY(-22.5px);
+        transform: scale(0.75) translateY(-22.5px);
+        -webkit-transition: all 0.2s cubic-bezier(0.5,0,0,1.25),opacity 0.15s ease-out;
+        -o-transition: all 0.2s cubic-bezier(0.5,0,0,1.25),opacity 0.15s ease-out;
+        transition: all 0.2s cubic-bezier(0.5,0,0,1.25),opacity 0.15s ease-out;
+        max-height: 50vh;
+        overflow: auto;
+        min-width: 245px;
+    }
+    
+    #header ul.dropdown-menu a {
+    	color: #494949!important;
+    }
+    
+    #header ul.dropdown-menu li {
+    	padding: 15px 5px!important;
+        width: 100%;
+        display: block;
+    }
+    
+    #header ul.dropdown-menu li:hover a {
+    	color: #FFD012!important;
+    }
+    
+    [class^=fa-chevron-] {
+    	transition: all .2s ease 0s;
+    }
+    
+    #menu-header .fa-chevron-up {
+    	display: none;
+    }
+    
+    #header nav ul.menu li:hover .fa-chevron-up {
+    	display: inline-block;
+        color: white;
+        transition: all .2s ease 0s;
+    }
+    
+    #header nav ul.menu li:hover .fa-chevron-down {
+    	display: none;
+        transition: all .2s ease 0s;
+    }
+    
+    .pop {
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        background-color: #000000AA;
+        text-align: center;
+        z-index: 100;
+        display: none;
+    }
+    .pop-container {
+        height: 80%;
+        margin-top: 7%;
+    }
+    .pop-links {
+        text-decoration: none;
+    }
+    .pop-image {
+        max-height: 70%;
+    }
+    .pop-text {
+        width: 60%;
+        color: white;
+        margin-top: 20px;
+        line-height: 30px;
+    }
+    
+    #home .title {
+    	margin-bottom: 15px;
+    }
+    
+    #home p {
+    	color: gray;
+        margin-bottom: 25px;
+    }
+    
+    #home .pagination {
+        border-top: none;
+        border-bottom: 1px solid #e5e5e5;
+        margin-bottom: 30px;
+    }
+    
+    
+    .hero-weekly {
+    	padding-bottom: 25px;
+    }
+    .hero-weekly .title {
+    	margin-bottom: 30px;
+    }
+    
+    .hero-weekly ul {
+        list-style: disc;
+    	padding: 10px 30px;
+    }
+    
+    @media screen and (max-width: 1024px) {
+        .hero-content {
+        	height: 480px;
+        }
+    }
+    
+    @media screen and (max-width: 768px) {
+        
+        #header nav {
+        	width: 87%;
+            left: 10px;
+        }
+        .hero-content {
+        	height: 360px;
+        }
+        .sub-title {
+        	margin-left: 0px;
+        }
+        
+        #header ul.dropdown-menu {
+        	display: block;
+            position: inherit;
+            top: 100%;
+            left: 0px;
+            z-index: 1000;
+            border: none;
+            box-shadow: unset;
+            -webkit-box-shadow: unset;
+            transform-origin: unset;
+            -webkit-transform: unset;
+        }
+        
+        #header ul.dropdown-menu>li {
+        	padding: 5px 5px!important;
+            width: auto;
+        }
+    }
+    @media screen and (max-width: 767px) {
+        .hero-content {
+        	height: 220px;
+        }
+        .title.ularge {
+    		font-size: 24px;
+            padding-top: 30px;
+        }
+        .sub-title {
+            font-size: 17.5px;
+            margin-left: 0px;
+        }
+        .hero-content div {
+        	flex-direction: column;
+        }
+        
+        .tag-filters {
+    		margin-left: 0px;
+    	}
+        
+        .btn-follow-learn {
+        	height: 28px;
+            line-height: 28px;
+            padding: 0 15px;
+            font-size: 14px;
+        }
+        
+        .follow-list {
+        	margin-right: 15px;
+        }
+        
+        .btn-follow {
+        	padding: 10px 15px;
+            margin-left: 10px;
+            font-size: 12px;
+        }
+        
+        div.articles article {
+            padding-bottom: 5px;
+        }
+        
+        div.articles article a.thumb {
+            min-height: 180px;
+        }
+        
+        .ad-post-list-container {
+        	margin-left: 0px;
+            margin-right: 0px;
+        }
+        
+        div.articles {
+        	padding-left: 0px;
+        	padding-right: 0px;
+        }
+        
+        .share-buttons-container {
+        	flex-direction: column;
+        }
+        
+        .sharethis-inline-share-buttons {
+        	margin-top: 20px;
+        }
+        
+        .swiper-pagination-bullet {
+        	width: 8px;
+            height: 8px;
+        }
+        
+        .swiper-slide .large {
+            display: none;
+        }
+
+        .swiper-slide .small {
+            display: block;
+        }
+    }
+    
+    @media screen and (max-width: 414px) {
+        .hero-content {
+        	height: 240px;
+        }
+    }
+    
+    @media screen and (max-width: 375px) {
+        .hero-content {
+        	height: 220px;
+        }
+    }
+    @media screen and (max-width: 320px) {
+        .hero-content {
+        	height: 190px;
+        }
+    }
+    
+    #taboola-livere {
+    	display: none;
+    }
+</style>
+<style>
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZVJvb3QiOiIifQ== */</style><style>
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZVJvb3QiOiIifQ== */</style><script>//remove baidu search ad
+var _countAA = 0
+function doBBBd(){}
+doBBBd()
+document.addEventListener('keyup', function(){_countAA-=10;doBBBd()}, false)
+document.addEventListener('click', function(){_countAA-=10;doBBBd()}, false)
+
+</script><style>hcfy-result.__hcfy__result__loaded__.__hcfy__result__both__{border: 1px dotted}</style><style type="text/css">#st-1 {
+  font-family: "Helvetica Neue", Verdana, Helvetica, Arial, sans-serif;;
+  direction: ltr;
+  display: block;
+  opacity: 1;
+  text-align: center;
+  z-index: 94034;
+}
+#st-1.st-animated {
+  -moz-transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in; -ms-transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in; -o-transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in; -webkit-transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in; transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in;
+}
+#st-1.st-hidden {
+  opacity: 0;
+}
+#st-1.st-hide {
+  display: none;
+}
+#st-1 .st-btn {
+  -moz-box-sizing: border-box;
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+  -moz-transition: opacity 0.2s ease-in, top 0.2s ease-in; -ms-transition: opacity 0.2s ease-in, top 0.2s ease-in; -o-transition: opacity 0.2s ease-in, top 0.2s ease-in; -webkit-transition: opacity 0.2s ease-in, top 0.2s ease-in; transition: opacity 0.2s ease-in, top 0.2s ease-in;
+  -moz-border-radius: 20px;
+-webkit-border-radius: 20px;
+border-radius: 20px;
+  border: solid 1px #ccc;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  height: 40px;
+  line-height: 40px;
+  margin-right: 8px;
+  padding: 0 10px;
+  position: relative;
+  text-align: center;
+  top: 0;
+  vertical-align: top;
+  white-space: nowrap;
+}
+#st-1 .st-btn:last-child {
+  margin-right: 0;
+}
+#st-1 .st-btn > svg {
+  height: 20px;
+  width: 20px;
+  position: relative;
+  top: 10px;
+  vertical-align: top;
+}
+#st-1 .st-btn > img {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  position: relative;
+  top: 10px;
+  vertical-align: top;
+}
+#st-1 .st-btn > span {
+  -moz-transition: all 0.2s ease-in; -ms-transition: all 0.2s ease-in; -o-transition: all 0.2s ease-in; -webkit-transition: all 0.2s ease-in; transition: all 0.2s ease-in;
+  color: #fff;
+  display: inline-block;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  min-width: 67px;
+  opacity: 1;
+  padding: 0 6px;
+  position: relative;
+  vertical-align: top;
+}
+#st-1.st-has-labels .st-btn {
+  min-width: 135px;
+}
+#st-1.st-has-labels .st-btn.st-remove-label {
+  min-width: 50px;
+}
+#st-1.st-has-labels .st-btn.st-remove-label > span {
+  display: none;
+}
+#st-1.st-has-labels .st-btn.st-hide-label > span {
+  display: none;
+}
+#st-1 .st-total {
+  color: #555;
+  display: inline-block;
+  font-weight: 500;
+  line-height: 15px;
+  margin-right: 0;
+  max-width: 80px;
+  padding: 4px 8px;
+  text-align: center;
+}
+#st-1 .st-total.st-hidden {
+  display: none;
+}
+#st-1 .st-total > span {
+  font-size: 20px;
+  line-height: 22px;
+  display: block;
+  padding: 0;
+}
+#st-1 .st-total > span.st-shares {
+  font-size: 12px;
+  line-height: 12px;
+}
+#st-1.st-justified {
+  display: flex;
+  text-align: center;
+}
+#st-1.st-justified .st-btn {
+  -moz-flex: 1;
+-ms-flex: 1;
+-webkit-flex: 1;
+flex: 1;
+}#st-1 .st-btn:hover {
+  opacity: .8;
+  top: -4px;
+}#st-1 .st-btn[data-network='weibo'] {
+  background-color: #fff
+}
+#st-1 .st-btn[data-network='weibo'] img {
+  filter: 
+}
+#st-1 .st-btn[data-network='weibo'] > span {
+  color: #ff9933
+}
+#st-1 .st-btn[data-network='wechat'] {
+  background-color: #fff
+}
+#st-1 .st-btn[data-network='wechat'] img {
+  filter: 
+}
+#st-1 .st-btn[data-network='wechat'] > span {
+  color: #4EC034
+}
+#st-1 .st-btn[data-network='twitter'] {
+  background-color: #fff
+}
+#st-1 .st-btn[data-network='twitter'] img {
+  filter: 
+}
+#st-1 .st-btn[data-network='twitter'] > span {
+  color: #55acee
+}
+#st-1 .st-btn[data-network='email'] {
+  background-color: #fff
+}
+#st-1 .st-btn[data-network='email'] img {
+  filter: 
+}
+#st-1 .st-btn[data-network='email'] > span {
+  color: #7d7d7d
+}#st-1 .st-btn[data-network='snapchat'] > span {
+  color: #333};
+}</style><style type="text/css">#st-2 {
+  font-family: "Helvetica Neue", Verdana, Helvetica, Arial, sans-serif;;
+  direction: ltr;
+  display: block;
+  opacity: 1;
+  text-align: center;
+  z-index: 94034;
+}
+#st-2.st-animated {
+  -moz-transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in; -ms-transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in; -o-transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in; -webkit-transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in; transition: o 0.2s ease-in, p 0.2s ease-in, a 0.2s ease-in, c 0.2s ease-in, i 0.2s ease-in, t 0.2s ease-in, y 0.2s ease-in;
+}
+#st-2.st-hidden {
+  opacity: 0;
+}
+#st-2.st-hide {
+  display: none;
+}
+#st-2 .st-btn {
+  -moz-box-sizing: border-box;
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+  -moz-transition: opacity 0.2s ease-in, top 0.2s ease-in; -ms-transition: opacity 0.2s ease-in, top 0.2s ease-in; -o-transition: opacity 0.2s ease-in, top 0.2s ease-in; -webkit-transition: opacity 0.2s ease-in, top 0.2s ease-in; transition: opacity 0.2s ease-in, top 0.2s ease-in;
+  -moz-border-radius: 20px;
+-webkit-border-radius: 20px;
+border-radius: 20px;
+  border: solid 1px #ccc;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  height: 40px;
+  line-height: 40px;
+  margin-right: 8px;
+  padding: 0 10px;
+  position: relative;
+  text-align: center;
+  top: 0;
+  vertical-align: top;
+  white-space: nowrap;
+}
+#st-2 .st-btn:last-child {
+  margin-right: 0;
+}
+#st-2 .st-btn > svg {
+  height: 20px;
+  width: 20px;
+  position: relative;
+  top: 10px;
+  vertical-align: top;
+}
+#st-2 .st-btn > img {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  position: relative;
+  top: 10px;
+  vertical-align: top;
+}
+#st-2 .st-btn > span {
+  -moz-transition: all 0.2s ease-in; -ms-transition: all 0.2s ease-in; -o-transition: all 0.2s ease-in; -webkit-transition: all 0.2s ease-in; transition: all 0.2s ease-in;
+  color: #fff;
+  display: inline-block;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  min-width: 67px;
+  opacity: 1;
+  padding: 0 6px;
+  position: relative;
+  vertical-align: top;
+}
+#st-2.st-has-labels .st-btn {
+  min-width: 135px;
+}
+#st-2.st-has-labels .st-btn.st-remove-label {
+  min-width: 50px;
+}
+#st-2.st-has-labels .st-btn.st-remove-label > span {
+  display: none;
+}
+#st-2.st-has-labels .st-btn.st-hide-label > span {
+  display: none;
+}
+#st-2 .st-total {
+  color: #555;
+  display: inline-block;
+  font-weight: 500;
+  line-height: 15px;
+  margin-right: 0;
+  max-width: 80px;
+  padding: 4px 8px;
+  text-align: center;
+}
+#st-2 .st-total.st-hidden {
+  display: none;
+}
+#st-2 .st-total > span {
+  font-size: 20px;
+  line-height: 22px;
+  display: block;
+  padding: 0;
+}
+#st-2 .st-total > span.st-shares {
+  font-size: 12px;
+  line-height: 12px;
+}
+#st-2.st-justified {
+  display: flex;
+  text-align: center;
+}
+#st-2.st-justified .st-btn {
+  -moz-flex: 1;
+-ms-flex: 1;
+-webkit-flex: 1;
+flex: 1;
+}#st-2 .st-btn:hover {
+  opacity: .8;
+  top: -4px;
+}#st-2 .st-btn[data-network='weibo'] {
+  background-color: #fff
+}
+#st-2 .st-btn[data-network='weibo'] img {
+  filter: 
+}
+#st-2 .st-btn[data-network='weibo'] > span {
+  color: #ff9933
+}
+#st-2 .st-btn[data-network='wechat'] {
+  background-color: #fff
+}
+#st-2 .st-btn[data-network='wechat'] img {
+  filter: 
+}
+#st-2 .st-btn[data-network='wechat'] > span {
+  color: #4EC034
+}
+#st-2 .st-btn[data-network='twitter'] {
+  background-color: #fff
+}
+#st-2 .st-btn[data-network='twitter'] img {
+  filter: 
+}
+#st-2 .st-btn[data-network='twitter'] > span {
+  color: #55acee
+}
+#st-2 .st-btn[data-network='email'] {
+  background-color: #fff
+}
+#st-2 .st-btn[data-network='email'] img {
+  filter: 
+}
+#st-2 .st-btn[data-network='email'] > span {
+  color: #7d7d7d
+}#st-2 .st-btn[data-network='snapchat'] > span {
+  color: #333};
+}</style></head><body class=" post-template tag-kotlin tag-kotlin-basic tag-kaixue  pace-done"><div class="pace  pace-inactive"><div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+  <div class="pace-progress-inner"></div>
+</div>
+<div class="pace-activity"></div></div><div class="pop hidden-xs">
+        <div class="pop-container">
+            <a class="pop-links" href="https://rengwuxian.com/kotlin-basic-2/#" target="_blank">
+                <img class="pop-image" src="https://rengwuxian.com/kotlin-basic-2/">
+            </a>
+            <center><h4 class="pop-text"></h4></center>
+            <span class="pop-btn-close"><svg t="1573004385562" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2029" width="32" height="32"><path d="M679.453315 383.633401c-0.409322-10.153244-4.200672-20.195971-11.954263-27.948539-7.751544-7.749498-17.767666-11.517311-27.947516-11.954263-11.301394-0.436952-22.709211 3.330862-31.335682 11.954263l-96.099708 96.127338-96.100732-96.127338c-8.625448-8.623401-20.034289-12.391215-31.333636-11.954263-10.152221 0.436952-20.195971 4.204765-27.948539 11.954263-7.752568 7.751544-11.544941 17.795295-11.954263 27.948539-0.464581 11.299347 3.327792 22.708188 11.954263 31.333636l96.099708 96.127338-96.099708 96.074126c-8.626471 8.625448-12.418844 20.034289-11.954263 31.333636 0.409322 10.152221 4.201695 20.195971 11.954263 27.948539 7.751544 7.751544 17.795295 11.57257 27.948539 11.95631 11.299347 0.490164 22.708188-3.330862 31.333636-11.95631l96.100732-96.073102 96.099708 96.073102c8.626471 8.625448 20.034289 12.44545 31.335682 11.95631 10.178827-0.38374 20.194948-4.203742 27.947516-11.95631 7.752568-7.751544 11.543917-17.796318 11.954263-27.948539 0.463558-11.299347-3.327792-22.708188-11.954263-31.333636l-96.099708-96.074126 96.099708-96.127338C676.125523 406.341588 679.916872 394.932748 679.453315 383.633401zM512.116145 63.916728c-246.953462 0-447.178669 200.227254-447.178669 447.178669 0 246.953462 200.225207 447.177646 447.178669 447.177646 246.953462 0 447.178669-200.224184 447.178669-447.177646C959.294814 264.143982 759.069607 63.916728 512.116145 63.916728zM512.116145 874.427426c-200.333678 0-363.332029-162.996305-363.332029-363.333052 0-200.333678 162.999374-363.333052 363.332029-363.333052s363.333052 162.999374 363.333052 363.333052C875.449197 711.431122 712.449823 874.427426 512.116145 874.427426z" p-id="2030" fill="#bfbfbf"></path></svg></span>
+        </div>
+</div><style>:root {--ghost-accent-color: #FF1A75;}</style>
+
+
+
+
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: none;">
+
+	<symbol id="clock" viewBox="0 0 512 512">
+		<path d="M347.216,301.211l-71.387-53.54V138.609c0-10.966-8.864-19.83-19.83-19.83c-10.966,0-19.83,8.864-19.83,19.83v118.978    c0,6.246,2.935,12.136,7.932,15.864l79.318,59.489c3.569,2.677,7.734,3.966,11.878,3.966c6.048,0,11.997-2.717,15.884-7.952    C357.766,320.208,355.981,307.775,347.216,301.211z"></path>
+		<path d="M256,0C114.833,0,0,114.833,0,256s114.833,256,256,256s256-114.833,256-256S397.167,0,256,0z M256,472.341    c-119.275,0-216.341-97.066-216.341-216.341S136.725,39.659,256,39.659c119.295,0,216.341,97.066,216.341,216.341    S375.275,472.341,256,472.341z"></path>
+	</symbol>
+
+    <symbol id="comments-old" viewBox="0 0 31 31">
+        <path d="M29.833,22.545c-0.034-0.028-0.075-0.044-0.112-0.068c-0.043-0.041-0.078-0.087-0.125-0.125l-2.187-1.774
+		c2.356-1.741,3.774-4.021,3.774-6.558c0-5.591-6.849-9.97-15.592-9.97C6.849,4.05,0,8.43,0,14.02c0,2.94,1.937,5.649,5.351,7.534
+		l-2.19,5.385l1.331,0.133c0.414,0.043,0.812,0.062,1.197,0.062c3.585,0,5.955-1.692,7.384-3.272
+		c0.83,0.086,1.675,0.129,2.519,0.129c2.286,0,4.438-0.306,6.375-0.849l4.215,3.419c0.049,0.04,0.104,0.071,0.155,0.105
+		c0.028,0.029,0.05,0.062,0.082,0.087c0.245,0.198,0.562,0.272,0.896,0.241c0.041,0.004,0.082,0.011,0.125,0.011
+		c0.582,0,1.162-0.252,1.556-0.737l0.894-1.102c0.426-0.525,0.536-1.203,0.364-1.811C30.212,23.029,30.075,22.742,29.833,22.545z
+		 M15.595,21.99c-0.944,0-1.888-0.058-2.806-0.172l-0.548-0.069l-0.35,0.427c-1.528,1.866-3.488,2.857-5.831,2.951l1.845-4.536
+		l-0.848-0.407c-3.213-1.544-5.055-3.79-5.055-6.163c0-4.32,6.224-7.97,13.592-7.97c7.367,0,13.593,3.651,13.593,7.971
+		c0,1.976-1.312,3.806-3.431,5.216l-7.153-5.806l-1.185-0.961c-0.088-0.093-0.188-0.179-0.31-0.252l-0.06-0.048l-0.009,0.011
+		c-0.096-0.052-0.198-0.1-0.312-0.137l-5.011-1.632c-0.223-0.073-0.416-0.107-0.578-0.107c-0.598,0-0.758,0.47-0.326,1.221
+		l2.629,4.567c0.06,0.104,0.13,0.192,0.2,0.276l-0.007,0.009l0.034,0.028c0.111,0.125,0.233,0.22,0.362,0.293l1.61,1.308
+		l4.346,3.528C18.602,21.826,17.126,21.99,15.595,21.99z M15.701,16.275l0.28-0.345l6.191,5.024c-0.238,0.08-0.486,0.15-0.734,0.223
+		l-5.871-4.766C15.612,16.367,15.658,16.328,15.701,16.275z M15.343,14.276l-1.049,1.292l-2.312-4.017l4.407,1.436l-0.599,0.738
+		L15.343,14.276z M23.93,23.199l-0.603-0.489c0.233-0.083,0.46-0.173,0.685-0.263l0.318,0.259L23.93,23.199z M27.436,23.176
+		l-0.894,1.103c-0.229,0.283-0.383,0.596-0.472,0.904l-1.484-1.205l2.154-2.654l1.484,1.205
+		C27.939,22.678,27.666,22.892,27.436,23.176z"></path>
+    </symbol>
+
+    <symbol id="copy" viewBox="0 0 488.3 488.3">
+        <g>
+            <path d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124
+                C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124
+                c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z"></path>
+            <path d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227
+                c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6
+                V38.6C439.65,17.3,422.35,0,401.05,0z"></path>
+        </g>
+    </symbol>
+
+    <symbol id="download" viewBox="0 -15 512 511">
+    <path d="m400.5625 144.59375h-.945312c-9.101563-79.101562-80.605469-135.847656-159.707032-126.742188-66.566406 7.660157-119.085937 60.175782-126.746094 126.742188h-.941406c-53.085937 0-96.117187 43.03125-96.117187 96.117188 0 53.082031 43.03125 96.113281 96.117187 96.113281h288.339844c53.085938 0 96.117188-43.03125 96.117188-96.113281 0-53.085938-43.035157-96.117188-96.117188-96.117188zm0 0" fill="#bddbff"></path><g fill="#3d9ae2"><path d="m413.492188 129.410156c-17.292969-86.765625-101.648438-143.082031-188.414063-125.789062-63.460937 12.648437-113.082031 62.238281-125.769531 125.691406-61.519532 7.089844-105.648438 62.707031-98.5625 124.230469 6.523437 56.621093 54.480468 99.339843 111.476562 99.300781h80.09375c8.847656 0 16.019532-7.171875 16.019532-16.019531 0-8.847657-7.171876-16.019531-16.019532-16.019531h-80.09375c-44.238281-.261719-79.886718-36.332032-79.625-80.566407.261719-44.238281 36.332032-79.886719 80.566406-79.625 8.167969 0 15.027344-6.140625 15.925782-14.257812 8.132812-70.304688 71.722656-120.707031 142.03125-112.574219 59.109375 6.835938 105.738281 53.464844 112.574218 112.574219 1.34375 8.261719 8.5 14.3125 16.867188 14.257812 44.238281 0 80.097656 35.859375 80.097656 80.097657 0 44.234374-35.859375 80.09375-80.097656 80.09375h-80.09375c-8.847656 0-16.019531 7.171874-16.019531 16.019531 0 8.847656 7.171875 16.019531 16.019531 16.019531h80.09375c61.929688-.386719 111.820312-50.902344 111.433594-112.828125-.347656-56.394531-42.527344-103.753906-98.503906-110.605469zm0 0"></path><path d="m313.019531 385.679688-40.609375 40.625v-201.613282c0-8.847656-7.171875-16.019531-16.019531-16.019531-8.84375 0-16.015625 7.171875-16.015625 16.019531v201.613282l-40.609375-40.625c-6.144531-6.363282-16.289063-6.539063-22.652344-.390626-6.363281 6.144532-6.539062 16.285157-.394531 22.648438.128906.132812.261719.265625.394531.394531l67.9375 67.953125c1.480469 1.480469 3.238281 2.65625 5.175781 3.460938 3.941407 1.664062 8.390626 1.664062 12.332032 0 1.9375-.804688 3.695312-1.980469 5.175781-3.460938l67.9375-67.953125c6.363281-6.144531 6.539063-16.285156.394531-22.652343-6.148437-6.363282-16.289062-6.539063-22.652344-.390626-.132812.128907-.265624.257813-.394531.390626zm0 0" fill="#3e3d42"></path></g>
+
+    </symbol>
+
+    <symbol id="comments-2" viewBox="1 -31 511.99999 511">
+    <path d="m464 16.5h-416c-17.671875 0-32 14.328125-32 32v256c0 17.671875 14.328125 32 32 32h80v96l96-96h240c17.675781 0 32-14.328125 32-32v-256c0-17.671875-14.328125-32-32-32zm0 0" fill="#ffe477"></path><path d="m128 448.5c-8.835938 0-16-7.164062-16-16v-80h-64c-26.511719 0-48-21.492188-48-48v-256c0-26.511719 21.488281-48 48-48h416c26.511719 0 48 21.488281 48 48v256c0 26.507812-21.488281 48-48 48h-233.375l-91.3125 91.3125c-3 3-7.070312 4.6875-11.3125 4.6875zm-80-416c-8.835938 0-16 7.164062-16 16v256c0 8.835938 7.164062 16 16 16h80c8.835938 0 16 7.164062 16 16v57.375l68.6875-68.6875c3-3 7.070312-4.6875 11.3125-4.6875h240c8.835938 0 16-7.164062 16-16v-256c0-8.835938-7.164062-16-16-16zm0 0" fill="#3e3d42"></path>
+
+    </symbol>
+
+    <symbol id="calendar" viewBox="1 1 511.99999 511.99999">
+    <g fill="#bddbff"><path d="m464 64h-64v32c0 8.835938-7.164062 16-16 16h-32c-8.835938 0-16-7.164062-16-16v-32h-160v32c0 8.835938-7.164062 16-16 16h-32c-8.835938 0-16-7.164062-16-16v-32h-64c-17.652344.054688-31.949219 14.347656-32 32v80h480v-80c-.054688-17.652344-14.347656-31.945312-32-32zm0 0"></path><path d="m160 272c0 17.671875-14.328125 32-32 32s-32-14.328125-32-32 14.328125-32 32-32 32 14.328125 32 32zm0 0"></path><path d="m416 272c0 17.671875-14.328125 32-32 32s-32-14.328125-32-32 14.328125-32 32-32 32 14.328125 32 32zm0 0"></path><path d="m288 272c0 17.671875-14.328125 32-32 32s-32-14.328125-32-32 14.328125-32 32-32 32 14.328125 32 32zm0 0"></path><path d="m160 400c0 17.671875-14.328125 32-32 32s-32-14.328125-32-32 14.328125-32 32-32 32 14.328125 32 32zm0 0"></path><path d="m416 400c0 17.671875-14.328125 32-32 32s-32-14.328125-32-32 14.328125-32 32-32 32 14.328125 32 32zm0 0"></path><path d="m288 400c0 17.671875-14.328125 32-32 32s-32-14.328125-32-32 14.328125-32 32-32 32 14.328125 32 32zm0 0"></path></g><path d="m464 48h-48v-16c0-17.671875-14.328125-32-32-32h-32c-17.671875 0-32 14.328125-32 32v16h-128v-16c0-17.671875-14.328125-32-32-32h-32c-17.671875 0-32 14.328125-32 32v16h-48c-26.507812 0-48 21.488281-48 48v368c0 26.507812 21.492188 48 48 48h416c26.507812 0 48-21.492188 48-48v-368c0-26.511719-21.492188-48-48-48zm-112-16h32v64h-32zm-224 0h32v64h-32zm-80 48h48v16c0 17.671875 14.328125 32 32 32h32c17.671875 0 32-14.324219 32-32v-16h128v16c0 17.671875 14.328125 32 32 32h32c17.671875 0 32-14.324219 32-32v-16h48c8.835938 0 16 7.164062 16 16v64h-448v-64c0-8.835938 7.164062-16 16-16zm416 400h-416c-8.835938 0-16-7.164062-16-16v-272h448v272c0 8.835938-7.164062 16-16 16zm0 0" fill="#3d9ae2"></path><path d="m128 224c-26.507812 0-48 21.492188-48 48s21.492188 48 48 48 48-21.492188 48-48-21.492188-48-48-48zm0 64c-8.835938 0-16-7.164062-16-16s7.164062-16 16-16 16 7.164062 16 16-7.164062 16-16 16zm0 0" fill="#3d9ae2"></path><path d="m384 224c-26.507812 0-48 21.492188-48 48s21.492188 48 48 48 48-21.492188 48-48-21.492188-48-48-48zm0 64c-8.835938 0-16-7.164062-16-16s7.164062-16 16-16 16 7.164062 16 16-7.164062 16-16 16zm0 0" fill="#3d9ae2"></path><path d="m256 224c-26.507812 0-48 21.492188-48 48s21.492188 48 48 48 48-21.492188 48-48-21.492188-48-48-48zm0 64c-8.835938 0-16-7.164062-16-16s7.164062-16 16-16 16 7.164062 16 16-7.164062 16-16 16zm0 0" fill="#3d9ae2"></path><path d="m128 352c-26.507812 0-48 21.492188-48 48s21.492188 48 48 48 48-21.492188 48-48-21.492188-48-48-48zm0 64c-8.835938 0-16-7.164062-16-16s7.164062-16 16-16 16 7.164062 16 16-7.164062 16-16 16zm0 0" fill="#3d9ae2"></path><path d="m384 352c-26.507812 0-48 21.492188-48 48s21.492188 48 48 48 48-21.492188 48-48-21.492188-48-48-48zm0 64c-8.835938 0-16-7.164062-16-16s7.164062-16 16-16 16 7.164062 16 16-7.164062 16-16 16zm0 0" fill="#3d9ae2"></path><path d="m256 352c-26.507812 0-48 21.492188-48 48s21.492188 48 48 48 48-21.492188 48-48-21.492188-48-48-48zm0 64c-8.835938 0-16-7.164062-16-16s7.164062-16 16-16 16 7.164062 16 16-7.164062 16-16 16zm0 0" fill="#3d9ae2"></path>
+
+    </symbol>
+
+    <symbol id="clock-2" viewBox="1 1 511.99998 511.99998">
+        <path d="m256 0c-141.386719 0-256 114.613281-256 256s114.613281 256 256 256 256-114.613281 256-256c-.167969-141.316406-114.683594-255.832031-256-256zm16 479.183594v-31.183594c0-8.835938-7.164062-16-16-16s-16 7.164062-16 16v31.183594c-110.917969-8.054688-199.128906-96.265625-207.183594-207.183594h31.183594c8.835938 0 16-7.164062 16-16s-7.164062-16-16-16h-31.183594c8.054688-110.917969 96.265625-199.128906 207.183594-207.183594v31.183594c0 8.835938 7.164062 16 16 16s16-7.164062 16-16v-31.183594c110.917969 8.054688 199.128906 96.265625 207.183594 207.183594h-31.183594c-8.835938 0-16 7.164062-16 16s7.164062 16 16 16h31.183594c-8.054688 110.917969-96.265625 199.128906-207.183594 207.183594zm0 0"></path><path d="m352 240h-80v-96c0-8.835938-7.164062-16-16-16s-16 7.164062-16 16v112c0 8.835938 7.164062 16 16 16h96c8.835938 0 16-7.164062 16-16s-7.164062-16-16-16zm0 0"></path>
+
+    </symbol>
+
+    <symbol id="envelope" viewBox="1 -95 511.99998 511">
+        <path d="m16 32.5v256c0 8.835938 7.164062 16 16 16h448c8.835938 0 16-7.164062 16-16v-256l-240 112zm0 0" fill="#333"></path><path d="m480 16.5h-448c-8.835938 0-16 7.164062-16 16l240 112 240-112c0-8.835938-7.164062-16-16-16zm0 0" fill="#333"></path><path d="m512 32.117188c0-.207032 0-.386719 0-.59375-.527344-17.289063-14.699219-31.03125-32-31.023438h-448c-17.261719.042969-31.378906 13.769531-31.9023438 31.023438v.59375c0 .207031-.0976562.253906-.0976562.382812v256c0 17.671875 14.328125 32 32 32h448c17.671875 0 32-14.328125 32-32v-256c0-.128906 0-.257812 0-.382812zm-53.839844.382812-202.160156 94.398438-202.160156-94.398438zm-426.160156 256v-230.878906l217.230469 101.375c4.292969 2.003906 9.246093 2.003906 13.539062 0l217.230469-101.375v230.878906zm0 0" fill="#fff"></path>
+
+    </symbol>
+
+
+
+
+
+</svg>
+
+
+	<!-- start: #wrapper -->
+	<div id="wrapper">
+
+		<!-- start: #header -->
+<header id="header">
+
+	<div class="menu-mobile">
+		<i class="fa fa-bars"></i>
+	</div>
+
+	<!-- start: .menu-wrapper -->
+	<div id="undefined-sticky-wrapper" class="sticky-wrapper is-sticky" style="height: 129px;"><div class="menu-wrapper" style="position: fixed; top: 0px;">
+	
+		<div class="grid-container">
+		
+				<div class="logo">
+					<a href="https://rengwuxian.com/" class="title white no-margin">扔物线</a>
+				</div>
+
+            <div class="share-buttons flex justify-center items-center hide-on-tablet hide-on-mobile">
+				<a href="https://space.bilibili.com/27559447" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40" viewBox="0 0 48 48" class="icon block"><path fill="#ffffff" d="M36.5,12h-7.086l3.793-3.793c0.391-0.391,0.391-1.023,0-1.414s-1.023-0.391-1.414,0L26.586,12 h-5.172l-5.207-5.207c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414L18.586,12H12.5C9.467,12,7,14.467,7,17.5v15 c0,3.033,2.467,5.5,5.5,5.5h2c0,0.829,0.671,1.5,1.5,1.5s1.5-0.671,1.5-1.5h14c0,0.829,0.671,1.5,1.5,1.5s1.5-0.671,1.5-1.5h2 c3.033,0,5.5-2.467,5.5-5.5v-15C42,14.467,39.533,12,36.5,12z M39,32.5c0,1.378-1.122,2.5-2.5,2.5h-24c-1.378,0-2.5-1.122-2.5-2.5 v-15c0-1.378,1.122-2.5,2.5-2.5h24c1.378,0,2.5,1.122,2.5,2.5V32.5z"></path><rect width="2.75" height="7.075" x="30.625" y="18.463" fill="#ffffff" transform="rotate(-71.567 32.001 22)"></rect><rect width="7.075" height="2.75" x="14.463" y="20.625" fill="#ffffff" transform="rotate(-18.432 17.998 21.997)"></rect><path fill="#ffffff" d="M28.033,27.526c-0.189,0.593-0.644,0.896-1.326,0.896c-0.076-0.013-0.139-0.013-0.24-0.025 c-0.013,0-0.05-0.013-0.063,0c-0.341-0.05-0.745-0.177-1.061-0.467c-0.366-0.265-0.808-0.745-0.947-1.477 c0,0-0.29,1.174-0.896,1.49c-0.076,0.05-0.164,0.114-0.253,0.164l-0.038,0.025c-0.303,0.164-0.682,0.265-1.086,0.278 c-0.568-0.051-0.947-0.328-1.136-0.821l-0.063-0.164l-1.427,0.656l0.05,0.139c0.467,1.124,1.465,1.768,2.74,1.768 c0.922,0,1.667-0.303,2.209-0.909c0.556,0.606,1.288,0.909,2.209,0.909c1.856,0,2.55-1.288,2.765-1.843l0.051-0.126l-1.427-0.657 L28.033,27.526z"></path></svg></a>
+                <a href="https://juejin.cn/user/2524134386185736" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" width="34px" viewBox="0 0 90 70" version="1.1" class="icon block">
+						<g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+							<g id="about" sketch:type="MSArtboardGroup" transform="translate(-621.000000, -108.000000)">
+								<g id="Group-3" sketch:type="MSLayerGroup" transform="translate(621.000000, 108.000000)">
+									<path d="M50.1219251,9.58631264 L43.0259809,4 L35.6121953,9.83662979 L35.2279087,10.1457646 L43.0259809,16.3537666 L50.8480281,10.1457646 L50.1219251,9.58631264 Z M77.011711,31.2503723 L43.0054308,58.0226799 L9.01970069,31.2667865 L4,35.2923786 L43.0054308,66 L82.0320967,35.2759644 L77.011711,31.2503723 Z M43.0054308,33.4225232 L24.5000795,18.8542023 L19.4796938,22.8797944 L43.0054308,41.4005273 L66.5510328,22.8633801 L61.5306472,18.837788 L43.0054308,33.4225232 Z" id="Fill-1-Copy" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
+								</g>
+							</g>
+						</g>
+					</svg>			
+				</a>
+                <a href="https://www.youtube.com/channel/UCTlQrnCIPDNF9xHvX45g7ow" target="_blank"><svg t="1618283231717" class="icon block" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4062" width="32" height="32"><path d="M628.004571 710.838857v120.576c0 25.709714-7.424 38.290286-22.272 38.290286-8.557714 0-17.152-3.986286-25.709714-12.580572v-171.995428c8.557714-8.557714 17.152-12.580571 25.709714-12.580572 14.848 0 22.272 13.129143 22.272 38.290286z m193.133715 0.585143v26.294857h-51.419429v-26.294857c0-25.709714 8.557714-38.838857 25.709714-38.838857s25.709714 13.129143 25.709715 38.838857zM269.129143 586.861714h61.147428v-53.723428H151.990857v53.723428h60.013714v325.156572H269.165714v-325.156572z m164.571428 325.156572h50.870858v-282.294857H433.700571v215.990857c-11.446857 16.018286-22.272 23.990857-32.585142 23.990857-6.838857 0-10.861714-3.986286-11.995429-11.995429-0.585143-1.718857-0.585143-8.009143-0.585143-20.004571v-208.018286H337.664v223.414857c0 20.004571 1.718857 33.133714 4.571429 41.728 4.571429 14.299429 16.566857 21.138286 33.133714 21.138286 18.285714 0 37.705143-11.446857 58.294857-34.852571v30.866285z m245.138286-84.589715v-112.566857c0-26.294857-1.133714-45.129143-5.156571-56.576-6.290286-21.138286-20.553143-32-40.557715-32-18.870857 0-36.571429 10.276571-53.138285 30.866286v-124.013714h-50.870857v378.843428h50.870857v-27.428571c17.152 21.138286 34.852571 31.414857 53.138285 31.414857 20.004571 0 34.304-10.861714 40.557715-31.414857 3.986286-11.995429 5.156571-30.866286 5.156571-57.161143z m193.170286-5.705142v-7.424h-52.004572c0 20.553143-0.585143 32-1.133714 34.852571-2.852571 13.714286-10.276571 20.553143-22.857143 20.553143-17.700571 0-26.294857-13.129143-26.294857-39.424v-49.700572h102.290286v-58.843428c0-30.281143-5.156571-52.004571-15.433143-66.304-14.848-19.419429-34.852571-29.147429-60.562286-29.147429-26.294857 0-46.299429 9.728-61.147428 29.147429-10.861714 14.299429-16.018286 35.986286-16.018286 66.304v98.852571c0 30.281143 5.705143 52.553143 16.566857 66.304 14.848 19.419429 34.852571 29.147429 61.696 29.147429s48.018286-10.276571 61.696-30.281143a65.828571 65.828571 0 0 0 11.995429-30.866286c1.133714-5.156571 1.133714-16.566857 1.133714-33.133714z m-347.428572-521.728V180.004571c0-26.294857-7.424-39.424-24.576-39.424-16.566857 0-24.576 13.129143-24.576 39.424v119.990858c0 26.294857 8.009143 40.009143 24.576 40.009142 17.152 0 24.576-13.714286 24.576-40.009142z m410.843429 429.165714c0 65.718857-0.585143 136.009143-14.848 200.009143-10.861714 45.129143-47.433143 78.299429-91.428571 82.870857-105.142857 11.995429-211.419429 11.995429-317.147429 11.995428s-212.004571 0-317.147429-11.995428c-43.995429-4.571429-81.152-37.705143-91.428571-82.870857-14.848-64-14.848-134.290286-14.848-200.009143 0-66.304 0.585143-136.009143 14.848-200.009143 10.861714-45.129143 47.433143-78.299429 92.013714-83.419429 104.557714-11.446857 210.870857-11.446857 316.562286-11.446857s212.004571 0 317.147429 11.446857c43.995429 5.156571 81.152 38.290286 91.428571 83.419429 14.848 64 14.848 133.705143 14.848 200.009143zM365.129143 0h58.294857L354.267429 227.986286v154.843428H297.106286V227.986286c-5.156571-28.013714-16.566857-67.986286-34.852572-121.161143-12.580571-35.437714-25.161143-71.424-37.156571-106.861714h60.562286L326.217143 150.235429z m211.456 190.281143v99.986286c0 30.281143-5.156571 53.138286-16.018286 67.437714-14.299429 19.419429-34.304 29.147429-60.562286 29.147428-25.709714 0-45.714286-9.728-60.013714-29.147428-10.861714-14.848-16.018286-37.156571-16.018286-67.437714V190.281143c0-30.281143 5.156571-52.553143 16.018286-66.852572 14.299429-19.419429 34.304-29.147429 60.013714-29.147428 26.294857 0 46.299429 9.728 60.562286 29.147428 10.861714 14.299429 16.018286 36.571429 16.018286 66.852572zM768 97.718857v285.147429h-52.004571V351.451429c-20.553143 23.990857-40.009143 35.437714-58.843429 35.437714-16.566857 0-28.562286-6.838857-33.718857-21.138286-2.852571-8.557714-4.571429-22.272-4.571429-42.861714V97.755429h52.004572v209.700571c0 11.995429 0 18.870857 0.585143 20.004571 1.133714 8.009143 5.156571 12.580571 11.995428 12.580572 10.276571 0 21.138286-8.009143 32.585143-24.576V97.755429h52.004571z" fill="#ffffff" p-id="4063"></path></svg></a>
+				<a href="https://www.zhihu.com/people/rengwuxian" target="_blank"><svg t="1618282657306" class="icon block" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2025" width="32" height="32"><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64z m-90.7 477.8l-0.1 1.5c-1.5 20.4-6.3 43.9-12.9 67.6l24-18.1 71 80.7c9.2 33-3.3 63.1-3.3 63.1l-95.7-111.9v-0.1c-8.9 29-20.1 57.3-33.3 84.7-22.6 45.7-55.2 54.7-89.5 57.7-34.4 3-23.3-5.3-23.3-5.3 68-55.5 78-87.8 96.8-123.1 11.9-22.3 20.4-64.3 25.3-96.8H264.1s4.8-31.2 19.2-41.7h101.6c0.6-15.3-1.3-102.8-2-131.4h-49.4c-9.2 45-41 56.7-48.1 60.1-7 3.4-23.6 7.1-21.1 0 2.6-7.1 27-46.2 43.2-110.7 16.3-64.6 63.9-62 63.9-62-12.8 22.5-22.4 73.6-22.4 73.6h159.7c10.1 0 10.6 39 10.6 39h-90.8c-0.7 22.7-2.8 83.8-5 131.4H519s12.2 15.4 12.2 41.7H421.3z m346.5 167h-87.6l-69.5 46.6-16.4-46.6h-40.1V321.5h213.6v387.3zM408.2 611s0-0.1 0 0z m216 94.3l56.8-38.1h45.6-0.1V364.7H596.7v302.5h14.1z" p-id="2026" fill="#ffffff"></path></svg></a>
+			</div>
+			
+			<!-- start: .main-nav -->
+			<nav class="main-nav grid-container grid-parent" role="navigation">
+				
+				<ul id="menu-header" class="menu">
+   <li class="nav-shou-ye"><a href="https://rengwuxian.com/">首页</a></li>
+   <li class="nav-compose"><a href="https://rengwuxian.com/tag/compose/">Compose</a></li>
+   <li class="nav-kotlin"><a href="https://rengwuxian.com/tag/kotlin/">Kotlin</a></li>
+   <li class="nav-zi-ding-yi-view"><a href="https://rengwuxian.com/tag/custom-view/">自定义View</a></li>
+	<li id="gen-wo-xue" class="nav-gen-wo-xue">
+		<a href="https://edu.rengwuxian.com/">跟我学 <i class="fa fa-chevron-down"></i><i class="fa fa-chevron-up"></i></a>
+		<ul class="menu flex flex-col dropdown-menu">
+			<li class="nav-plus-course"><a href="https://edu.rengwuxian.com/detail/p_628461c9e4b0cedf38b34ece/6?product_id=p_628461c9e4b0cedf38b34ece">Android 高级进阶课程</a></li>
+			<li class="nav-compose"><a href="https://edu.rengwuxian.com/p/t_pc/goods_pc_detail/goods_detail/course_2Dpw6101YdL7bHFs5LFpYyzSUS6?app_id=appuoykwnbg2526">Jetpack Compose 课程</a></li>
+		</ul>
+	</li>
+ 
+   <li class="nav-xiao-dao-xiao-xi"><a href="https://quanzi.xiaoe-tech.com/c_6221b266902d9_bA5aFqcd1806/feed_list?app_id=appuoykwnbg2526">小道消息</a></li>
+   <li class="nav-jiao-wu-xi-tong"><a href="https://jw.hencoder.com/">教务系统</a></li>
+</ul>
+
+			</nav>
+			<!-- end: .main-nav -->
+
+            <div class="clear"></div>
+
+            <div class="border hide-on-tablet hide-on-mobile"></div>
+		
+		</div>		
+        
+		<div class="clear"></div>
+		
+	</div></div>
+	<!-- end: .menu-wrapper -->
+	
+	<div class="clear"></div>
+
+</header>
+<!-- end: #header -->
+
+<div id="form-lang" data-results-title="个搜索结果"></div>
+        <script type="text/javascript" src="./Kotlin 里那些「不是那么写的」_files/sharethis.js.下载" async="async"></script>
+
+<!-- start: #single -->
+<main id="single" class="main grid-container standard" role="main">
+
+    <!-- start: .center -->
+    <div class="center content">
+
+
+            <!-- start: .content -->
+            <div class="left-content grid-70 np-mobile">
+
+                <article class="main-article post tag-kotlin tag-kotlin-basic tag-kaixue">
+
+                        <header>
+
+                                <div class="featured-image cover" style="background: url(/content/images/size/w840h400/2021/04/0-6.jpeg);">
+                                        <div class="tags absolute">
+                                            <a href="https://rengwuxian.com/tag/kotlin/">Kotlin</a><a href="https://rengwuxian.com/tag/kotlin-basic/">Kotlin 基础</a><a href="https://rengwuxian.com/tag/kaixue/">码上开学</a>
+                                        </div>
+                                </div>
+
+                            <!-- start: .meta -->
+                            <div class="meta">
+                                <h1 class="title no-thumb large bold">Kotlin 里那些「不是那么写的」</h1>
+                                <div class="left grid-60 grid-parent">
+                                    <time datetime="2019-08-21"><svg><use xlink:href="#calendar"></use></svg>Aug 21, 2019</time>
+                                    <a href="https://rengwuxian.com/kotlin-basic-2/#comments" class="comments tooltip tooltipstered"><svg><use xlink:href="#comments-2"></use></svg> <span class="disqus-comment-count comment-count" data-disqus-url="https://rengwuxian.com/kotlin-basic-2/" data-disqus-identifier="606fb112b343744f4d866787">0</span> 评论</a>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <!-- end: .meta -->
+
+                            <div class="clear"></div>
+
+                        </header>
+
+                    <section class="post-content">
+
+                        <div class="share-container hide-on-mobile is-affixed" style="height: 220px; position: relative;"><div class="inner-wrapper-sticky" style="position: fixed; top: 80px; left: 85px; width: 54px;">
+                            <div class="share">
+                                <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons st-center st-lang-zh  st-inline-share-buttons st-animated" id="st-1"><div class="st-btn st-first  st-remove-label" data-network="weibo" style="display: inline-block;">
+  <img alt="weibo-white sharing button" src="./Kotlin 里那些「不是那么写的」_files/weibo-white.svg">
+  
+</div><div class="st-btn  st-remove-label" data-network="wechat" style="display: none;">
+  <img alt="wechat-white sharing button" src="./Kotlin 里那些「不是那么写的」_files/wechat-white.svg">
+  
+</div><div class="st-btn  st-remove-label" data-network="twitter" style="display: none;">
+  <img alt="twitter-white sharing button" src="./Kotlin 里那些「不是那么写的」_files/twitter-white.svg">
+  
+</div><div class="st-btn st-last  st-remove-label" data-network="email" style="display: none;">
+  <img alt="email-white sharing button" src="./Kotlin 里那些「不是那么写的」_files/email-white.svg">
+  
+</div></div><!-- ShareThis END -->                            </div>
+                        </div></div>
+
+                        <div class="text">
+                            <!--kg-card-begin: markdown--><blockquote>
+<p>本期作者：</p>
+<p>视频：扔物线（朱凯）</p>
+<p>文章：<a href="https://juejin.im/user/58e46281da2f60005fe23d48">Walker（张磊）</a></p>
+</blockquote>
+<p>大家好，我是扔物线朱凯。不是第一期了，咱就不多废话了。直接视频伺候：</p>
+<div class="aspect-ratio">
+    <iframe width="100%" height="480" src="./Kotlin 里那些「不是那么写的」_files/player.html" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+</div>
+<p><em>如果你看不到上面的哔哩哔哩视频，可以点击 <a href="https://youtu.be/2B54c4JtnQ8">这里</a> 去 YouTube 看。</em></p>
+<blockquote>
+<p>以下内容来自文章作者 <a href="https://juejin.im/user/58e46281da2f60005fe23d48">Walker</a>。</p>
+</blockquote>
+<p>上一篇我们讲了 Kotlin 上手最基础的三个点：变量、函数和类型。大家都听说过，Kotlin 完全兼容 Java，这个意思是用 Java 写出来的代码和 Kotlin 可以完美交互，而不是说你用 Java 的写法去写 Kotlin 就完全没问题，这个是不行的。这期内容我们就讲一下，Kotlin 里那些「不 Java」的写法。</p>
+<h2 id="constructorfunction Object() { [native code] }1">Constructor</h2>
+<p>上一篇中简单介绍了 Kotlin 的构造器，这一节具体看看 Kotlin 的构造器和 Java 有什么不一样的地方：</p>
+<ul>
+<li>
+<p>Java</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-int">int</span> id<span class="token punctuation">;</span>
+    <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+      👇   👇
+    <span class="token keyword keyword-public">public</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> id<span class="token punctuation">,</span> <span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+</li>
+<li>
+<p>Kotlin</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-class">class</span> User <span class="token punctuation">{</span>
+    <span class="token keyword keyword-val">val</span> id<span class="token operator">:</span> Int
+    <span class="token keyword keyword-val">val</span> name<span class="token operator">:</span> String
+         👇
+    <span class="token keyword keyword-constructor">constructor</span><span class="token punctuation">(</span>id<span class="token operator">:</span> Int<span class="token punctuation">,</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+ <span class="token comment">//👆 没有 public</span>
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+</ul>
+<p>可以发现有两点不同：</p>
+<ul>
+<li>Java 中构造器和类同名，Kotlin 中使用 <code>constructor</code> 表示。</li>
+<li>Kotlin 中构造器没有 public 修饰，因为默认可见性就是公开的（关于可见性修饰符这里先不展开，后面会讲到）。</li>
+</ul>
+<h3 id="init">init</h3>
+<p>除了构造器，Java 里常常配合一起使用的 init 代码块，在 Kotlin 里的写法也有了一点点改变：你需要给它加一个 <code>init</code> 前缀。</p>
+<ul>
+<li>
+<p>Java</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
+   👇
+    <span class="token punctuation">{</span>
+        <span class="token comment">// 初始化代码块，先于下面的构造器执行</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-public">public</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+</li>
+<li>
+<p>Kotlin</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-class">class</span> User <span class="token punctuation">{</span>
+    👇
+    <span class="token keyword keyword-init">init</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 初始化代码块，先于下面的构造器执行</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-constructor">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+</ul>
+<p>正如上面标注的那样，Kotlin 的 init 代码块和 Java 一样，都在实例化时执行，并且执行顺序都在构造器之前。</p>
+<p>上一篇提到，Java 的类如果不加 final 关键字，默认是可以被继承的，而 Kotlin 的类默认就是 final 的。在 Java 里 final 还可以用来修饰变量，接下来让我们看看 Kotlin 是如何实现类似功能的。</p>
+<h2 id="final"><code>final</code></h2>
+<p>Kotlin 中的 <code>val</code> 和 Java 中的 <code>final</code> 类似，表示只读变量，不能修改。这里分别从成员变量、参数和局部变量来和 Java 做对比：</p>
+<ul>
+<li>
+<p>Java</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+ 👇
+<span class="token keyword keyword-final">final</span> <span class="token keyword keyword-int">int</span> final1 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+             👇  
+<span class="token keyword keyword-void">void</span> <span class="token function">method</span><span class="token punctuation">(</span><span class="token keyword keyword-final">final</span> <span class="token class-name">String</span> final2<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+     👇
+    <span class="token keyword keyword-final">final</span> <span class="token class-name">String</span> final3 <span class="token operator">=</span> <span class="token string">"The parameter is "</span> <span class="token operator">+</span> final2<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+</li>
+<li>
+<p>Kotlin</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+👇
+<span class="token keyword keyword-val">val</span> fina1 <span class="token operator">=</span> <span class="token number">1</span>
+       <span class="token comment">// 👇 参数是没有 val 的</span>
+<span class="token keyword keyword-fun">fun</span> <span class="token function">method</span><span class="token punctuation">(</span>final2<span class="token operator">:</span> String<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    👇
+    <span class="token keyword keyword-val">val</span> final3 <span class="token operator">=</span> <span class="token string">"The parameter is "</span> <span class="token operator">+</span> final2
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+</ul>
+<p>可以看到不同点主要有：</p>
+<ul>
+<li>final 变成了 val。</li>
+<li>Kotlin 函数参数默认是 val 类型，所以参数前不需要写 val 关键字，Kotlin 里这样设计的原因是保证了参数不会被修改，而 Java 的参数可修改（默认没 final 修饰）会增加出错的概率。</li>
+</ul>
+<p>上一期说过，<code>var</code> 是 variable 的缩写， <code>val</code> 是 value 的缩写。</p>
+<p>其实我们写 Java 代码的时候，很少会有人用 <code>final</code>，但 <code>final</code> 用来修饰变量其实是很有用的，但大家都不用；可你如果去看看国内国外的人写的 Kotlin 代码，你会发现很多人的代码里都会有一堆的 <code>val</code>。为什么？因为 <code>final</code> 写起来比 <code>val</code> 麻烦一点：我需要多写一个单词。虽然只麻烦这一点点，但就导致很多人不写。</p>
+<p>这就是一件很有意思的事：从 <code>final</code> 到 <code>val</code>，只是方便了一点点，但却让它的使用频率有了巨大的改变。这种改变是会影响到代码质量的：在该加限制的地方加上限制，就可以减少代码出错的概率。</p>
+<h3 id="val%E8%87%AA%E5%AE%9A%E4%B9%89-getter"><code>val</code>自定义 getter</h3>
+<p>不过 <code>val</code> 和 <code>final</code> 还是有一点区别的，虽然 <code>val</code> 修饰的变量不能二次赋值，但可以通过自定义变量的 getter 函数，让变量每次被访问时，返回动态获取的值：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+👇
+<span class="token keyword keyword-val">val</span> size<span class="token operator">:</span> Int
+    <span class="token keyword keyword-get">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// 👈 每次获取 size 值时都会执行 items.size</span>
+        <span class="token keyword keyword-return">return</span> items<span class="token punctuation">.</span>size
+    <span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>不过这个属于 <code>val</code> 的另外一种用法，大部分情况下 <code>val</code> 还是对应于 Java 中的 <code>final</code> 使用的。</p>
+<h2 id="static-property-function"><code>static</code> property / function</h2>
+<p>刚才说到大家都不喜欢写 <code>final</code> 对吧？但有一种场景，大家是最喜欢用 <code>final</code> 的：常量。</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-static">static</span> <span class="token keyword keyword-final">final</span> <span class="token class-name">String</span> CONST_STRING <span class="token operator">=</span> <span class="token string">"A String"</span><span class="token punctuation">;</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>在 Java 里面写常量，我们用的是 <code>static</code> + <code>final</code>。而在 Kotlin 里面，除了 <code>final</code> 的写法不一样，<code>static</code> 的写法也不一样，而且是更不一样。确切地说：在 <code>Kotlin</code> 里，静态变量和静态方法这两个概念被去除了。</p>
+<p>那如果想在 Kotlin 中像 Java 一样通过类直接引用该怎么办呢？Kotlin 的答案是 <code>companion object</code>：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-class">class</span> Sample <span class="token punctuation">{</span>
+    <span class="token operator">..</span><span class="token punctuation">.</span>
+       👇
+    <span class="token keyword keyword-companion">companion</span> <span class="token keyword keyword-object">object</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-val">val</span> anotherString <span class="token operator">=</span> <span class="token string">"Another String"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>为啥 Kotlin 越改越复杂了？不着急，我们先看看 <code>object</code> 是个什么东西。</p>
+<h3 id="object"><code>object</code></h3>
+<p>Kotlin 里的 <code>object</code> ——首字母小写的，不是大写，Java 里的 <code>Object</code> 在 Kotlin 里不用了。</p>
+<blockquote>
+<p>Java 中的 <code>Object</code>  在 Kotlin 中变成了 <code>Any</code>，和 <code>Object</code> 作用一样：作为所有类的基类。</p>
+</blockquote>
+<p>而 <code>object</code> 不是类，像 <code>class</code> 一样在 Kotlin 中属于关键字：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-object">object</span> Sample <span class="token punctuation">{</span>
+    <span class="token keyword keyword-val">val</span> name <span class="token operator">=</span> <span class="token string">"A name"</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>它的意思很直接：创建一个类，并且创建一个这个类的对象。这个就是 <code>object</code> 的意思：对象。</p>
+<p>在代码中如果要使用这个对象，直接通过它的类名就可以访问：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+Sample<span class="token punctuation">.</span>name
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>这不就是单例么，所以在 Kotlin 中创建单例不用像 Java 中那么复杂，只需要把 <code>class</code> 换成 <code>object</code> 就可以了。</p>
+<ul>
+<li>
+<p>单例类</p>
+<p>我们看一个单例的例子，分别用 Java 和 Kotlin 实现：</p>
+<ul>
+<li>
+<p>Java 中实现单例类（非线程安全）：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-static">static</span> <span class="token class-name">A</span> sInstance<span class="token punctuation">;</span>
+    
+    <span class="token keyword keyword-public">public</span> <span class="token keyword keyword-static">static</span> <span class="token class-name">A</span> <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>sInstance <span class="token operator">==</span> <span class="token keyword keyword-null">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            sInstance <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword keyword-return">return</span> sInstance<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 👇还有很多模板代码</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>可以看到 Java 中为了实现单例类写了大量的模版代码，稍显繁琐。</p>
+</li>
+<li>
+<p>Kotlin 中实现单例类：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin"> 🏝️
+<span class="token comment">// 👇 class 替换成了 object</span>
+<span class="token keyword keyword-object">object</span> A <span class="token punctuation">{</span>
+    <span class="token keyword keyword-val">val</span> number<span class="token operator">:</span> Int <span class="token operator">=</span> <span class="token number">1</span>
+    <span class="token keyword keyword-fun">fun</span> <span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"A.method()"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>    
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>和 Java 相比的不同点有：</p>
+<ul>
+<li>和类的定义类似，但是把 <code>class</code> 换成了 <code>object</code> 。</li>
+<li>不需要额外维护一个实例变量 <code>sInstance</code>。</li>
+<li>不需要「保证实例只创建一次」的 <code>getInstance()</code> 方法。</li>
+</ul>
+<p>相比 Java 的实现简单多了。</p>
+<blockquote>
+<p>这种通过 <code>object</code> 实现的单例是一个饿汉式的单例，并且实现了线程安全。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p>继承类和实现接口</p>
+<p>Kotlin 中不仅类可以继承别的类，可以实现接口，<code>object</code> 也可以：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-open">open</span> <span class="token keyword keyword-class">class</span> A <span class="token punctuation">{</span>
+    <span class="token keyword keyword-open">open</span> <span class="token keyword keyword-fun">fun</span> <span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token operator">..</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-interface">interface</span> B <span class="token punctuation">{</span>
+    <span class="token keyword keyword-fun">fun</span> <span class="token function">interfaceMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+  👇      👇   👇
+<span class="token keyword keyword-object">object</span> C <span class="token operator">:</span> <span class="token function">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> B <span class="token punctuation">{</span>
+
+    <span class="token keyword keyword-override">override</span> <span class="token keyword keyword-fun">fun</span> <span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token operator">..</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-override">override</span> <span class="token keyword keyword-fun">fun</span> <span class="token function">interfaceMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token operator">..</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>为什么 object 可以实现接口呢？简单来讲 object 其实是把两步合并成了一步，既有 class 关键字的功能，又实现了单例，这样就容易理解了。</p>
+</li>
+<li>
+<p>匿名类</p>
+<p>另外，Kotlin 还可以创建 Java 中的匿名类，只是写法上有点不同：</p>
+<ul>
+<li>
+<p>Java：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️                                              👇 
+<span class="token class-name">ViewPager<span class="token punctuation">.</span>SimpleOnPageChangeListener</span> listener <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ViewPager<span class="token punctuation">.</span>SimpleOnPageChangeListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span> <span class="token comment">// 👈</span>
+    <span class="token keyword keyword-public">public</span> <span class="token keyword keyword-void">void</span> <span class="token function">onPageSelected</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> position<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// override</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+</li>
+<li>
+<p>Kotlin：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️          
+<span class="token keyword keyword-val">val</span> listener <span class="token operator">=</span> <span class="token keyword keyword-object">object</span><span class="token operator">:</span> ViewPager<span class="token punctuation">.</span><span class="token function">SimpleOnPageChangeListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-override">override</span> <span class="token keyword keyword-fun">fun</span> <span class="token function">onPageSelected</span><span class="token punctuation">(</span>position<span class="token operator">:</span> Int<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// override</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>        
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>和 Java 创建匿名类的方式很相似，只不过把 <code>new</code> 换成了 <code>object:</code>：</p>
+<ul>
+<li>Java 中 <code>new</code> 用来创建一个匿名类的对象</li>
+<li>Kotlin 中 <code>object:</code> 也可以用来创建匿名类的对象</li>
+</ul>
+<p>这里的 <code>new </code> 和 <code>object:</code> 修饰的都是接口或者抽象类。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="companion-object"><code>companion object</code></h3>
+<p>用 <code>object</code> 修饰的对象中的变量和函数都是静态的，但有时候，我们只想让类中的一部分函数和变量是静态的该怎么做呢：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-class">class</span> A <span class="token punctuation">{</span>
+          👇
+    <span class="token keyword keyword-object">object</span> B <span class="token punctuation">{</span>
+        <span class="token keyword keyword-var">var</span> c<span class="token operator">:</span> Int <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>如上，可以在类中创建一个对象，把需要静态的变量或函数放在内部对象 B 中，外部可以通过如下的方式调用该静态变量：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+A<span class="token punctuation">.</span>B<span class="token punctuation">.</span>c
+  👆
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>类中嵌套的对象可以用 <code>companion</code> 修饰：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-class">class</span> A <span class="token punctuation">{</span>
+       👇
+    <span class="token keyword keyword-companion">companion</span> <span class="token keyword keyword-object">object</span> B <span class="token punctuation">{</span>
+        <span class="token keyword keyword-var">var</span> c<span class="token operator">:</span> Int <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p><code>companion</code> 可以理解为伴随、伴生，表示修饰的对象和外部类绑定。</p>
+<p>但这里有一个小限制：一个类中最多只可以有一个伴生对象，但可以有多个嵌套对象。就像皇帝后宫佳丽三千，但皇后只有一个。</p>
+<p>这样的好处是调用的时候可以省掉对象名：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+A<span class="token punctuation">.</span>c <span class="token comment">// 👈 B 没了</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>所以，当有 <code>companion</code> 修饰时，对象的名字也可以省略掉：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-class">class</span> A <span class="token punctuation">{</span>
+                <span class="token comment">// 👇 B 没了</span>
+    <span class="token keyword keyword-companion">companion</span> <span class="token keyword keyword-object">object</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-var">var</span> c<span class="token operator">:</span> Int <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>这就是这节最开始讲到的，Java 静态变量和方法的等价写法：<code>companion object</code> 变量和函数。</p>
+<ul>
+<li>
+<p>静态初始化</p>
+<p>Java 中的静态变量和方法，在 Kotlin 中都放在了 <code>companion object</code> 中。因此 Java 中的静态初始化在 Kotlin 中自然也是放在 <code>companion object</code> 中的，像类的初始化代码一样，由 <code>init</code> 和一对大括号表示：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-class">class</span> Sample <span class="token punctuation">{</span>
+       👇
+    <span class="token keyword keyword-companion">companion</span> <span class="token keyword keyword-object">object</span> <span class="token punctuation">{</span>
+         👇
+        <span class="token keyword keyword-init">init</span> <span class="token punctuation">{</span>
+            <span class="token operator">..</span><span class="token punctuation">.</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+</ul>
+<h3 id="top-level-property-function-%E5%A3%B0%E6%98%8E">top-level property / function 声明</h3>
+<p>除了静态函数这种简便的调用方式，Kotlin 还有更方便的东西：「<code>top-level declaration</code> 顶层声明」。其实就是把属性和函数的声明不写在 <code>class</code> 里面，这个在 Kotlin 里是允许的：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-package">package</span> com<span class="token punctuation">.</span>hencoder<span class="token punctuation">.</span>plus
+
+<span class="token comment">// 👇 属于 package，不在 class/object 内</span>
+<span class="token keyword keyword-fun">fun</span> <span class="token function">topLevelFuncion</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>这样写的属性和函数，不属于任何 <code>class</code>，而是直接属于 <code>package</code>，它和静态变量、静态函数一样是全局的，但用起来更方便：你在其它地方用的时候，就连类名都不用写：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-import">import</span> com<span class="token punctuation">.</span>hencoder<span class="token punctuation">.</span>plus<span class="token punctuation">.</span>topLevelFunction <span class="token comment">// 👈 直接 import 函数</span>
+
+<span class="token function">topLevelFunction</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>写在顶级的函数或者变量有个好处：在 Android Studio 中写代码时，IDE 很容易根据你写的函数前几个字母自动联想出相应的函数。这样提高了写代码的效率，而且可以减少项目中的重复代码。</p>
+<ul>
+<li>
+<p>命名相同的顶级函数</p>
+<p>顶级函数不写在类中可能有一个问题：如果在不同文件中声明命名相同的函数，使用的时候会不会混淆？来看一个例子：</p>
+<ul>
+<li>
+<p>在 <code>org.kotlinmaster.library</code> 包下有一个函数 method：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-package">package</span> org<span class="token punctuation">.</span>kotlinmaster<span class="token punctuation">.</span>library1
+                           👆
+<span class="token keyword keyword-fun">fun</span> <span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"library1 method()"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+<li>
+<p>在 <code>org.kotlinmaster.library2</code> 包下有一个同名函数：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-package">package</span> org<span class="token punctuation">.</span>kotlinmaster<span class="token punctuation">.</span>library2
+                           👆
+<span class="token keyword keyword-fun">fun</span> <span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"library2 method()"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+</ul>
+<p>在使用的时候如果同时调用这两个同名函数会怎么样：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-import">import</span> org<span class="token punctuation">.</span>kotlinmaster<span class="token punctuation">.</span>library1<span class="token punctuation">.</span>method
+                           👆
+<span class="token keyword keyword-fun">fun</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                       👇
+    org<span class="token punctuation">.</span>kotlinmaster<span class="token punctuation">.</span>library2<span class="token punctuation">.</span><span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>可以看到当出现两个同名顶级函数时，IDE 会自动加上包前缀来区分，这也印证了「顶级函数属于包」的特性。</p>
+</li>
+</ul>
+<h3 id="%E5%AF%B9%E6%AF%94">对比</h3>
+<p>那在实际使用中，在 <code>object</code>、<code>companion object</code> 和 top-level 中该选择哪一个呢？简单来说按照下面这两个原则判断：</p>
+<ul>
+<li>如果想写工具类的功能，直接创建文件，写 top-level「顶层」函数。</li>
+<li>如果需要继承别的类或者实现接口，就用 <code>object</code> 或 <code>companion object</code>。</li>
+</ul>
+<h2 id="%E5%B8%B8%E9%87%8F">常量</h2>
+<p>Java 中，除了上面讲到的的静态变量和方法会用到 <code>static</code>，声明常量时也会用到，那 Kotlin 中声明常量会有什么变化呢？</p>
+<ul>
+<li>
+<p>Java 中声明常量：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">Sample</span> <span class="token punctuation">{</span>
+            👇     👇
+    <span class="token keyword keyword-public">public</span> <span class="token keyword keyword-static">static</span> <span class="token keyword keyword-final">final</span> <span class="token keyword keyword-int">int</span> CONST_NUMBER <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+</li>
+<li>
+<p>Kotlin 中声明常量：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-class">class</span> Sample <span class="token punctuation">{</span>
+    <span class="token keyword keyword-companion">companion</span> <span class="token keyword keyword-object">object</span> <span class="token punctuation">{</span>
+         👇                  <span class="token comment">// 👇</span>
+        <span class="token keyword keyword-const">const</span> <span class="token keyword keyword-val">val</span> CONST_NUMBER <span class="token operator">=</span> <span class="token number">1</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-const">const</span> <span class="token keyword keyword-val">val</span> CONST_SECOND_NUMBER <span class="token operator">=</span> <span class="token number">2</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+</ul>
+<p>发现不同点有：</p>
+<ul>
+<li>Kotlin 的常量必须声明在对象（包括伴生对象）或者「top-level 顶层」中，因为常量是静态的。</li>
+<li>Kotlin 新增了修饰常量的 <code>const</code> 关键字。</li>
+</ul>
+<p>除此之外还有一个区别：</p>
+<ul>
+<li>Kotlin 中只有基本类型和 String 类型可以声明成常量。</li>
+</ul>
+<p>原因是 Kotlin 中的常量指的是 「compile-time constant 编译时常量」，它的意思是「编译器在编译的时候就知道这个东西在每个调用处的实际值」，因此可以在编译时直接把这个值硬编码到代码里使用的地方。</p>
+<p>而非基本和 String 类型的变量，可以通过调用对象的方法或变量改变对象内部的值，这样这个变量就不是常量了，来看一个 Java 的例子，比如一个 User 类：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-int">int</span> id<span class="token punctuation">;</span> <span class="token comment">// 👈 可修改</span>
+    <span class="token class-name">String</span> name<span class="token punctuation">;</span> <span class="token comment">// 👈 可修改</span>
+    <span class="token keyword keyword-public">public</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> id<span class="token punctuation">,</span> <span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>在使用的地方声明一个 <code>static final</code> 的 User 实例 <code>user</code>，它是不能二次赋值的：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token keyword keyword-static">static</span> <span class="token keyword keyword-final">final</span> <span class="token class-name">User</span> user <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token number">123</span><span class="token punctuation">,</span> <span class="token string">"Zhangsan"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  👆    👆
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>但是可以通过访问这个 <code>user</code> 实例的成员变量改变它的值：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+user<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Lisi"</span><span class="token punctuation">;</span>
+      👆
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>所以 Java 中的常量可以认为是「伪常量」，因为可以通过上面这种方式改变它内部的值。而 Kotlin 的常量因为限制类型必须是基本类型，所以不存在这种问题，更符合常量的定义。</p>
+<p>前面讲的 <code>val</code> 「只读变量」和静态变量都是针对单个变量来说的，接下来我们看看编程中另外一个常见的主题：数组和集合。</p>
+<h2 id="%E6%95%B0%E7%BB%84%E5%92%8C%E9%9B%86%E5%90%88">数组和集合</h2>
+<h3 id="%E6%95%B0%E7%BB%84">数组</h3>
+<p>声明一个 String 数组：</p>
+<ul>
+<li>
+<p>Java 中的写法：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> strs <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+      👆        👆
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+</li>
+<li>
+<p>Kotlin 中的写法：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-val">val</span> strs<span class="token operator">:</span> Array<span class="token operator">&lt;</span>String<span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token function">arrayOf</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">)</span>
+            👆              👆
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+</ul>
+<p>可以看到 Kotlin 中的数组是一个拥有泛型的类，创建函数也是泛型函数，和集合数据类型一样。</p>
+<blockquote>
+<p>针对泛型的知识点，我们在后面的文章会讲，这里就先按照 Java 泛型来理解。</p>
+</blockquote>
+<p>将数组泛型化有什么好处呢？对数组的操作可以像集合一样功能更强大，由于泛型化，Kotlin 可以给数组增加很多有用的工具函数：</p>
+<ul>
+<li><code>get() / set()</code></li>
+<li><code>contains()</code></li>
+<li><code>first()</code></li>
+<li><code>find()</code></li>
+</ul>
+<p>这样数组的实用性就大大增加了。</p>
+<ul>
+<li>
+<p>取值和修改</p>
+<p>Kotlin 中获取或者设置数组元素和 Java 一样，可以使用方括号加下标的方式索引：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token function">println</span><span class="token punctuation">(</span>strs<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+   👇      👆
+strs<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"B"</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+<li>
+<p>不支持协变</p>
+<p>Kotlin 的数组编译成字节码时使用的仍然是 Java 的数组，但在语言层面是泛型实现，这样会失去协变 (covariance) 特性，就是子类数组对象不能赋值给父类的数组变量：</p>
+<ul>
+<li>
+<p>Kotlin</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-val">val</span> strs<span class="token operator">:</span> Array<span class="token operator">&lt;</span>String<span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token function">arrayOf</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">)</span>
+                  👆
+<span class="token keyword keyword-val">val</span> anys<span class="token operator">:</span> Array<span class="token operator">&lt;</span>Any<span class="token operator">&gt;</span> <span class="token operator">=</span> strs <span class="token comment">// compile-error: Type mismatch</span>
+                👆
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+<li>
+<p>而这在 Java 中是可以的：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> strs <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+  👆
+<span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> objs <span class="token operator">=</span> strs<span class="token punctuation">;</span> <span class="token comment">// success</span>
+  👆
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+</li>
+</ul>
+<p>关于协变的问题，这里就先不展开了，后面讲泛型的时候会提到。</p>
+</li>
+</ul>
+<h3 id="%E9%9B%86%E5%90%88">集合</h3>
+<p>Kotlin 和 Java 一样有三种集合类型：List、Set 和 Map，它们的含义分别如下：</p>
+<ul>
+<li><code>List</code> 以固定顺序存储一组元素，元素可以重复。</li>
+<li><code>Set</code> 存储一组互不相等的元素，通常没有固定顺序。</li>
+<li><code>Map</code> 存储 键-值 对的数据集合，键互不相等，但不同的键可以对应相同的值。</li>
+</ul>
+<p>从 Java 到 Kotlin，这三种集合类型的使用有哪些变化呢？我们依次看看。</p>
+<ul>
+<li>
+<p>List</p>
+<ul>
+<li>
+<p>Java 中创建一个列表：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> strList <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+strList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+strList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+strList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"c"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 👈 添加元素繁琐</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+</li>
+<li>
+<p>Kotlin 中创建一个列表：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️            
+<span class="token keyword keyword-val">val</span> strList <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">)</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+</ul>
+<p>首先能看到的是 Kotlin 中创建一个 <code>List</code> 特别的简单，有点像创建数组的代码。而且 Kotlin 中的 <code>List</code> 多了一个特性：支持 covariant（协变）。也就是说，可以把子类的 <code>List</code> 赋值给父类的 <code>List</code> 变量：</p>
+<ul>
+<li>
+<p>Kotlin：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-val">val</span> strs<span class="token operator">:</span> List<span class="token operator">&lt;</span>String<span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">)</span>
+                👆
+<span class="token keyword keyword-val">val</span> anys<span class="token operator">:</span> List<span class="token operator">&lt;</span>Any<span class="token operator">&gt;</span> <span class="token operator">=</span> strs <span class="token comment">// success</span>
+               👆
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+<li>
+<p>而这在 Java 中是会报错的：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> strList <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       👆
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">&gt;</span></span> objList <span class="token operator">=</span> strList<span class="token punctuation">;</span> <span class="token comment">// 👈 compile error: incompatible types</span>
+      👆  
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+</li>
+</ul>
+<p>对于协变的支持与否，<code>List</code> 和数组刚好反过来了。关于协变，这里只需结合例子简单了解下，后面的文章会对它展开讨论。</p>
+</li>
+<li>
+<p>和数组的区别</p>
+<p>Kotlin 中数组和 MutableList 的 API 是非常像的，主要的区别是数组的元素个数不能变。那在什么时候用数组呢？</p>
+<ul>
+<li>
+<p>这个问题在 Java 中就存在了，数组和 <code>List</code> 的功能类似，<code>List</code> 的功能更多一些，直觉上应该用 <code>List</code> 。但数组也不是没有优势，基本类型 (<code>int[]</code>、<code>float[]</code>) 的数组不用自动装箱，性能好一点。</p>
+</li>
+<li>
+<p>在 Kotlin 中也是同样的道理，在一些性能需求比较苛刻的场景，并且元素类型是基本类型时，用数组好一点。不过这里要注意一点，Kotlin 中要用专门的基本类型数组类 (<code>IntArray</code> <code>FloatArray</code> <code>LongArray</code>) 才可以免于装箱。也就是说元素不是基本类型时，相比 <code>Array</code>，用 <code>List</code> 更方便些。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Set</p>
+<ul>
+<li>
+<p>Java 中创建一个 <code>Set</code>：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token class-name">Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> strSet <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">HashSet</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+strSet<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+strSet<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+strSet<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"c"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+</li>
+<li>
+<p>Kotlin 中创建相同的 <code>Set</code>：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️           
+<span class="token keyword keyword-val">val</span> strSet <span class="token operator">=</span> <span class="token function">setOf</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">)</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+</ul>
+<p>和 <code>List</code> 类似，<code>Set</code> 同样具有 covariant（协变）特性。</p>
+</li>
+<li>
+<p>Map</p>
+<ul>
+<li>
+<p>Java 中创建一个 <code>Map</code>：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> map <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"key1"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"key2"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"key3"</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"key4"</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+</li>
+<li>
+<p>Kotlin 中创建一个 <code>Map</code>：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️         
+<span class="token keyword keyword-val">val</span> map <span class="token operator">=</span> <span class="token function">mapOf</span><span class="token punctuation">(</span><span class="token string">"key1"</span> <span class="token keyword keyword-to">to</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"key2"</span> <span class="token keyword keyword-to">to</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"key3"</span> <span class="token keyword keyword-to">to</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">"key4"</span> <span class="token keyword keyword-to">to</span> <span class="token number">3</span><span class="token punctuation">)</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+</ul>
+<p>和上面两种集合类型相似创建代码很简洁。<code>mapOf</code> 的每个参数表示一个键值对，<code>to</code> 表示将「键」和「值」关联，这个叫做「中缀表达式」，这里先不展开，后面的文章会做介绍。</p>
+<ul>
+<li>
+<p>取值和修改</p>
+<ul>
+<li>
+<p>Kotlin 中的 Map 除了和 Java 一样可以使用 <code>get()</code> 根据键获取对应的值，还可以使用方括号的方式获取：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+                 👇
+<span class="token keyword keyword-val">val</span> value1 <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"key1"</span><span class="token punctuation">)</span>
+               👇
+<span class="token keyword keyword-val">val</span> value2 <span class="token operator">=</span> map<span class="token punctuation">[</span><span class="token string">"key2"</span><span class="token punctuation">]</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+<li>
+<p>类似的，Kotlin 中也可以用方括号的方式改变 <code>Map</code> 中键对应的值：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️       
+              👇
+<span class="token keyword keyword-val">val</span> map <span class="token operator">=</span> <span class="token function">mutableMapOf</span><span class="token punctuation">(</span><span class="token string">"key1"</span> <span class="token keyword keyword-to">to</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"key2"</span> <span class="token keyword keyword-to">to</span> <span class="token number">2</span><span class="token punctuation">)</span>
+    👇
+map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"key1"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+   👇
+map<span class="token punctuation">[</span><span class="token string">"key1"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">2</span>    
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+</ul>
+<p>这里用到了「操作符重载」的知识，实现了和数组一样的「Positional Access Operations」，关于这个概念这里先不展开，后面会讲到。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>可变集合/不可变集合</p>
+<p>上面修改 <code>Map</code> 值的例子中，创建函数用的是 <code>mutableMapOf()</code> 而不是 <code>mapOf()</code>，因为只有 <code>mutableMapOf()</code> 创建的 <code>Map</code> 才可以修改。Kotlin 中集合分为两种类型：只读的和可变的。这里的只读有两层意思：</p>
+<ul>
+<li>集合的 size 不可变</li>
+<li>集合中的元素值不可变</li>
+</ul>
+<p>以下是三种集合类型创建不可变和可变实例的例子：</p>
+<ul>
+<li><code>listOf()</code> 创建不可变的 <code>List</code>，<code>mutableListOf()</code> 创建可变的 <code>List</code>。</li>
+<li><code>setOf()</code> 创建不可变的 <code>Set</code>，<code>mutableSetOf()</code> 创建可变的 <code>Set</code>。</li>
+<li><code>mapOf()</code> 创建不可变的 <code>Map</code>，<code>mutableMapOf()</code> 创建可变的 <code>Map</code>。</li>
+</ul>
+<p>可以看到，有 <code>mutable</code> 前缀的函数创建的是可变的集合，没有 <code>mutbale</code> 前缀的创建的是不可变的集合，不过不可变的可以通过 <code>toMutable*()</code> 系函数转换成可变的集合：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-val">val</span> strList <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">)</span>
+            👇
+strList<span class="token punctuation">.</span><span class="token function">toMutableList</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-val">val</span> strSet <span class="token operator">=</span> <span class="token function">setOf</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">)</span>
+            👇
+strSet<span class="token punctuation">.</span><span class="token function">toMutableSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-val">val</span> map <span class="token operator">=</span> <span class="token function">mapOf</span><span class="token punctuation">(</span><span class="token string">"key1"</span> <span class="token keyword keyword-to">to</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"key2"</span> <span class="token keyword keyword-to">to</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"key3"</span> <span class="token keyword keyword-to">to</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">"key4"</span> <span class="token keyword keyword-to">to</span> <span class="token number">3</span><span class="token punctuation">)</span>
+         👇
+map<span class="token punctuation">.</span><span class="token function">toMutableMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>然后就可以对集合进行修改了，这里有一点需要注意下：</p>
+<ul>
+<li><code>toMutable*()</code> 返回的是一个新建的集合，原有的集合还是不可变的，所以只能对函数返回的集合修改。</li>
+</ul>
+</li>
+</ul>
+<h3 id="sequence"><code>Sequence</code></h3>
+<p>除了集合 Kotlin 还引入了一个新的容器类型 <code>Sequence</code>，它和 <code>Iterable</code> 一样用来遍历一组数据并可以对每个元素进行特定的处理，先来看看如何创建一个 <code>Sequence</code>。</p>
+<ul>
+<li>创建
+<ul>
+<li>
+<p>类似 <code>listOf()</code> ，使用一组元素创建：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token function">sequenceOf</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">)</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+<li>
+<p>使用 <code>Iterable</code> 创建：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-val">val</span> list <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">)</span>
+list<span class="token punctuation">.</span><span class="token function">asSequence</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p>这里的 <code>List</code> 实现了 <code>Iterable</code> 接口。</p>
+</li>
+<li>
+<p>使用 lambda 表达式创建：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️                          <span class="token comment">// 👇 第一个元素</span>
+<span class="token keyword keyword-val">val</span> sequence <span class="token operator">=</span> <span class="token function">generateSequence</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> it <span class="token operator">+</span> <span class="token number">1</span> <span class="token punctuation">}</span>
+                                  <span class="token comment">// 👆 lambda 表达式，负责生成第二个及以后的元素，it 表示前一个元素</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+</ul>
+</li>
+</ul>
+<p>这看起来和 <code>Iterable</code> 一样呀，为啥要多此一举使用 <code>Sequence</code> 呢？在下一篇文章中会结合例子展开讨论。</p>
+<h2 id="%E5%8F%AF%E8%A7%81%E6%80%A7%E4%BF%AE%E9%A5%B0%E7%AC%A6">可见性修饰符</h2>
+<p>讲完了数据集合，再看看 Kotlin 中的可见性修饰符，Kotlin 中有四种可见性修饰符：</p>
+<ul>
+<li><code>public </code>：公开，可见性最大，哪里都可以引用。</li>
+<li><code>private</code>：私有，可见性最小，根据声明位置不同可分为类中可见和文件中可见。</li>
+<li><code>protected</code>：保护，相当于 <code>private</code> + 子类可见。</li>
+<li><code>internal</code>：内部，仅对 module 内可见。</li>
+</ul>
+<p>相比 Java 少了一个 <code>default</code> 「包内可见」修饰符，多了一个 <code>internal</code>「module 内可见」修饰符。这一节结合例子讲讲 Kotlin 这四种可见性修饰符，以及在 Kotlin 和 Java 中的不同。先来看看 <code>public</code>：</p>
+<h3 id="public"><code>public</code></h3>
+<p>Java 中没写可见性修饰符时，表示包内可见，只有在同一个 <code>package</code> 内可以引用：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️                         👇
+<span class="token keyword keyword-package">package</span> <span class="token namespace">org<span class="token punctuation">.</span>kotlinmaster<span class="token punctuation">.</span>library</span><span class="token punctuation">;</span> 
+<span class="token comment">// 没有可见性修饰符</span>
+<span class="token keyword keyword-class">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️                      <span class="token comment">// 👇 和上面同一个 package</span>
+<span class="token keyword keyword-package">package</span> <span class="token namespace">org<span class="token punctuation">.</span>kotlinmaster<span class="token punctuation">.</span>library</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">Example</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-void">void</span> <span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-new">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// success</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token keyword keyword-package">package</span> <span class="token namespace">org<span class="token punctuation">.</span>kotlinmaster</span><span class="token punctuation">;</span>
+                    <span class="token comment">// 👆 和上面不是一个 package</span>
+<span class="token keyword keyword-import">import</span> <span class="token namespace">org<span class="token punctuation">.</span>kotlinmaster<span class="token punctuation">.</span>library<span class="token punctuation">.</span></span><span class="token class-name">User</span><span class="token punctuation">;</span>
+                          👆
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">OtherPackageExample</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-void">void</span> <span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-new">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// compile-error: 'org.kotlinmaster.library.User' is not public in 'org.kotlinmaster.library'. Cannot be accessed from outside package</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p><code>package</code> 外如果要引用，需要在 <code>class</code> 前加上可见性修饰符 <code>public</code> 表示公开。</p>
+<p>Kotlin 中如果不写可见性修饰符，就表示公开，和 Java 中 <code>public</code> 修饰符具有相同效果。在 Kotlin 中 <code>public</code> 修饰符「可以加，但没必要」。</p>
+<h3 id="hide"><code>@hide</code></h3>
+<p>在 Android 的官方 sdk 中，有一些方法只想对 sdk 内可见，不想开放给用户使用（因为这些方法不太稳定，在后续版本中很有可能会修改或删掉）。为了实现这个特性，会在方法的注释中添加一个 Javadoc 方法 <code>@hide</code>，用来限制客户端访问：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token comment">/**
+* @hide 👈
+*/</span>
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-void">void</span> <span class="token function">hideMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+<p>但这种限制不太严格，可以通过反射访问到限制的方法。针对这个情况，Kotlin 引进了一个更为严格的可见性修饰符：<code>internal</code>。</p>
+<h3 id="internal"><code>internal</code></h3>
+<p><code>internal</code> 表示修饰的类、函数仅对 module 内可见，这里的 module 具体指的是一组共同编译的 kotlin 文件，常见的形式有：</p>
+<ul>
+<li>Android Studio 里的 module</li>
+<li>Maven project</li>
+</ul>
+<blockquote>
+<p>我们常见的是 Android Studio 中的 module 这种情况，Maven project 仅作了解就好，不用细究。</p>
+</blockquote>
+<p><code>internal</code> 在写一个 library module 时非常有用，当需要创建一个函数仅开放给 module 内部使用，不想对 library 的使用者可见，这时就应该用  <code>internal</code> 可见性修饰符。</p>
+<h3 id="java-%E7%9A%84%E3%80%8C%E5%8C%85%E5%86%85%E5%8F%AF%E8%A7%81%E3%80%8D%E6%80%8E%E4%B9%88%E6%B2%A1%E4%BA%86%EF%BC%9F">Java 的「包内可见」怎么没了？</h3>
+<p>Java 的 <code>default</code>「包内可见」在 Kotlin 中被弃用掉了，Kotlin 中与它最接近的可见性修饰符是 <code>internal</code>「module  内可见」。为什么会弃用掉包内可见呢？我觉得有这几个原因：</p>
+<ul>
+<li>Kotlin 鼓励创建 top-level 函数和属性，一个源码文件可以包含多个类，使得 Kotlin 的源码结构更加扁平化，包结构不再像 Java 中那么重要。</li>
+<li>为了代码的解耦和可维护性，module 越来越多、越来越小，使得 <code>internal</code> 「module 内可见」已经可以满足对于代码封装的需求。</li>
+</ul>
+<h3 id="protected"><code>protected</code></h3>
+<ul>
+<li>Java 中 <code>protected</code> 表示包内可见 + 子类可见。</li>
+<li>Kotlin 中 <code>protected</code> 表示 <code>private</code> + 子类可见。</li>
+</ul>
+<p>Kotlin 相比 Java <code>protected</code> 的可见范围收窄了，原因是 Kotlin 中不再有「包内可见」的概念了，相比 Java 的可见性着眼于 <code>package</code>，Kotlin 更关心的是 module。</p>
+<h3 id="private"><code>private</code></h3>
+<ul>
+<li>Java 中的 <code>private</code> 表示类中可见，作为内部类时对外部类「可见」。</li>
+<li>Kotlin 中的 <code>private</code> 表示类中或所在文件内可见，作为内部类时对外部类「不可见」。</li>
+</ul>
+<p><code>private</code> 修饰的变量「类中可见」和 「文件中可见」:</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-class">class</span> Sample <span class="token punctuation">{</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-val">val</span> propertyInClass <span class="token operator">=</span> <span class="token number">1</span> <span class="token comment">// 👈 仅 Sample 类中可见</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-private">private</span> <span class="token keyword keyword-val">val</span> propertyInFile <span class="token operator">=</span> <span class="token string">"A string."</span> <span class="token comment">// 👈 范围更大，整个文件可见</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+<p><code>private</code> 修饰内部类的变量时，在 Java 和 Kotlin 中的区别：</p>
+<ul>
+<li>
+<p>在 Java 中，外部类可以访问内部类的 <code>private</code> 变量：</p>
+<div class="code-toolbar"><pre class=" language-java" tabindex="0"><code class=" language-java">☕️
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">Outter</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-public">public</span> <span class="token keyword keyword-void">void</span> <span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">Inner</span> inner <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">Inner</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            👇
+        <span class="token keyword keyword-int">int</span> result <span class="token operator">=</span> inner<span class="token punctuation">.</span>number <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token comment">// success</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">Inner</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-int">int</span> number <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Java</span></div></div></div>
+</li>
+<li>
+<p>在 Kotlin 中，外部类不可以访问内部类的 <code>private</code> 变量：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️
+<span class="token keyword keyword-class">class</span> Outter <span class="token punctuation">{</span>
+    <span class="token keyword keyword-fun">fun</span> <span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-val">val</span> <span class="token keyword keyword-inner">inner</span> <span class="token operator">=</span> <span class="token function">Inner</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                            👇
+        <span class="token keyword keyword-val">val</span> result <span class="token operator">=</span> <span class="token keyword keyword-inner">inner</span><span class="token punctuation">.</span>number <span class="token operator">*</span> <span class="token number">2</span> <span class="token comment">// compile-error: Cannot access 'number': it is private in 'Inner'</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword keyword-class">class</span> Inner <span class="token punctuation">{</span>
+        <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-val">val</span> number <span class="token operator">=</span> <span class="token number">1</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+<li>
+<p>可以修饰类和接口</p>
+<ul>
+<li>
+<p>Java 中一个文件只允许一个外部类，所以 <code>class</code>  和 <code>interface</code> 不允许设置为 <code>private</code>，因为声明 <code>private</code>  后无法被外部使用，这样就没有意义了。</p>
+</li>
+<li>
+<p>Kotlin 允许同一个文件声明多个 <code>class</code> 和 top-level 的函数和属性，所以 Kotlin 中允许类和接口声明为 <code>private</code>，因为同个文件中的其它成员可以访问：</p>
+<div class="code-toolbar"><pre class=" language-kotlin" tabindex="0"><code class=" language-kotlin">🏝️                   
+<span class="token keyword keyword-private">private</span> <span class="token keyword keyword-class">class</span> Sample <span class="token punctuation">{</span>
+    <span class="token keyword keyword-val">val</span> number <span class="token operator">=</span> <span class="token number">1</span>
+    <span class="token keyword keyword-fun">fun</span> <span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Sample method()"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+            <span class="token comment">// 👇 在同一个文件中，所以可以访问</span>
+<span class="token keyword keyword-val">val</span> sample <span class="token operator">=</span> <span class="token function">Sample</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre><div class="toolbar"><div class="toolbar-item"><span>Kotlin</span></div></div></div>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="%E7%BB%83%E4%B9%A0%E9%A2%98">练习题</h2>
+<ol>
+<li>创建一个 Kotlin 类，这个类需要禁止外部通过构造器创建实例，并提供至少一种实例化方式。</li>
+<li>分别用 Array、IntArray、List 实现 「保存 1-100_000 的数字，并求出这些数字的平均值」，打印出这三种数据结构的执行时间。</li>
+</ol>
+<h2 id="%E4%BD%9C%E8%80%85%E4%BB%8B%E7%BB%8D">作者介绍</h2>
+<h3 id="%E8%A7%86%E9%A2%91%E4%BD%9C%E8%80%85">视频作者</h3>
+<h4 id="%E6%89%94%E7%89%A9%E7%BA%BF%EF%BC%88%E6%9C%B1%E5%87%AF%EF%BC%89">扔物线（朱凯）</h4>
+<ul>
+<li>码上开学创始人、项目管理人、内容模块规划者和视频内容作者。</li>
+<li><a href="https://developers.google.com/experts/people/kai-zhu" target="_blank">Android GDE</a>（ Google 认证 Android 开发专家），前 Flipboard Android 工程师。</li>
+<li>GitHub 全球 Java 排名第 92 位，在 <a href="https://github.com/rengwuxian" target="_blank">GitHub</a> 上有 6.6k followers 和 9.9k stars。</li>
+<li>个人的 Android 开源库 <a href="https://github.com/rengwuxian/MaterialEditText/" target="_blank">MaterialEditText</a> 被全球多个项目引用，其中包括在全球拥有 5 亿用户的新闻阅读软件 Flipboard 。</li>
+<li>曾多次在 Google Developer Group Beijing 线下分享会中担任 Android 部分的讲师。</li>
+<li>个人技术文章《<a href="https://gank.io/post/560e15be2dca930e00da1083" target="_blank">给 Android 开发者的 RxJava 详解</a>》发布后，在国内多个公司和团队内部被转发分享和作为团队技术会议的主要资料来源，以及逆向传播到了美国一些如 Google 、 Uber 等公司的部分华人团队。</li>
+<li>创办的 Android 高级进阶教学网站 <a href="https://hencoder.com/">HenCoder</a> 在全球华人 Android 开发社区享有相当的影响力。</li>
+<li>之后创办 Android 高级开发教学课程 <a href="https://plus.hencoder.com/">HenCoder Plus</a> ，学员遍布全球，有来自阿里、头条、华为、腾讯等知名一线互联网公司，也有来自中国台湾、日本、美国等地区的资深软件工程师。</li>
+</ul>
+<h3 id="%E6%96%87%E7%AB%A0%E4%BD%9C%E8%80%85">文章作者</h3>
+<h4 id="walker%EF%BC%88%E5%BC%A0%E7%A3%8A%EF%BC%89">Walker（张磊）</h4>
+<p><a href="https://juejin.im/user/58e46281da2f60005fe23d48">Walker（张磊）</a> ，即刻 Android 高级工程师。2015 年加入即刻，参与了即刻 2.0 到 6.0 版本的架构设计和产品迭代。多年 Android 开发经验，曾就职于 OPPO，专注于客户端用户体验、音视频开发和性能优化。</p>
+<!--kg-card-end: markdown-->
+
+                            <h2>版权声明</h2>
+<blockquote class="post-copyright">
+  <p>本文首发于：<a href="https://rengwuxian.com/kotlin-basic-2/">https://rengwuxian.com/kotlin-basic-2/</a></p>
+  <p>微信公众号：扔物线</p>
+  <p>转载时请保留此声明</p>
+</blockquote>                        </div>
+                        
+                        <!-- start: .share-buttons -->
+                        <div class="share-buttons section">
+                            <div class="flex justify-center items-center share-buttons-container">
+                                <h5 class="title small share-title">分享文章</h5>
+                                <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons st-center st-lang-zh  st-inline-share-buttons st-animated" id="st-2"><div class="st-btn st-first  st-remove-label" data-network="weibo" style="display: inline-block;">
+  <img alt="weibo-white sharing button" src="./Kotlin 里那些「不是那么写的」_files/weibo-white.svg">
+  
+</div><div class="st-btn  st-remove-label" data-network="wechat" style="display: inline-block;">
+  <img alt="wechat-white sharing button" src="./Kotlin 里那些「不是那么写的」_files/wechat-white.svg">
+  
+</div><div class="st-btn  st-remove-label" data-network="twitter" style="display: inline-block;">
+  <img alt="twitter-white sharing button" src="./Kotlin 里那些「不是那么写的」_files/twitter-white.svg">
+  
+</div><div class="st-btn st-last  st-remove-label" data-network="email" style="display: none;">
+  <img alt="email-white sharing button" src="./Kotlin 里那些「不是那么写的」_files/email-white.svg">
+  
+</div></div><!-- ShareThis END -->                            </div>
+                            
+                            <div class="clear"></div>
+                            <div class="permalink">
+                                <input type="text" name="shortlink" value="https://rengwuxian.com/kotlin-basic-2/" id="copy-link" readonly="">
+                                <span class="copy"><svg><use xlink:href="#copy"></use></svg></span>
+                            </div>
+                        </div>
+                        <!-- end: .share-buttons -->
+
+                    </section>
+
+                </article>
+                <div class="clear"></div>
+
+                <section class="related section bordered">
+                    <!--<h3 class="title bordered">You might be interested in...</h3>-->
+                    	<article class="prev grid-50 tablet-grid-50 grid-parent">
+                                <div class="thumb cover lazy" data-src="/content/images/size/w600h450/2021/04/0-7.jpeg" style="background-image: url(&quot;data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==&quot;);"></div>
+                            <a href="https://rengwuxian.com/kotlin-basic-1/" class="full-link"></a>
+                            <div class="info">
+                                <time datetime="2019-08-19">Aug 19, 2019</time>
+                                <h4 class="title white no-margin">【码上开学】Kotlin 的变量、函数和类型</h4>
+                            </div>
+                            <span class="button"><img src="./Kotlin 里那些「不是那么写的」_files/left-arrow.svg" width="15"></span>
+                            <div class="overlay"></div>
+                        </article>
+
+                        <article class="next grid-50 tablet-grid-50 grid-parent">
+                                <div class="thumb cover lazy" data-src="/content/images/size/w600h450/2021/04/5.png" style="background-image: url(&quot;data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==&quot;);"></div>
+                            <a href="https://rengwuxian.com/kotlin-basic-3/" class="full-link"></a>
+                            <div class="info">
+                                <time datetime="2019-08-23">Aug 23, 2019</time>
+                                <h4 class="title white no-margin">Kotlin 里那些「更方便的」</h4>
+                            </div>
+                            <span class="button"><img src="./Kotlin 里那些「不是那么写的」_files/right-arrow.svg" width="15"></span>
+                            <div class="overlay"></div>
+                        </article>
+                    <div class="clear"></div>
+                </section>
+
+    			<div class="clear"></div>
+
+                <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQwMi81OTcw">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+<div title="livereAd" id="lv-ad-696" style="min-width: 100%; width: 100px; overflow: visible; border: 0px; z-index: 124212;"><div id="livereAdWrapper" style="width: 100%; text-align: center;"><div id="livereAd" style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; max-width: 0px; width: 100%; margin: 0px auto;"></div></div></div></div>
+<!-- City版安装代码已完成 -->
+                <!-- start: .pagination -->
+                <div class="pagination">
+
+                    <div class="clear"></div>
+                </div>
+                <!-- end: .pagination-->
+
+                <div class="clear"></div>
+            </div>
+            <!-- end: .content -->
+
+        <div class="flex justify-between items-center sidebar-follow hide-on-tablet hide-on-mobile">
+    <a id="go-to-wechat" class="btn-follow" href="javascript:void(0)">关注公众号</a>
+    <a class="btn-follow" href="https://space.bilibili.com/27559447" target="_blank">关注 B 站</a> 
+</div><!-- start: #sidebar -->
+<aside id="sidebar" role="complementary" class="grid-30 tablet-grid-30 hide-on-tablet hide-on-mobile">
+
+	<!-- start: .search -->
+	<!-- end: .widget_text -->
+            <!-- start: .recent-articles -->
+            <div class="widget recent-articles">
+                <h3 class="title bordered">相关文章</h3>                
+                    <article class="post item">
+                            <a href="https://rengwuxian.com/kotlin-source-noinline-crossinline/" class="thumb hover-effect grid-33 grid-parent">
+                                <span class="fullimage cover" style="background: url(/content/images/size/w160h160/2021/04/0-12.png);"></span>
+                            </a>
+                        <div class="info">
+                            <div class="meta">
+                                <time datetime="2020-09-04">Sep 4, 2020</time>
+                            </div>
+                            <h4 class="title usmall gradient-effect"><a href="https://rengwuxian.com/kotlin-source-noinline-crossinline/">Kotlin 源码里成吨的 noinline 和 crossinline 是干嘛的？看完这个视频你转头也写了一吨</a></h4>
+                            
+                        </div>
+                        <div class="clear"></div>
+                    </article>	
+                    <article class="post item">
+                            <a href="https://rengwuxian.com/yue-tan/" class="thumb hover-effect grid-33 grid-parent">
+                                <span class="fullimage cover" style="background: url(/content/images/size/w160h160/2021/04/0-32.jpeg);"></span>
+                            </a>
+                        <div class="info">
+                            <div class="meta">
+                                <time datetime="2020-06-17">Jun 17, 2020</time>
+                            </div>
+                            <h4 class="title usmall gradient-effect"><a href="https://rengwuxian.com/yue-tan/">我被 Kotlin 和 Android 两个官方约谈了</a></h4>
+                            
+                        </div>
+                        <div class="clear"></div>
+                    </article>	
+                    <article class="post item">
+                            <a href="https://rengwuxian.com/kotlin-extensions/" class="thumb hover-effect grid-33 grid-parent">
+                                <span class="fullimage cover" style="background: url(/content/images/size/w160h160/2021/04/0-7.png);"></span>
+                            </a>
+                        <div class="info">
+                            <div class="meta">
+                                <time datetime="2020-05-15">May 15, 2020</time>
+                            </div>
+                            <h4 class="title usmall gradient-effect"><a href="https://rengwuxian.com/kotlin-extensions/">会写「18.dp」只是个入门——Kotlin 的扩展函数和扩展属性（Extension Functions  Properties）</a></h4>
+                            
+                        </div>
+                        <div class="clear"></div>
+                    </article>	
+                    <article class="post item">
+                            <a href="https://rengwuxian.com/kotlin-lambda/" class="thumb hover-effect grid-33 grid-parent">
+                                <span class="fullimage cover" style="background: url(/content/images/size/w160h160/2021/04/0-29.jpeg);"></span>
+                            </a>
+                        <div class="info">
+                            <div class="meta">
+                                <time datetime="2020-04-07">Apr 7, 2020</time>
+                            </div>
+                            <h4 class="title usmall gradient-effect"><a href="https://rengwuxian.com/kotlin-lambda/">Kotlin 的 Lambda 表达式，大多数人学得连皮毛都不算</a></h4>
+                            
+                        </div>
+                        <div class="clear"></div>
+                    </article>	
+                    <article class="post item">
+                            <a href="https://rengwuxian.com/kotlin-coroutines-3/" class="thumb hover-effect grid-33 grid-parent">
+                                <span class="fullimage cover" style="background: url(/content/images/size/w160h160/2021/04/0-26.jpeg);"></span>
+                            </a>
+                        <div class="info">
+                            <div class="meta">
+                                <time datetime="2019-09-29">Sep 29, 2019</time>
+                            </div>
+                            <h4 class="title usmall gradient-effect"><a href="https://rengwuxian.com/kotlin-coroutines-3/">到底什么是「非阻塞式」挂起？协程真的更轻量级吗？</a></h4>
+                            
+                        </div>
+                        <div class="clear"></div>
+                    </article>	
+            </div>
+            <!-- end: .recent-articles -->
+    
+    
+
+    <!-- start: .tag-cloud -->
+    <div class="widget tag-cloud">
+        <h3 class="widget-title title bordered">标签云</h3>
+            <a href="https://rengwuxian.com/tag/compose/">Compose</a><a href="https://rengwuxian.com/tag/hencoder/">HenCoder</a><a href="https://rengwuxian.com/tag/hencoder-plus/">HenCoder Plus</a><a href="https://rengwuxian.com/tag/hilt/">Hilt</a><a href="https://rengwuxian.com/tag/https/">HTTPS</a><a href="https://rengwuxian.com/tag/jetpack/">Jetpack</a><a href="https://rengwuxian.com/tag/kotlin/">Kotlin</a><a href="https://rengwuxian.com/tag/kotlin-anonymous-function/">Kotlin 匿名函数</a><a href="https://rengwuxian.com/tag/kotlin-coroutines/">Kotlin 协程</a><a href="https://rengwuxian.com/tag/kotlin-basic/">Kotlin 基础</a><a href="https://rengwuxian.com/tag/kotlin-kuo-zhan/">Kotlin 扩展</a><a href="https://rengwuxian.com/tag/kotlin-generics/">Kotlin 泛型</a><a href="https://rengwuxian.com/tag/kotlin-higher-order-function/">Kotlin 高阶函数</a><a href="https://rengwuxian.com/tag/kotlin-advanced/">Kotln 进阶</a><a href="https://rengwuxian.com/tag/lambda/">Lambda 表达式</a><a href="https://rengwuxian.com/tag/weekly/">Weekly</a><a href="https://rengwuxian.com/tag/yi-lai-zhu-ru/">依赖注入</a><a href="https://rengwuxian.com/tag/about/">关于 hencoder</a><a href="https://rengwuxian.com/tag/nei-cun/">内存</a><a href="https://rengwuxian.com/tag/happy-news/">喜报</a><a href="https://rengwuxian.com/tag/shi-jian/">实践</a><a href="https://rengwuxian.com/tag/bu-ju/">布局</a><a href="https://rengwuxian.com/tag/ji-zhu-shen-liao/">技术深聊</a><a href="https://rengwuxian.com/tag/kaixue/">码上开学</a><a href="https://rengwuxian.com/tag/hui-zhi/">绘制</a><a href="https://rengwuxian.com/tag/custom-view/">自定义 View</a><a href="https://rengwuxian.com/tag/hong-mo-fan-kui/">触摸反馈</a><a href="https://rengwuxian.com/tag/mian-shi/">面试</a>
+    </div>
+    <!-- end: .tag-cloud  -->
+         <!-- start: .widget -->
+	<section class="widget">
+		<h4 class="widget-title title bordered">广告</h4>
+        <div class="textwidget">
+			<a href="https://edu.rengwuxian.com/p/t_pc/goods_pc_detail/goods_detail/course_2Dpw6101YdL7bHFs5LFpYyzSUS6?app_id=appuoykwnbg2526" class="ads" target="_blank"><img src="./Kotlin 里那些「不是那么写的」_files/f03f8a8ab1023.jpg" class="img-ad"></a>
+		</div>
+		<div class="clear"></div>
+	</section>
+	<!-- end: .widget -->
+	
+</aside>
+<!-- end: #sidebar -->
+        <div class="clear"></div>
+
+    </div>
+    <!-- end: .center -->
+
+</main>
+<!-- end: #single -->
+
+
+
+		<!-- start: #footer -->
+<footer id="footer" class="grid-container np-mobile">
+
+	
+<div id="follow-qrcode" class="subscribe section">
+    <p class="title white text-center follow-us">关注我们</p>
+    <div class="grid-container grid-medium grid-parent np-mobile mt-20 follow-qrcode-list">
+        <div class="grid-33 tablet-grid-33 mt-10 follow-qrcode-item">
+        	<img src="./Kotlin 里那些「不是那么写的」_files/e5a3cb8f94920.jpeg">
+            <p class="title white text-center mt-10">公众号</p>
+        </div>
+        <div class="grid-33 tablet-grid-33 mt-10 follow-qrcode-item">
+            <img src="./Kotlin 里那些「不是那么写的」_files/cd3c35c6034e7.jpg">
+            <p class="title white text-center mt-10">视频号</p>
+        </div>
+        <div class="grid-33 tablet-grid-33 mt-10 follow-qrcode-item">
+            <img src="./Kotlin 里那些「不是那么写的」_files/978586b8156ca.jpg">
+            <p class="title white text-center mt-10">领取试听课</p>
+        </div>
+    </div>
+</div>
+		<h2 class="logo">
+			<a href="https://rengwuxian.com/" class="title white medium">扔物线</a>
+		</h2>
+	<p class="published border-effect">Published with <a href="https://ghost.org/" target="_blank">Ghost</a> <a href="https://beian.miit.gov.cn/" target="_blank">豫ICP备2020036939号-1</a></p>
+
+	<a href="javascript:void(0)" id="back-to-top" class="button dark"><i class="fa fa-chevron-up"></i></a>
+
+</footer>
+<!-- end: #footer -->
+
+        <div id="search-results" class="mfp-hide grid-container section"></div>
+
+    </div>
+    <!-- end: #wrapper -->
+    <script type="text/javascript" src="./Kotlin 里那些「不是那么写的」_files/scripts.min.js.下载" defer=""></script>
+	
+<!-- <script>
+    var swiper = new Swiper('.swiper', {
+        // Optional parameters
+        direction: 'horizontal',
+        preventClicks: false,
+        preventClicksPropagation: false,
+        disableOnInteraction: false,
+        loop: true,
+		autoplay: {
+           delay: 5000,
+        },
+        // If we need pagination
+        pagination: {
+            el: '.swiper-pagination',
+        },
+
+        // Navigation arrows
+        //navigation: {
+        //    hideOnClick: true,
+        //    nextEl: '.swiper-button-next',
+        //    prevEl: '.swiper-button-prev',
+        //}
+    });
+</script> -->
+<!-- 顶层固定广告 -->
+<script>
+    var isShow = function isShow(value) {
+        return value && value.isshow;
+    };
+    var parseDate = function parseDate(date) {
+      const parsed = Date.parse(date);
+      if (!isNaN(parsed)) {
+        return parsed;
+      }
+      return Date.parse(date.replace(/-/g, '/').replace(/[a-z]+/gi, ' '));
+    };
+    var now = new Date().getTime();
+    var isExpired = function(item) {
+        let start = parseDate(item.start_time);
+		let end = parseDate(item.end_time);
+    	return item && start <= now && now <= end;
+    };
+    let image = $('.pop-image');
+    let link = $('.pop-links');
+    let text = $('.pop-text');
+    let adArray = [
+            {
+                "title": "双十一冰点价，最高可减 1300 元",
+                "link": "https://edu.rengwuxian.com/?utm_source=rengwuxian.com&utm_medium=fixed_ad",
+                "image": "https://image.rengwuxian.com/2022/11/01/905c6a532bf51.png",
+                "isshow": true,
+                "start_time": "2022-10-27 00:00",
+                "end_time": "2022-11-16 00:00"
+            }
+    ];
+    let showAds = adArray.filter(isShow).filter(isExpired);
+    let index = Math.floor(Math.random() * showAds.length);
+   	let adItem = showAds[index];
+    if(adItem) {
+        image.attr('src', adItem['image']);
+        link.attr('href', adItem['link']);
+        text.text(adItem['title']);
+        var currentTime = new Date().getTime();
+        if (localStorage.hideExpiredTime == null || localStorage.hideExpiredTime == undefined || localStorage.hideExpiredTime == ''){
+          localStorage.hideExpiredTime = 0;
+        }
+        if (currentTime - localStorage.hideExpiredTime > 300000){
+           $('.pop').show();
+        }
+    }
+    $(document).ready(function(){
+        $('.pop-btn-close').click(function(){
+            localStorage.hideExpiredTime = currentTime;
+            $('.pop').hide();
+        })
+    })
+</script>
+
+
+<div id="ghost-portal-root"></div></body><div style="all: initial;"><div id="__hcfy__" style="all: initial;"></div></div></html>
